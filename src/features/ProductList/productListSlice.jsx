@@ -20,7 +20,6 @@ export const productListSlice = createSlice({
         increment: (state) => {
             state.value += 1;
         },
-        
     },
     extraReducers: (builder) => {
         builder
