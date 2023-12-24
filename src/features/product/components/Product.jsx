@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, incrementAsync, selectCount } from "./productlistSlice";
+import { Link } from "react-router-dom";
+import { increment, incrementAsync, selectCount } from "../productSlice";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -10,7 +11,11 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  StarIcon,
+} from "@heroicons/react/20/solid";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -397,28 +402,33 @@ export default function ProductList() {
                   <div>
                     <div className="flex flex-wrap gap-10 justify-center">
                       {products.map((product) => (
-                        <div className="xs:w-8/12 md:w-4/12 lg:w-3/12 text-md" key={product.id} >
-                          <div className="rounded-lg bg-violet-600 mb-4 pb-2">
-                            <div className="overflow-hidden rounded-lg ">
-                              <img
-                                src={product.imageSrc}
-                                className="w-full h-auto hover:opacity-90 transition-opacity duration-100 cursor-pointer "
-                                alt="cloth-image"
-                              />
+                          <div
+                            className="xs:w-8/12 md:w-4/12 lg:w-3/12 text-md"
+                            key={product.id}
+                          >
+                            <Link to="/product-detail">
+                            <div className="rounded-lg bg-violet-600 mb-4 pb-2">
+                              <div className="overflow-hidden rounded-lg ">
+                                <img
+                                  src={product.imageSrc}
+                                  className="w-full h-auto hover:opacity-90 transition-opacity duration-100 cursor-pointer "
+                                  alt="cloth-image"
+                                />
+                              </div>
                             </div>
-                          </div>
 
-                          <div>
-                            <div className="flex justify-between font-medium">
-                              <div> {product.name} </div>{" "}
-                              <div> {product.price} </div>
+                            <div>
+                              <div className="flex justify-between font-medium">
+                                <div> {product.name} </div>{" "}
+                                <div> {product.price} </div>
+                              </div>
+                              <div className="text-start opacity-[0.9]">
+                                {" "}
+                                {product.color}{" "}
+                              </div>
                             </div>
-                            <div className="text-start opacity-[0.9]">
-                              {" "}
-                              {product.color}{" "}
-                            </div>
+                            </Link>
                           </div>
-                        </div>
                       ))}
                     </div>
                   </div>
