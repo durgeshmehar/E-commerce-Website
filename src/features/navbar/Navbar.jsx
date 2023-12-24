@@ -80,7 +80,7 @@ export default function Navbar( {children}) {
                         <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                         
                       </button>
-                      <span class="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">3</span>
+                      <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">3</span>
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
@@ -170,7 +170,7 @@ export default function Navbar( {children}) {
                       <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                       
                     </button>
-                    <span class="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">3</span>
+                    <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">3</span>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
