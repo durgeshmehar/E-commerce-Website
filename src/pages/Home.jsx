@@ -1,11 +1,11 @@
 import Navbar from "../features/navbar/Navbar"
-import Product from "../features/product/components/Product"
+import ProductList from "../features/product/components/ProductList"
 
 function Home() {
   return (
     <div>
       <Navbar>
-      <Product />
+      <ProductList />
       </Navbar>
     </div>
   )
