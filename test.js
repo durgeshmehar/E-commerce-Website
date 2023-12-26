@@ -1934,3 +1934,7 @@ const brand = [...new Set([...products.map((p) => p.brand)])];
 //   }))
 // );
 
+const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+
+console.log(screenWidth )
