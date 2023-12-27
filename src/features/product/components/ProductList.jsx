@@ -392,7 +392,7 @@ export function ProductGrid({ products }) {
               className="group text-md w-[95%] sm:w-full border border-solid border-spacing-2  border-gray-300 rounded-md"
               key={product.id}
             >
-              <Link to="/product-detail">
+              <Link to={`/product-detail/${product.id}`}>
                 <div className="aspect-h-1 aspect-w-1  md:w-full bg-gray-200 lg:aspect-none overflow-hidden rounded-md lg:h-72">
                   <img
                     src={product.thumbnail}
