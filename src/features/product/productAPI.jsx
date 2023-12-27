@@ -2,7 +2,6 @@ export  function fetchAllProducts() {
     return new Promise(async (resolve) =>{
         const response = await fetch('http://localhost:8080/products')
         const data = await response.json()
-        console.log("DAata",data);
         resolve({data})
     });
 }
@@ -31,7 +30,6 @@ export function fetchProductsByFilter({filter,sort,pagination}) {
     if(queryString.length>0){
         queryString = queryString.slice(0,-1)
     }
-    console.log("api qeury:",queryString);
 
     return new Promise(async (resolve) =>{
         const response = await fetch(`http://localhost:8080/products?${queryString}`)

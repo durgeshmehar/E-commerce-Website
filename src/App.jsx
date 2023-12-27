@@ -1,18 +1,20 @@
 import './App.css'
-import Home from './pages/Home';
-import { Provider} from 'react-redux';
 import store from './app/store'
+import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import Protected from './features/auth/Protected';
+
+import { Provider ,useDispatch  ,useSelector} from 'react-redux';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
     path :"/",
-    element : <Home />
+    element : <Protected> <Home /> </Protected>
   },
   {
     path:"/login",
@@ -24,27 +26,29 @@ const router = createBrowserRouter([
   },
   {
     path:"/cart",
-    element:<CartPage />
+    element:<Protected><CartPage /> </Protected>
   },
   {
     path:"/checkout",
-    element:<CheckoutPage />
+    element:<Protected><CheckoutPage /> </Protected>
   },
   {
     path:"/product-detail/:id",
-    element:<ProductDetailPage />
+    element: <Protected><ProductDetailPage /> </Protected>
   }
 ])
 
 function App() {
   
+  
   return (
     <>
      <Provider store={store}>
-       <RouterProvider router={router} />
+       <RouterProvider router={router} >
+       </RouterProvider>
      </Provider>
     </>
   )
 }
 
-export default App
+export default App;

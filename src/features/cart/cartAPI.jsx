@@ -1,7 +1,48 @@
-export function fetchCount(amount = 1) {
-    return new Promise(async (resolve) =>{
-        const response = await fetch('https://localhost:5173')
-        const data = await response.json()
-        resolve({data})
-    });
+export function addToCart(item){
+    return new Promise( async( resolve)=>{
+        const response = await fetch("http://localhost:8080/cart",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(item)
+        })
+        const data = await response.json();
+        resolve({data});
+    })
+}
+
+export function fetchItemsByUserId(userId){
+    return new Promise( async( resolve)=>{
+        const response = await fetch("http://localhost:8080/cart?user="+userId)
+        const data = await response.json();
+        console.log("data at server:",data);
+        resolve({data});
+    })
+}
+
+export function updateCart(update){
+    return new Promise( async( resolve)=>{
+        const response = await fetch("http://localhost:8080/cart/"+update.id,{
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(update)
+        })
+        const data = await response.json();
+        resolve({data});
+    })
+}
+export function deleteItemFromCart(itemId){
+    return new Promise( async( resolve)=>{
+        const response = await fetch("http://localhost:8080/cart/"+itemId,{
+            method:"DELETE",
+            headers:{
+                "Content-Type":"application/json"
+            },
+        })
+        const data = await response.json();
+        resolve({data:{id:itemId ,message:"Deleted successfully"}});
+    })
 }

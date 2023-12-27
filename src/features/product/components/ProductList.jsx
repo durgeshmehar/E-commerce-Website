@@ -12,6 +12,9 @@ import {
   selectProductsArray,
   selectTotalItems
 } from "../productSlice";
+import {selectLoggedInUser} from "../../auth/authSlice";
+import { fetchItemsByUserIdAsync } from "../../cart/cartSlice"
+
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -25,6 +28,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
+import { selectCartItems } from './../../cart/cartSlice';
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc" },
   { name: "Price: Low to High", sort: "price", order: "asc" },
@@ -101,7 +105,16 @@ export default function ProductList() {
     const newPagination ={ _page: pageValue, _limit: ITEMS_PER_PAGE };
     setPagination(newPagination);
   };
+// this to fetch all products in cart
 
+  const user = useSelector(selectLoggedInUser);
+  const items = useSelector(selectCartItems);
+  useEffect(()=>{
+    if(user){
+      console.log("Prouductlist :",user.id)
+      dispatch(fetchItemsByUserIdAsync(user.id));
+    }
+  },[dispatch,user]);
 
   return (
     <> 
