@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser,checkUser } from './authAPI';
-import { selectCategoriesArray } from './../product/productSlice';
+import { createUser,checkUser,updateUser} from './authAPI';
 
 const initialState = {
     loggedInUser: null,
@@ -22,9 +21,16 @@ export const checkUserAsync = createAsyncThunk(
         return response.data;
     }
 );
+export const updateUserAsync = createAsyncThunk(
+    'user/updateUser',
+    async(update) => {
+        const response = await updateUser(update);
+        return response.data;
+    }
+);
 
 export const authSlice = createSlice({
-    name: 'user',
+    name: 'auth',
     initialState,
     reducers: {
         increment: (state) => {
@@ -34,26 +40,33 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(createUserAsync.pending, (state) => {
+          .addCase(createUserAsync.pending, (state) => {
             state.status = 'loading';
-        })
-        .addCase(createUserAsync.fulfilled, (state, action) => {
+          })
+          .addCase(createUserAsync.fulfilled, (state, action) => {
             state.status = 'idle';
             state.loggedInUser = action.payload;
-        })
-        .addCase(checkUserAsync.pending, (state) => {
+          })
+          .addCase(checkUserAsync.pending, (state) => {
             state.status = 'loading';
-        })
-        .addCase(checkUserAsync.fulfilled, (state, action) => {
+          })
+          .addCase(checkUserAsync.fulfilled, (state, action) => {
             state.status = 'idle';
-            state.loggedInUser= action.payload;
-        })
-        .addCase(checkUserAsync.rejected, (state,action) => {
+            state.loggedInUser = action.payload;
+          })
+          .addCase(checkUserAsync.rejected, (state, action) => {
             state.status = 'loading';
-            state.error= action.error
-        })
-    }
-});
+            state.error = action.error;
+          })
+          .addCase(updateUserAsync.pending, (state) => {
+            state.status = 'loading';
+          }) // Fix: Add an empty arrow function as the second argument
+          .addCase(updateUserAsync.fulfilled, (state, action) => {
+            state.status = 'idle';
+            state.loggedInUser = action.payload;
+          });
+      },
+    });
 
 export const { increment } = authSlice.actions;
 export const selectLoggedInUser = (state) => state.auth.loggedInUser;

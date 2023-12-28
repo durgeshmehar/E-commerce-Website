@@ -7,9 +7,11 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import Protected from './features/auth/Protected';
+import { OrderSuccessPage} from './pages/OrderSuccessPage';
 
 import { Provider ,useDispatch  ,useSelector} from 'react-redux';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { PageNotFound } from './pages/404Page';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
   {
     path:"/product-detail/:id",
     element: <Protected><ProductDetailPage /> </Protected>
+  },
+  {
+    path:"/order-success/:id",
+    element:<OrderSuccessPage />
+  },
+  {
+    path:'*',
+    element:<PageNotFound />
   }
 ])
 

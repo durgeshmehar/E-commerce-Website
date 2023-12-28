@@ -1,21 +1,23 @@
 import { useSelector,useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { deleteItemFromCartAsync, selectCartItems, updateCartAsync } from "./cartSlice";
-
+import { Link , Navigate } from "react-router-dom";
+import { deleteItemFromCartAsync, selectCartItems, updateCartAsync  } from "./cartSlice";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems)
   const totalAmount = products.reduce((total,item)=> total + item.price*item.quantity,0)
   const totalItems = products.reduce((total,item)=> total + item.quantity,0)
-
+ 
   const handleSelect = (e,product)=>{
     dispatch(updateCartAsync({...product,quantity:+e.target.value}));
   }
-  const handleRemove = (e,id)=>{
+  const handleRemove = (id)=>{
     dispatch(deleteItemFromCartAsync(id));
   }
+
   return (
+    <>
+    {totalItems === 0  && <Navigate to="/"></Navigate> }
     <div className="bg-white mx-auto max-w-7xl px-4 mt-12 sm:px-6 lg:px-8 ">
       <h1 id="products-heading" className="p-4 text-3xl font-semibold">
         Cart
@@ -66,7 +68,7 @@ export default function Cart() {
                       <button
                         type="button"
                         className="font-medium text-indigo-600 hover:text-indigo-500"
-                        onClick={(e)=>handleRemove(e,product.id)}
+                        onClick={()=>handleRemove(product.id)}
                       >
                         Remove
                       </button>
@@ -105,5 +107,6 @@ export default function Cart() {
         </div>
       </div>
     </div>
+    </>
   );
 }
