@@ -1,4 +1,6 @@
+/* eslint-disable no-useless-escape */
 import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { useState } from "react";
@@ -13,17 +15,17 @@ import { selectLoggedInUser } from "../features/auth/authSlice"
 
 
 export default function CheckoutPage() {
-  const { register,handleSubmit,setError, watch, formState: { errors }} = useForm();
+  const { register,handleSubmit,setError, formState: { errors }} = useForm();
 
   const dispatch = useDispatch();
-  const products = useSelector(selectCartItems);
+  const cart = useSelector(selectCartItems);
   const user = useSelector(selectLoggedInUser)
   const [selectedAddress , setSelectedAddress] = useState(null)
   const [paymentMethod , setPaymentMethod] = useState('cash')
   const currentOrder = useSelector(selectCurrentOrder)
   
-  const totalItems = products.reduce((total, item) => total + item.quantity, 0);
-  const totalAmount = products.reduce(
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  const totalAmount = cart.reduce(
   (total, item) => total + item.price * item.quantity,
   0
   );
@@ -35,22 +37,20 @@ export default function CheckoutPage() {
     dispatch(deleteItemFromCartAsync(id));
   };
   const handleAddress = (e) => {
-    console.log("Address value",user.addresses[e.target.value]);
     setSelectedAddress(user.addresses[e.target.value])
   };
 
   const handlePayment = (e) => {
     setPaymentMethod(e.target.value);
-    console.log("Payment method",e.target.value)
   }
-  const handleOrder = (e) => {
+  const handleOrder = () => {
     if (!selectedAddress) {
       setError("address", {
         type: "manual",
         message: "Please select an address."
       });
     }else{
-      const order ={products ,totalAmount ,totalItems ,user ,paymentMethod , selectedAddress,status:'pending'}
+      const order ={cart ,totalAmount ,totalItems ,user ,paymentMethod , selectedAddress,status:'Pending'}
       console.log("Order :",order)
       dispatch(createOrderAsync(order))
     }
@@ -58,7 +58,6 @@ export default function CheckoutPage() {
     //clear cart
     //change stocks on server
   }
-
 
   return (
     <>
@@ -246,7 +245,7 @@ export default function CheckoutPage() {
                         >
                           <div className="flex min-w-0 gap-x-4">
                             <input
-                              {...register("address", { required: "Address is required"})}
+                              {...register("address", { required: selectedAddress==null?false:"Address is required"})}
                               type="radio"
                               value={index}
                               onChange={(e)=>{handleAddress(e)}}
@@ -260,7 +259,7 @@ export default function CheckoutPage() {
                                 {address.street}
                               </p>
                               <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                                {address.pincode}
+                                {address.postalcode}
                               </p>
                             </div>
                           </div>
@@ -338,7 +337,7 @@ export default function CheckoutPage() {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {products.map((product) => (
+                    {cart.map((product) => (
                       <li key={product.id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img

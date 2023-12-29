@@ -1,5 +1,6 @@
 import { useSelector,useDispatch } from "react-redux";
 import { Link , Navigate } from "react-router-dom";
+import React from "react";
 import { deleteItemFromCartAsync, selectCartItems, updateCartAsync  } from "./cartSlice";
 
 export default function Cart() {

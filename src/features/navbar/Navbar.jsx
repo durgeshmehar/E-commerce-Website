@@ -1,4 +1,5 @@
-import { Children, Fragment } from "react";
+/* eslint-disable react/prop-types */
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -20,14 +21,16 @@ const navigation = [
   { name: "Team", href: "#", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", link: "/" },
-  { name: "Settings", link: "/" },
+  { name: "My Profile", link: "/profile" },
+  { name: "My Orders", link: "/orders" },
   { name: "Sign out", link: "/login" },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+import React from "react";
 
 export default function Navbar({ children }) {
   const items = useSelector(selectCartItems);
@@ -77,17 +80,18 @@ export default function Navbar({ children }) {
                           className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                         >
                           <span className="absolute -inset-1.5" />
-                         
+
                           <ShoppingCartIcon
                             className="h-6 w-6"
                             aria-hidden="true"
                           />
                         </button>
                       </Link>
-                      {items.length >0 && 
-                      <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">
-                        {items.length}
-                      </span>}
+                      {items.length > 0 && (
+                        <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">
+                          {items.length}
+                        </span>
+                      )}
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
@@ -201,10 +205,11 @@ export default function Navbar({ children }) {
                         />
                       </button>
                     </Link>
-                    {items.length >0 && 
-                    <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">
-                      {items.length}
-                    </span>}
+                    {items.length > 0 && (
+                      <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">
+                        {items.length}
+                      </span>
+                    )}
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
@@ -213,9 +218,7 @@ export default function Navbar({ children }) {
                         as="a"
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
-                      <Link to={item.link}>
-                        {item.name}
-                      </Link>
+                        <Link to={item.link}>{item.name}</Link>
                       </Disclosure.Button>
                     ))}
                   </div>
@@ -233,7 +236,7 @@ export default function Navbar({ children }) {
           </div>
         </header>
         <main>
-          <div className="bg-white mx-auto max-w-7xl py-6 mt-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
             {/* Your content */} {children}
           </div>
         </main>
