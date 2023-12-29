@@ -15,6 +15,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { PageNotFound } from "./pages/404Page";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import Logout from "./features/auth/components/Logout";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 const router = createBrowserRouter([
   {
@@ -59,15 +61,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/order-success/:id",
-    element: <OrderSuccessPage />,
+    element: <Protected><OrderSuccessPage /> </Protected>
   },
   {
     path: "/orders",
-    element: <UserOrdersPage />,
+    element: <Protected> <UserOrdersPage /> </Protected>,
   },
   {
     path: "/profile",
-    element: <UserProfilePage />,
+    element: <Protected> <UserProfilePage /> </Protected>,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
   },
   {
     path: "*",
