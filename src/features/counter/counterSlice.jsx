@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchLoggedInUser } from './userAPI';
+import { fetchAddress } from './userAPI';
 
 const initialState = {
     userInfo: null,
     status: 'idle',
     };
 
-export const fetchLoggedInUserAsync = createAsyncThunk(
-    'user/fetchLoggedInUser',
+export const fetchAddressAsync = createAsyncThunk(
+    'user/fetchAddress',
     async(userId) => {
-        const response = await fetchLoggedInUser(userId);
+        const response = await fetchAddress(userId);
         return response.data;
     }
 );
@@ -25,10 +25,10 @@ export const counterSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(fetchLoggedInUserAsync.pending, (state) => {
+        .addCase(fetchAddressAsync.pending, (state) => {
             state.status = 'loading';
         })
-        .addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
+        .addCase(fetchAddressAsync.fulfilled, (state, action) => {
             state.status = 'idle';
             state.userInfo = action.payload;
         });

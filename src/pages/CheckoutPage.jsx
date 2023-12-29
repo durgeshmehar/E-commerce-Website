@@ -11,15 +11,15 @@ import {
 } from "../features/cart/cartSlice";
 import { createOrderAsync ,selectCurrentOrder} from "../features/order/orderSlice";
 import {updateUserAsync } from "../features/auth/authSlice";
-import { selectLoggedInUser } from "../features/auth/authSlice"
+import { selectUserInfo } from "../features/user/userSlice";
 
 
 export default function CheckoutPage() {
-  const { register,handleSubmit,setError, formState: { errors }} = useForm();
+  const { register,handleSubmit,setError,setValue, formState: { errors }} = useForm();
 
   const dispatch = useDispatch();
   const cart = useSelector(selectCartItems);
-  const user = useSelector(selectLoggedInUser)
+  const user = useSelector(selectUserInfo)
   const [selectedAddress , setSelectedAddress] = useState(null)
   const [paymentMethod , setPaymentMethod] = useState('cash')
   const currentOrder = useSelector(selectCurrentOrder)
@@ -29,6 +29,16 @@ export default function CheckoutPage() {
   (total, item) => total + item.price * item.quantity,
   0
   );
+
+  const handleReset = () => {
+    setValue("name", "");
+    setValue("email", "");
+    setValue("mobile", "");
+    setValue("street","");
+    setValue("city", "");
+    setValue("state", "");
+    setValue("postalcode","");
+  }
   
   const handleSelect = (e, product) => {
     dispatch(updateCartAsync({ ...product, quantity: +e.target.value }));
@@ -217,7 +227,8 @@ export default function CheckoutPage() {
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <button
                     type="button"
-                    className="text-sm font-semibold leading-6 text-gray-900"
+                    onClick={handleReset}
+                    className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Reset
                   </button>

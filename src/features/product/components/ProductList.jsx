@@ -1,19 +1,21 @@
+/* eslint-disable react/prop-types */
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  fetchAllProductsAsync,
+
   fetchBrandsAsync,
   fetchCategoriesAsync,
   fetchProductsByFilterAsync,
-  increment,
+
   selectBrandsArray,
   selectCategoriesArray,
   selectProductsArray,
   selectTotalItems
 } from "../productSlice";
-import {selectLoggedInUser} from "../../auth/authSlice";
 import { fetchItemsByUserIdAsync } from "../../cart/cartSlice"
+import { selectUserInfo } from "../../user/userSlice";
+import { fetchLoggedInUserAsync } from "../../user/userSlice";
 
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -28,7 +30,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE } from "../../../app/constants";
-import { selectCartItems } from './../../cart/cartSlice';
+import { selectLoggedInUser } from "../../auth/authSlice";
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc" },
   { name: "Price: Low to High", sort: "price", order: "asc" },
@@ -108,11 +110,12 @@ export default function ProductList() {
 // this to fetch all products in cart
 
   const user = useSelector(selectLoggedInUser);
-  const items = useSelector(selectCartItems);
+
   useEffect(()=>{
     if(user){
       console.log("Prouductlist :",user.id)
       dispatch(fetchItemsByUserIdAsync(user.id));
+      dispatch(fetchLoggedInUserAsync(user.id));
     }
   },[dispatch,user]);
 

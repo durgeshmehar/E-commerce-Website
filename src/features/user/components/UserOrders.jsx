@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserOrder } from "../userSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
+import { selectUserInfo, selectUserOrder } from "../userSlice";
 import { fetchLoggedInUserOrdersAsync } from "../userSlice";
 import { Link } from "react-router-dom";
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
 
   useEffect(() => {
