@@ -21,6 +21,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import Logout from "./features/auth/components/Logout";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
+import AdminOrdersPage from "./pages/AdminOrdersPage";
 
 const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/product-form/edit/:id",
     element: <AdminProtected><AdminProductFormPage></AdminProductFormPage> </AdminProtected>
+  },
+  {
+    path: "/admin/orders",
+    element: <AdminProtected><AdminOrdersPage></AdminOrdersPage> </AdminProtected>
   },
   {
     path: "*",

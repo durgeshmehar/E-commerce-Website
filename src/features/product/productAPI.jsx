@@ -10,8 +10,6 @@ export function fetchProductsByFilter({filter,sort,pagination}) {
     //filter ={"category":["smartphone","laptops"]}
     //sort = {_sort:"price",_order:"asc"}
     // console.log("filter & sort & pagination :",filter,sort,pagination);
-
-
     let queryString = '';
     for(let key in filter){
         const categoryValue = filter[key]
