@@ -66,11 +66,17 @@ export default function UserProfile() {
     <>
       <div className="bg-white mx-auto max-w-7xl px-4 mt-6 sm:px-6 lg:px-8 ">
         <h1 id="products-heading" className="p-4 pb-1 text-2xl font-semibold">
-          Name :{user.name ? user.name : "New Name"}
+          Name : {user.name ? user.name : " New Name"}
         </h1>
-        <h3 className="p-4 pb-1 text-xl font-semibold text-gray-500">
-          Email Address :{user.email}
+        <h3 className="p-4 pb-1 text-xl font-semibold text-red-400">
+          Email : {user.email}
         </h3>
+        {user.role === "admin" ? 
+        <h3 className="p-4 pb-1 text-xl font-semibold text-red-400">
+          Role : {user.role}
+        </h3> :null
+        }
+
 
         <button
           type="button"
@@ -259,6 +265,7 @@ export default function UserProfile() {
                   className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   onClick={() => {
                     setSelectedEditAddressIndex(-1);
+                    setShowAddressForm(false);
                   }}
                 >
                   Cancel

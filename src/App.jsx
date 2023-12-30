@@ -9,6 +9,9 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import Protected from "./features/auth/Protected";
 import { OrderSuccessPage } from "./pages/OrderSuccessPage";
+import AdminProtected from "./features/auth/AdminProtected";
+import AdminHome from "./pages/AdminHome";
+import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 
 import { Provider} from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -17,6 +20,7 @@ import UserOrdersPage from "./pages/UserOrdersPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import Logout from "./features/auth/components/Logout";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import AdminProductFormPage from "./pages/AdminProductFormPage";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +82,22 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/admin",
+    element: <AdminProtected><AdminHome></AdminHome> </AdminProtected>
+  },
+  {
+    path: "/admin/product-detail/:id",
+    element: <AdminProtected><AdminProductDetailPage></AdminProductDetailPage> </AdminProtected>
+  },
+  {
+    path: "/admin/product-form",
+    element: <AdminProtected><AdminProductFormPage></AdminProductFormPage> </AdminProtected>
+  },
+  {
+    path: "/admin/product-form/edit/:id",
+    element: <AdminProtected><AdminProductFormPage></AdminProductFormPage> </AdminProtected>
   },
   {
     path: "*",

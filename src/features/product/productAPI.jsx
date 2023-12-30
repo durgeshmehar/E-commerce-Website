@@ -48,6 +48,7 @@ export  function fetchCategories() {
         resolve({data})
     });
 }
+
 export  function fetchBrands() {
     return new Promise(async (resolve) =>{
         const response = await fetch('http://localhost:8080/brands')
@@ -62,4 +63,31 @@ export  function fetchProductById(id) {
         const data = await response.json()
         resolve({data})
     });
+}
+export  function addProduct(productData) {
+    return new Promise(async (resolve) =>{
+        const response = await fetch('http://localhost:8080/products/',{
+            method:"POST",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body:JSON.stringify(productData)
+           })
+        const data = await response.json()
+        resolve({data})
+    });
+}
+
+export function updateProduct(product){
+    return new Promise(async (resolve)=>{
+        const response = await fetch('http://localhost:8080/products/'+product.id,{
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(product)
+        })
+        const data = await response.json()
+        resolve({data})
+    })
 }

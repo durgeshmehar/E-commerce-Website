@@ -32,5 +32,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-unused-vars': 'off',
     'no-useless-escape': 'off',
+    'no-async-promise-executor':'off',
   },
 }
