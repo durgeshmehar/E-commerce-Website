@@ -2,18 +2,17 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import  Pagination  from "../../common/Pagination";
 import {
-
   fetchBrandsAsync,
   fetchCategoriesAsync,
   fetchProductsByFilterAsync,
-
   selectBrandsArray,
   selectCategoriesArray,
   selectProductsArray,
-  selectTotalItems
+  selectTotalItems,
 } from "../productSlice";
-import { fetchItemsByUserIdAsync } from "../../cart/cartSlice"
+import { fetchItemsByUserIdAsync } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
 import { fetchLoggedInUserAsync } from "../../user/userSlice";
 
@@ -29,7 +28,7 @@ import {
   ChevronRightIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { ITEMS_PER_PAGE } from "../../../app/constants";
+import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
 import { selectLoggedInUser } from "../../auth/authSlice";
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc" },
@@ -43,14 +42,17 @@ function classNames(...classes) {
 
 export default function ProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [filter, setFilter] = useState({}); 
-  const [sort, setSort] = useState({}); 
-  const [pagination,setPagination] = useState({_page:1,_limit:ITEMS_PER_PAGE}); 
+  const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
+  const [pagination, setPagination] = useState({
+    _page: 1,
+    _limit: ITEMS_PER_PAGE,
+  });
 
   const products = useSelector(selectProductsArray);
   const totalItems = useSelector(selectTotalItems);
-  const categories = useSelector(selectCategoriesArray)
-  const brands = useSelector(selectBrandsArray)
+  const categories = useSelector(selectCategoriesArray);
+  const brands = useSelector(selectBrandsArray);
   const dispatch = useDispatch();
 
   const filters = [
@@ -68,59 +70,57 @@ export default function ProductList() {
 
   useEffect(() => {
     // console.log("useeffect sort pagination :",sort,pagination)
-    dispatch(fetchProductsByFilterAsync({filter,sort,pagination}));
-  }, [dispatch,filter,sort,pagination]);
+    dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
+  }, [dispatch, filter, sort, pagination]);
 
   useEffect(() => {
-    setPagination({_page:1,_limit:ITEMS_PER_PAGE})
-  }, [sort,totalItems]);
+    setPagination({ _page: 1, _limit: ITEMS_PER_PAGE });
+  }, [sort, totalItems]);
 
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoriesAsync());
-  },[]);
+  }, []);
 
-  
   const handleFilter = (e, sectionCategory, optionValue) => {
-    let newFilter = {...filter}
-    if( e.target.checked === true) {
-        if(newFilter[sectionCategory]){
-          newFilter[sectionCategory].push(optionValue);
-        }
-        else{
+    let newFilter = { ...filter };
+    if (e.target.checked === true) {
+      if (newFilter[sectionCategory]) {
+        newFilter[sectionCategory].push(optionValue);
+      } else {
         newFilter[sectionCategory] = [optionValue];
-        }
-    }
-    else{
-        const idx = newFilter[sectionCategory].findIndex(el=>el===optionValue);
-        newFilter[sectionCategory].splice(idx,1);
+      }
+    } else {
+      const idx = newFilter[sectionCategory].findIndex(
+        (el) => el === optionValue
+      );
+      newFilter[sectionCategory].splice(idx, 1);
     }
     setFilter(newFilter);
   };
-  
+
   const handleSort = (e, option) => {
-    const newSort = {_sort: option.sort,_order:option.order };
+    const newSort = { _sort: option.sort, _order: option.order };
     setSort(newSort);
   };
   const handlePagination = (pageValue) => {
-    console.log("page :",pageValue)
-    const newPagination ={ _page: pageValue, _limit: ITEMS_PER_PAGE };
+    const newPagination = { _page: pageValue, _limit: ITEMS_PER_PAGE };
     setPagination(newPagination);
   };
-// this to fetch all products in cart
+  // this to fetch all products in cart
 
   const user = useSelector(selectLoggedInUser);
 
-  useEffect(()=>{
-    if(user){
-      console.log("Prouductlist :",user.id)
+  useEffect(() => {
+    if (user) {
+      console.log("Prouductlist :", user.id);
       dispatch(fetchItemsByUserIdAsync(user.id));
       dispatch(fetchLoggedInUserAsync(user.id));
     }
-  },[dispatch,user]);
+  }, [dispatch, user]);
 
   return (
-    <> 
+    <>
       <MobileFilter
         mobileFiltersOpen={mobileFiltersOpen}
         setMobileFiltersOpen={setMobileFiltersOpen}
@@ -212,7 +212,11 @@ export default function ProductList() {
         </section>
       </main>
 
-      <Pagination handlePagination={handlePagination} pagination={pagination} totalItems={totalItems}/>
+      <Pagination
+        handlePagination={handlePagination}
+        pagination={pagination}
+        totalItems={totalItems}
+      />
     </>
   );
 }
@@ -221,7 +225,7 @@ export function MobileFilter({
   mobileFiltersOpen,
   setMobileFiltersOpen,
   handleFilter,
-  filters
+  filters,
 }) {
   return (
     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -267,70 +271,67 @@ export function MobileFilter({
 
               {/* Filters */}
               <form className="mt-4 px-4 border-t border-gray-200">
-                {filters && filters.map((section) => (
-                  <Disclosure
-                    as="div"
-                    key={section.id}
-                    className="border-t border-gray-200 px-4 py-6"
-                  >
-                    {({ open }) => (
-                      <>
-                        <h3 className="-mx-2 -my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">
-                              {section.name}
-                            </span>
-                            <span className="ml-6 flex items-center">
-                              {open ? (
-                                <MinusIcon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <PlusIcon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              )}
-                            </span>
-                          </Disclosure.Button>
-                        </h3>
-                        <Disclosure.Panel className="pt-6">
-                          <div className="space-y-6">
-                            {section.options.map((option, optionIdx) => (
-                              <div
-                                key={option.value}
-                                className="flex items-center"
-                              >
-                                <input
-                                  id={`filter-mobile-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  defaultValue={option.value}
-                                  type="checkbox"
-                                  onChange={(e) =>
-                                    handleFilter(
-                                      e,
-                                      section.id,
-                                      option.value
-                                    )
-                                  }
-                                  defaultChecked={option.checked}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label
-                                  htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                  className="ml-3 min-w-0 flex-1 text-gray-500"
+                {filters &&
+                  filters.map((section) => (
+                    <Disclosure
+                      as="div"
+                      key={section.id}
+                      className="border-t border-gray-200 px-4 py-6"
+                    >
+                      {({ open }) => (
+                        <>
+                          <h3 className="-mx-2 -my-3 flow-root">
+                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                              <span className="font-medium text-gray-900">
+                                {section.name}
+                              </span>
+                              <span className="ml-6 flex items-center">
+                                {open ? (
+                                  <MinusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <PlusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </span>
+                            </Disclosure.Button>
+                          </h3>
+                          <Disclosure.Panel className="pt-6">
+                            <div className="space-y-6">
+                              {section.options.map((option, optionIdx) => (
+                                <div
+                                  key={option.value}
+                                  className="flex items-center"
                                 >
-                                  {option.label}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                ))}
+                                  <input
+                                    id={`filter-mobile-${section.id}-${optionIdx}`}
+                                    name={`${section.id}[]`}
+                                    defaultValue={option.value}
+                                    type="checkbox"
+                                    onChange={(e) =>
+                                      handleFilter(e, section.id, option.value)
+                                    }
+                                    defaultChecked={option.checked}
+                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                  />
+                                  <label
+                                    htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                    className="ml-3 min-w-0 flex-1 text-gray-500"
+                                  >
+                                    {option.label}
+                                  </label>
+                                </div>
+                              ))}
+                            </div>
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  ))}
               </form>
             </Dialog.Panel>
           </Transition.Child>
@@ -339,61 +340,62 @@ export function MobileFilter({
     </Transition.Root>
   );
 }
-export function DesktopFilter({ handleFilter,filters }) {
+export function DesktopFilter({ handleFilter, filters }) {
   return (
     <form className="hidden lg:block">
-      {filters && filters.map((section) => (
-        <Disclosure
-          as="div"
-          key={section.id}
-          className="border-b border-gray-200 py-6"
-        >
-          {({ open }) => (
-            <>
-              <h3 className="-my-3 flow-root">
-                <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                  <span className="font-medium text-gray-900">
-                    {section.name}
-                  </span>
-                  <span className="ml-6 flex items-center">
-                    {open ? (
-                      <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                    ) : (
-                      <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                    )}
-                  </span>
-                </Disclosure.Button>
-              </h3>
-              <Disclosure.Panel className="pt-6">
-                <div className="space-y-4">
-                  {section.options && section.options.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center">
-                      <input
-                        id={`filter-${section.id}-${optionIdx}`}
-                        name={`${section.id}[]`}
-                        defaultValue={option.value}
-                        type="checkbox"
-                        defaultChecked={option.checked}
-                        onChange={(e) =>
-                          handleFilter(e, section.id, option.value)
-                          
-                        }
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <label
-                        htmlFor={`filter-${section.id}-${optionIdx}`}
-                        className="ml-3 text-sm text-gray-600"
-                      >
-                        {option.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-      ))}
+      {filters &&
+        filters.map((section) => (
+          <Disclosure
+            as="div"
+            key={section.id}
+            className="border-b border-gray-200 py-6"
+          >
+            {({ open }) => (
+              <>
+                <h3 className="-my-3 flow-root">
+                  <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                    <span className="font-medium text-gray-900">
+                      {section.name}
+                    </span>
+                    <span className="ml-6 flex items-center">
+                      {open ? (
+                        <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                      ) : (
+                        <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                      )}
+                    </span>
+                  </Disclosure.Button>
+                </h3>
+                <Disclosure.Panel className="pt-6">
+                  <div className="space-y-4">
+                    {section.options &&
+                      section.options.map((option, optionIdx) => (
+                        <div key={option.value} className="flex items-center">
+                          <input
+                            id={`filter-${section.id}-${optionIdx}`}
+                            name={`${section.id}[]`}
+                            defaultValue={option.value}
+                            type="checkbox"
+                            defaultChecked={option.checked}
+                            onChange={(e) =>
+                              handleFilter(e, section.id, option.value)
+                            }
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          />
+                          <label
+                            htmlFor={`filter-${section.id}-${optionIdx}`}
+                            className="ml-3 text-sm text-gray-600"
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                  </div>
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        ))}
     </form>
   );
 }
@@ -420,13 +422,7 @@ export function ProductGrid({ products }) {
                 <div className="p-4">
                   <div className="flex justify-between font-medium">
                     <div className="font-normal"> {product.title} </div>{" "}
-                    <div>
-                      $
-                      {Math.round(
-                        product.price -
-                          (product.discountPercentage * product.price) / 100
-                      )}{" "}
-                    </div>
+                    <div>${discountedPrice(product)}</div>
                   </div>
                   <div className="flex justify-between font-medium py-[2px]">
                     <div>
@@ -440,73 +436,11 @@ export function ProductGrid({ products }) {
                   </div>
                 </div>
               </Link>
+              {product.stock <= 0 ? <div>
+                  <p className="ml-4 text-red-500">Out of stock</p>
+                </div> : null}
             </div>
           ))}
-      </div>
-    </div>
-  );
-} 
-
-export function Pagination({handlePagination,pagination ,totalItems}) {
-  const totalPages = Math.ceil(totalItems/ITEMS_PER_PAGE);
-  return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white xs:px-4 py-3 sm:px-6">
-      <div className="flex flex-1 justify-between sm:hidden">
-        <div
-          onClick={()=>handlePagination(pagination._page-1 >= 1 ?pagination._page-1:pagination._page)}
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          Previous
-        </div>
-        <div
-          onClick={()=>handlePagination(pagination._page+1 <= totalPages ?pagination._page+1:pagination._page)}
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          Next
-        </div>
-      </div>
-      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm text-gray-700">
-            Showing <span className="font-medium">{(pagination._page-1)*ITEMS_PER_PAGE + 1}</span> to{" "}
-            <span className="font-medium">{(pagination._page)*ITEMS_PER_PAGE>totalItems ?totalItems:(pagination._page)*ITEMS_PER_PAGE}</span> of{" "}
-            <span className="font-medium">{totalItems}</span> results
-          </p>
-        </div>
-        <div>
-          <nav
-            className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-            aria-label="Pagination"
-          >
-            <div
-              onClick={()=>handlePagination(pagination._page-1 >= 1 ?pagination._page-1:pagination._page)}
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-            >
-              <span className="sr-only">Previous</span>
-              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-            </div>
-            
-            {Array.from({length:totalPages}).map((val,index) =>(
-              <div key={index}
-                onClick={()=>handlePagination(index+1)}
-                aria-current="page"
-                className={`cursor-pointer relative z-10 inline-flex items-center ${index+1=== pagination._page?'bg-indigo-600 text-white':'text-gray-400 '} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              >
-                {index+1}
-              </div>
-            )
-            )}
-            
-
-            <div
-              onClick={()=>handlePagination(pagination._page+1 <= totalPages ?pagination._page+1:pagination._page)}
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-            >
-              <span className="sr-only">Next</span>
-              <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-            </div>
-          </nav>
-        </div>
       </div>
     </div>
   );

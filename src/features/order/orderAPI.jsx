@@ -11,9 +11,25 @@ export function createOrder(order) {
         resolve({data})
     });
 }
+export function updateOrder(order) {
+    return new Promise(async (resolve) =>{
+        const response = await fetch(`http://localhost:8080/orders/${order.id}`,{
+            method:'PATCH',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(order)
+        })
+        const data = await response.json()
+        resolve({data})
+    });
+}
 
-export function fetchAllOrders(pagination){
+export function fetchAllOrders({sort,pagination}){
     let queryString="";
+    for(const key in sort){
+        queryString+=`${key}=${sort[key]}&`
+    }
     for(const key in pagination){
         queryString+=`${key}=${pagination[key]}&`
     }

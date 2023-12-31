@@ -12,6 +12,7 @@ import {
 import { createOrderAsync ,selectCurrentOrder} from "../features/order/orderSlice";
 import {updateUserAsync } from "../features/auth/authSlice";
 import { selectUserInfo } from "../features/user/userSlice";
+import { discountedPrice } from "../app/constants";
 
 
 export default function CheckoutPage() {
@@ -23,10 +24,10 @@ export default function CheckoutPage() {
   const [selectedAddress , setSelectedAddress] = useState(null)
   const [paymentMethod , setPaymentMethod] = useState('cash')
   const currentOrder = useSelector(selectCurrentOrder)
-  
+
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
   const totalAmount = cart.reduce(
-  (total, item) => total + item.price * item.quantity,
+  (total, item) => total + discountedPrice(item) * item.quantity,
   0
   );
 
@@ -364,7 +365,7 @@ export default function CheckoutPage() {
                               <h3>
                                 <Link href={product.thumbnail}>{product.title}</Link>
                               </h3>
-                              <p className="ml-4">{product.price}</p>
+                              <p className="ml-4">{discountedPrice(product)}</p>
                             </div>
                             <p className="mt-4 text-sm text-gray-500">
                               {product.brand}

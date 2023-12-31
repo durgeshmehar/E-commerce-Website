@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo, selectUserOrder } from "../userSlice";
 import { fetchLoggedInUserOrdersAsync } from "../userSlice";
 import { Link } from "react-router-dom";
+import { discountedPrice } from "../../../app/constants";
 
 export default function UserOrders() {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ export default function UserOrders() {
                             <h3>
                               <a href={product.thumbnail}>{product.title}</a>
                             </h3>
-                            <p className="ml-4">{product.price}</p>
+                            <p className="ml-4">{discountedPrice(product)}</p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
                             {product.brand}

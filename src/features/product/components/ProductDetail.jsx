@@ -4,10 +4,12 @@ import { RadioGroup } from "@headlessui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectProduct } from "../productSlice";
+import { updateCartAsync } from "./../../cart/cartSlice";
 import { fetchProductByIdAsync } from "../productSlice";
-import { addToCartAsync } from "./../../cart/cartSlice";
+import { addToCartAsync, selectCartItems } from "./../../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { selectUserInfo } from './../../user/userSlice';
+import { discountedPrice } from "./../../../app/constants";
+import { selectUserInfo } from "./../../user/userSlice";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -44,6 +46,8 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1); // [1,2,3,4,5
   const product = useSelector(selectProduct);
   const user = useSelector(selectUserInfo);
+
+  const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
   const params = useParams();
 
@@ -53,17 +57,26 @@ export default function ProductDetail() {
 
   const handleCart = (e) => {
     e.preventDefault();
-    const newItem = { ...product, quantity: quantity, user: user.id };
-    delete newItem["id"];
-    dispatch(addToCartAsync(newItem)).then(()=>{
-      navigate("/cart");
-    })
+    if (cartItems.findIndex((item) => item.productId === product.id) < 0) {
+      const newItem = { ...product, quantity: quantity,productId:product.id, user: user.id };
+      delete newItem["id"];
+      dispatch(addToCartAsync(newItem)).then(() => {
+        navigate("/cart");
+      });
+    }
+    else{
+      console.log("Already Added")
+      const updatedProduct = {...product,quantity:quantity}
+      dispatch( updateCartAsync(updatedProduct)).then( ()=>{
+        navigate("/cart");
+      })
+    }
   };
 
-  const handleSelect = (e)=>{
+  const handleSelect = (e) => {
     e.preventDefault();
     setQuantity(+e.target.value);
-  }
+  };
 
   return (
     <div className="bg-white">
@@ -168,7 +181,16 @@ export default function ProductDetail() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                $ {product.price}
+                $ {discountedPrice(product)}
+              </p>
+              <p className="text-lg tracking-tight  text-gray-600 mt-2">
+                <span className="line-through opacity-90">
+                  $ {product.price}
+                </span>
+                <span className="text-green-700 font-semibold ml-2">
+                  {" "}
+                  {product.discountPercentage}% off{" "}
+                </span>
               </p>
 
               <div className="mt-6">

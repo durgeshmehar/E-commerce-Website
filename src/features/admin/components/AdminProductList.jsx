@@ -11,6 +11,7 @@ import {
   selectProductsArray,
   selectTotalItems,
 } from "../../product/productSlice";
+import {discountedPrice} from "../../../app/constants";
 
 import { fetchItemsByUserIdAsync } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
@@ -433,10 +434,7 @@ export function ProductGrid({ products }) {
                       <div className="font-normal"> {product.title} </div>{" "}
                       <div>
                         $
-                        {Math.round(
-                          product.price -
-                            (product.discountPercentage * product.price) / 100
-                        )}{" "}
+                         {discountedPrice(product)}
                       </div>
                     </div>
                     <div className="flex justify-between font-medium py-[2px]">
