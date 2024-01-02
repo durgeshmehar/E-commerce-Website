@@ -1,14 +1,16 @@
 import { useSelector,useDispatch } from "react-redux";
 import { Link , Navigate } from "react-router-dom";
-import React from "react";
+import React, { useEffect ,useState} from "react";
 import { deleteItemFromCartAsync, selectCartItems, updateCartAsync  } from "./cartSlice";
 import { discountedPrice } from "../../app/constants";
+import Modal from "../common/modal";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems)
   const totalAmount = products.reduce((total,item)=> total + discountedPrice(item)*item.quantity,0)
   const totalItems = products.reduce((total,item)=> total + item.quantity,0)
+  const [showModalId, setShowModalId ] = useState(-1);
  
   const handleSelect = (e,product)=>{
     dispatch(updateCartAsync({...product,quantity:+e.target.value}));
@@ -67,10 +69,16 @@ export default function Cart() {
                     </div>
 
                     <div className="flex">
+                    <Modal title="Remove Item" message={`Are you sure you want to remove ${product.title}`} cancelOption="Cancel" dangerOption="Remove" showModal={showModalId===product.id} handleDangerAction={()=>{
+                      handleRemove(product.id)
+                    }} handleCancelAction = {()=>{setShowModalId(-1)}}
+                    >
+
+                    </Modal>
                       <button
                         type="button"
                         className="font-medium text-indigo-600 hover:text-indigo-500"
-                        onClick={()=>handleRemove(product.id)}
+                        onClick={(e)=>{e.preventDefault();setShowModalId(product.id)}}
                       >
                         Remove
                       </button>

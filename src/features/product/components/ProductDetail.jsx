@@ -3,13 +3,15 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectProduct } from "../productSlice";
+import { selectProduct, selectProductListStatus } from "../productSlice";
 import { updateCartAsync } from "./../../cart/cartSlice";
 import { fetchProductByIdAsync } from "../productSlice";
 import { addToCartAsync, selectCartItems } from "./../../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
+import GridLoader from "react-spinners/GridLoader";
 import { discountedPrice } from "./../../../app/constants";
 import { selectUserInfo } from "./../../user/userSlice";
+import { useAlert } from "react-alert";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -50,6 +52,16 @@ export default function ProductDetail() {
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
   const params = useParams();
+  const alert = useAlert()
+  const status = useSelector(selectProductListStatus)
+
+  const override = {
+    display: "block",
+    position: "absolute",
+    top: "40%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
@@ -63,13 +75,10 @@ export default function ProductDetail() {
       dispatch(addToCartAsync(newItem)).then(() => {
         navigate("/cart");
       });
+      alert.success("Item added to cart")
     }
     else{
-      console.log("Already Added")
-      const updatedProduct = {...product,quantity:quantity}
-      dispatch( updateCartAsync(updatedProduct)).then( ()=>{
-        navigate("/cart");
-      })
+      alert.show("Item already added")
     }
   };
 
@@ -80,6 +89,7 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-white">
+    {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
       {product ? (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">

@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../common/modal";
 import {
   selectBrandsArray,
   selectProduct,
@@ -17,6 +18,7 @@ import {
 import { useParams } from "react-router-dom";
 
 export default function ProductForm() {
+  const [showModal, setShowModal] = useState(false);
   const categories = useSelector(selectCategoriesArray);
   const brands = useSelector(selectBrandsArray);
   const dispatch = useDispatch();
@@ -34,11 +36,12 @@ export default function ProductForm() {
   } = useForm();
 
   const handleDelete = () => {
+    setShowModal(false);
     const product = { ...selectedProduct };
     product.deleted = true;
-    dispatch(updateProductAsync(product)).then(()=>{
-        navigate("/admin");
-    })
+    dispatch(updateProductAsync(product)).then(() => {
+      navigate("/admin");
+    });
   };
 
   const handleSubmitAndUpdate = (data) => {
@@ -104,11 +107,15 @@ export default function ProductForm() {
       >
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-xl font-semibold leading-7 text-gray-900">
-              Add Product
+            <h2 className="text-2xl font-semibold leading-7 text-gray-900">
+              {params.id ? "Update " : "Add "} Product
             </h2>
-
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              {selectedProduct && selectedProduct.deleted && (
+                <div className="sm:col-span-6">
+                  <p className="text-red-500">Product is deleted already.</p>
+                </div>
+              )}
               <div className="sm:col-span-6">
                 <label
                   htmlFor="title"
@@ -447,22 +454,41 @@ export default function ProductForm() {
             </fieldset>
           </div>
           <div className="flex items-center justify-center">
-            {params.id ? (
-              <button
-                type="submit"
-                onClick={handleDelete}
-                className=" align-middle mt-12 mr-8 rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Delete Product
-              </button>
+            {selectedProduct && !selectedProduct.deleted ? (
+              <div>
+                <Modal
+                  title="Delete Item"
+                  message={`Are you sure you want to delete`}
+                  cancelOption="Cancel"
+                  dangerOption="Delete"
+                  showModal={showModal}
+                  handleDangerAction={handleDelete}
+                  handleCancelAction={() => {
+                    setShowModal(false);
+                  }}
+                />
+                <button
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowModal(true);
+                  }}
+                  className=" align-middle mt-12 mr-8 rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Delete Product
+                </button>
+              </div>
             ) : null}
 
             <button
               type="submit"
-              onClick={()=>{reset();navigate("/admin");}}
+              onClick={() => {
+                reset();
+                navigate("/admin");
+              }}
               className=" align-middle mt-12 mr-8 rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-             Cancel
+              Cancel
             </button>
 
             <button
@@ -471,7 +497,6 @@ export default function ProductForm() {
             >
               {params.id ? "Update " : "Add "} Product
             </button>
-            
           </div>
         </div>
       </form>

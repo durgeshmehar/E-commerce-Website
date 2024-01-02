@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect,CSSProperties } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import  Pagination  from "../../common/Pagination";
+import GridLoader from "react-spinners/GridLoader";
+import { selectProductListStatus } from "../productSlice";
 import {
   fetchBrandsAsync,
   fetchCategoriesAsync,
@@ -36,9 +38,19 @@ const sortOptions = [
   { name: "Price: High to Low", sort: "price", order: "desc" },
 ];
 
+
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
 
 export default function ProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -53,6 +65,7 @@ export default function ProductList() {
   const totalItems = useSelector(selectTotalItems);
   const categories = useSelector(selectCategoriesArray);
   const brands = useSelector(selectBrandsArray);
+  const status = useSelector(selectProductListStatus);
   const dispatch = useDispatch();
 
   const filters = [
@@ -206,7 +219,7 @@ export default function ProductList() {
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
             <DesktopFilter handleFilter={handleFilter} filters={filters} />
             <div className="lg:col-span-3">
-              <ProductGrid products={products} />
+              <ProductGrid products={products}  status={status} />
             </div>
           </div>
         </section>
@@ -400,10 +413,11 @@ export function DesktopFilter({ handleFilter, filters }) {
   );
 }
 
-export function ProductGrid({ products }) {
+export function ProductGrid({ products,status }) {
   return (
     <div>
       <div className="grid items-stretch gap-10 gap-y-20 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
+        {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
         {products &&
           products.map((product) => (
             <div
