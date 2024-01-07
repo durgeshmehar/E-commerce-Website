@@ -8,9 +8,11 @@ export function createOrder(order) {
             body:JSON.stringify(order)
         })
         const data = await response.json()
+        console.log("received data :",data);
         resolve({data})
     });
 }
+
 export function updateOrder(order) {
     return new Promise(async (resolve) =>{
         const response = await fetch(`http://localhost:8080/orders/${order.id}`,{

@@ -9,6 +9,7 @@ const BrandsRouter = require('./routes/Brands')
 const UsersRouter = require('./routes/Users')
 const AuthRouter = require('./routes/Auth')
 const CartRouter = require('./routes/Carts')
+const OrderRouter = require('./routes/Orders')
 
 server.use(cors({
     exposedHeaders:['X-Total-Count']
@@ -21,6 +22,7 @@ server.use('/brands',BrandsRouter.router)
 server.use('/users',UsersRouter.router)
 server.use('/auth',AuthRouter.router)
 server.use('/cart',CartRouter.router)
+server.use('/orders',OrderRouter.router)
 
 main().catch(err => console.log(err))
 
@@ -35,5 +37,3 @@ server.get('/',(req,res)=>{
 server.listen(8080,()=>{
     console.log('Server is running...');
 })
-
-// this line from ubuntu

@@ -30,7 +30,7 @@ export default function CheckoutPage() {
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems);
   const user = useSelector(selectUserInfo);
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const currentOrder = useSelector(selectCurrentOrder);
 
@@ -73,10 +73,10 @@ export default function CheckoutPage() {
       });
     } else {
       const order = {
-        products,
+        cart:products,
         totalAmount,
         totalItems,
-        user,
+        user:user.id,
         paymentMethod,
         selectedAddress,
         status: "Pending",
@@ -510,12 +510,15 @@ export default function CheckoutPage() {
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
+
                   <Link
                     to="/checkout"
                     className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                    onClick={handleOrder}
                   >
                     Checkout
                   </Link>
+
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   or&nbsp;

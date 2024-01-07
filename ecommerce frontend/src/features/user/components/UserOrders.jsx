@@ -36,12 +36,12 @@ export default function UserOrders() {
               <div className="flow-root">
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
                   {order.cart &&
-                    order.cart.map((product) => (
-                      <li key={product.id} className="flex py-6">
+                    order.cart.map((item) => (
+                      <li key={item.product.id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            src={product.thumbnail}
-                            alt={product.title}
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -49,15 +49,15 @@ export default function UserOrders() {
                         <div className="ml-4 flex flex-1 flex-col">
                           <div className="flex justify-between  text-base font-medium text-gray-900">
                             <h3>
-                              <a href={product.thumbnail}>{product.title}</a>
+                              <a href={item.product.thumbnail}>{item.product.title}</a>
                             </h3>
-                            <p className="ml-4">{discountedPrice(product)}</p>
+                            <p className="ml-4">{discountedPrice(item.product)}</p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
-                            {product.brand}
+                            {item.product.brand}
                           </p>
                           <div className="text-base font-medium text-gray-700 mt-4">
-                            <h3>Qty : {product.quantity}</h3>
+                            <h3>Qty : {item.product.quantity}</h3>
                           </div>
                         </div>
                       </li>
