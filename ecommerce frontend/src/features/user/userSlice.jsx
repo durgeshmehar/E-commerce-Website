@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchLoggedInUserOrders ,updateUser,fetchLoggedInUser } from './userAPI';
 
 const initialState = {
-    userOrder: null,
     status: 'idle',
     userInfo : null
     };
@@ -46,7 +45,7 @@ export const userSlice = createSlice({
         })
         .addCase(fetchLoggedInUserOrdersAsync.fulfilled, (state, action) => {
             state.status = 'idle';
-            state.userOrder = action.payload;
+            state.userInfo.orders = action.payload;
         })
         .addCase(updateUserAsync.pending, (state) => {
             state.status = 'loading';
@@ -67,6 +66,6 @@ export const userSlice = createSlice({
 });
 
 export const { increment } = userSlice.actions;
-export const selectUserOrder = (state) => state.user.userOrder;
+export const selectUserOrder = (state) => state.user.userInfo.orders;
 export const selectUserInfo = (state) => state.user.userInfo;
 export default userSlice.reducer;

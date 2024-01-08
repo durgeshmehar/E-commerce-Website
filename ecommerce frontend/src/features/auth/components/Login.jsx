@@ -5,6 +5,7 @@ import { checkUserAsync, selectError } from "../authSlice";
 import { useForm } from "react-hook-form"
 import { selectLoggedInUser } from "../authSlice";
 import { Navigate } from "react-router-dom"
+import { fetchLoggedInUserAsync } from "../../user/userSlice";
 
 export default function Login() {
     const dispatch = useDispatch();

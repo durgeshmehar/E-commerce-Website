@@ -67,7 +67,7 @@ export default function AdminOrders() {
   };
 
   return (
-    <>
+    <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
       <table className="w-full min-w-max table-auto text-left">
         <thead className="bg-gray-300">
           <tr className="text-lg font-semibold">
@@ -279,6 +279,6 @@ export default function AdminOrders() {
           totalItems={totalOrders}
         />
       </div>
-    </>
+    </div>
   );
 }

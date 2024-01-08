@@ -29,7 +29,7 @@ export default function CheckoutPage() {
 
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems);
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const [selectedAddress, setSelectedAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const currentOrder = useSelector(selectCurrentOrder);
@@ -59,12 +59,13 @@ export default function CheckoutPage() {
     dispatch(deleteItemFromCartAsync(id));
   };
   const handleAddress = (e) => {
-    setSelectedAddress(user.addresses[e.target.value]);
+    setSelectedAddress(userInfo.addresses[e.target.value]);
   };
 
   const handlePayment = (e) => {
     setPaymentMethod(e.target.value);
   };
+
   const handleOrder = () => {
     if (!selectedAddress) {
       setError("address", {
@@ -76,7 +77,7 @@ export default function CheckoutPage() {
         cart:products,
         totalAmount,
         totalItems,
-        user:user.id,
+        user:userInfo.id,
         paymentMethod,
         selectedAddress,
         status: "Pending",
@@ -103,12 +104,14 @@ export default function CheckoutPage() {
               noValidate
               className="bg-white px-10 mt-12"
               onSubmit={handleSubmit((data) => {
-                console.log("checkout data :", user);
+                console.log("checkout data :", userInfo);
+
                 dispatch(
                   updateUserAsync({
-                    id: user.id,
-                    addresses: [...(user.addresses || []), data],
+                    id: userInfo.id,
+                    addresses: [...(userInfo.addresses || []), data],
                   })
+                  
                 );
               })}
             >
@@ -304,8 +307,8 @@ export default function CheckoutPage() {
                   </p>
                   <div>
                     <ul role="list" className="divide-y divide-gray-100">
-                      {user.addresses &&
-                        user.addresses.map((address, index) => (
+                      {userInfo.addresses &&
+                        userInfo.addresses.map((address, index) => (
                           <li
                             key={index}
                             className="flex justify-between gap-x-6 py-5"

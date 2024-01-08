@@ -17,7 +17,7 @@ exports.loginUser = async (req,res)=>{
             res.status(401).json({message:"User Email Not Found"});
         }
         else if(user.password === req.body.password){
-            res.status(201).json({id:user.id, email:user.email, name:user.name,addresses:user.addresses})
+            res.status(201).json({id:user.id, email:user.email, name:user.name,addresses:user.addresses,role:user.role,orders:user.orders})
         }
         else{
             res.status(401).json({message:"Invalid Password Entered"});

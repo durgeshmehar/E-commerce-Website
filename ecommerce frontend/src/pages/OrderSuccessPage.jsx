@@ -9,15 +9,15 @@ import { selectUserInfo } from '../features/user/userSlice';
 export function OrderSuccessPage() {
   const params = useParams();
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo)
+  const userInfo = useSelector(selectUserInfo)
 
 
   //reset cart
   //reset currentOrder
   useEffect(() => {
-    dispatch(resetCartAsync(user.id))
+    dispatch(resetCartAsync(userInfo.id))
     dispatch(resetOrder())
-  },[dispatch,user.id])
+  },[dispatch,userInfo.id])
 
   return (
     <>

@@ -8,12 +8,12 @@ import { discountedPrice } from "../../../app/constants";
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
 
   useEffect(() => {
-    dispatch(fetchLoggedInUserOrdersAsync(user.id));
-  }, [dispatch, user]);
+    dispatch(fetchLoggedInUserOrdersAsync(userInfo.id));
+  }, [userInfo.id,dispatch]);
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function UserOrders() {
         orders.map((order) => (
           <div
             key={order.id}
-            className="bg-white mx-auto max-w-7xl px-4 mt-6 sm:px-6 lg:px-8 "
+            className="bg-white rounded-sm mx-auto max-w-7xl px-4 mt-8 sm:px-6 lg:px-8 "
           >
             <h1
               id="products-heading"
@@ -37,7 +37,7 @@ export default function UserOrders() {
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
                   {order.cart &&
                     order.cart.map((item) => (
-                      <li key={item.product.id} className="flex py-6">
+                      <li key={item.product.id} className=" flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
                             src={item.product.thumbnail}
@@ -57,7 +57,7 @@ export default function UserOrders() {
                             {item.product.brand}
                           </p>
                           <div className="text-base font-medium text-gray-700 mt-4">
-                            <h3>Qty : {item.product.quantity}</h3>
+                            <h3>Qty : {item.quantity}</h3>
                           </div>
                         </div>
                       </li>

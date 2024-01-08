@@ -53,8 +53,10 @@ export default function Navbar({ children }) {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
-                          item[user.role] ? 
+                      {console.log("USER ROLE", user.role)}
+                        {
+                          navigation.map((item) => (
+                          item[user.role] ?
                           <Link
                             key={item.name}
                             to={item.link}
@@ -68,7 +70,9 @@ export default function Navbar({ children }) {
                           >
                             {item.name}
                           </Link>
-                        :null))}
+                        :null ))
+                        }
+
                       </div>
                     </div>
                   </div>
@@ -237,7 +241,7 @@ export default function Navbar({ children }) {
           </div>
         </header>
         <main>
-          <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
+          <div>
             {/* Your content */} {children}
           </div>
         </main>

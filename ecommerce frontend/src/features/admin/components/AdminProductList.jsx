@@ -81,7 +81,7 @@ export default function AdminProductList() {
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoriesAsync());
-  }, []);
+  }, [dispatch]);
 
   const handleFilter = (e, sectionCategory, optionValue) => {
     let newFilter = { ...filter };
@@ -122,7 +122,7 @@ export default function AdminProductList() {
   }, [dispatch, user]);
 
   return (
-    <>
+    <div className="overflow-hidden">
       <MobileFilter
         mobileFiltersOpen={mobileFiltersOpen}
         setMobileFiltersOpen={setMobileFiltersOpen}
@@ -130,7 +130,7 @@ export default function AdminProductList() {
         filters={filters}
       />
 
-      <main className="mx-auto">
+      <main className="overflow-hidden bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8 ">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 px-4 pt-2">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900">
             All Products
@@ -229,7 +229,7 @@ export default function AdminProductList() {
         pagination={pagination}
         totalItems={totalItems}
       />
-    </>
+    </div>
   );
 }
 

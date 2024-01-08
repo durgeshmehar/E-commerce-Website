@@ -47,7 +47,7 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const [quantity, setQuantity] = useState(1); // [1,2,3,4,5
   const product = useSelector(selectProduct);
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
 
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ export default function ProductDetail() {
   const handleCart = (e) => {
     e.preventDefault();
     if (cartItems.findIndex((item) => item.product.id === product.id) < 0) {
-      const newItem = { quantity: quantity,product:product.id, user: user.id };
+      const newItem = { quantity: quantity,product:product.id, user: userInfo.id };
       dispatch(addToCartAsync(newItem)).then(() => {
         navigate("/cart");
       });
@@ -87,7 +87,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
     {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
       {product ? (
         <div className="pt-6">

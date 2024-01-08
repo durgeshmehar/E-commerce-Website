@@ -6,8 +6,11 @@ import { selectLoggedInUser, signOutAsync } from '../authSlice'
 function Logout() {
     const dispatch = useDispatch();
     const user = useSelector(selectLoggedInUser)
+
     useEffect( ()=>{
+      if(user && user.id){
         dispatch(signOutAsync(user.id));
+      }
     },[dispatch,user])
 
   return (

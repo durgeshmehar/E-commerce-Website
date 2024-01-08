@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo, updateUserAsync } from "../userSlice";
 import { useForm } from "react-hook-form";
+import Modal from "../../common/modal"
 
 export default function UserProfile() {
   const {
@@ -13,20 +14,21 @@ export default function UserProfile() {
     setValue,
     formState: { errors },
   } = useForm();
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const [selectedEditAddressIndex, setSelectedEditAddressIndex] = useState(-1);
   const [showAddressForm, setShowAddressForm] = useState(false);
+  const [showModalId, setShowModalId] = useState(-1);
 
   const handleSubmitAddress = (AddressData, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] };
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses] };
     newUser.addresses.splice(index, 1, AddressData);
     dispatch(updateUserAsync(newUser));
     setSelectedEditAddressIndex(-1);
   };
 
   const handleAddNewAddress = (AddressData) => {
-    const newUser = { ...user, addresses: [...user.addresses, AddressData] };
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses, AddressData] };
     dispatch(updateUserAsync(newUser));
     setShowAddressForm(false);
   };
@@ -42,17 +44,18 @@ export default function UserProfile() {
     setSelectedEditAddressIndex(-1);
   };
 
-  const handleRemove = (e, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] };
+  const handleRemove = (index) => {
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses] };
     newUser.addresses.splice(index, 1);
     dispatch(updateUserAsync(newUser));
+    setShowModalId(-1);
   };
 
   const handleSelectEdit = (index) => {
     setSelectedEditAddressIndex(index);
     setShowAddressForm(false);
-    const address = user.addresses[index];
-    console.log("index ,user :", index, user.addresses[index]);
+    const address = userInfo.addresses[index];
+    console.log("index ,user :", index, userInfo.addresses[index]);
     setValue("name", address.name);
     setValue("email", address.email);
     setValue("mobile", address.mobile);
@@ -66,14 +69,14 @@ export default function UserProfile() {
     <>
       <div className="bg-white mx-auto max-w-7xl px-4 mt-6 sm:px-6 lg:px-8 ">
         <h1 id="products-heading" className="p-4 pb-1 text-2xl font-semibold">
-          Name : {user.name ? user.name : " New Name"}
+          Name : {userInfo.name ? userInfo.name : " New Name"}
         </h1>
         <h3 className="p-4 pb-1 text-xl font-semibold text-red-400">
-          Email : {user.email}
+          Email : {userInfo.email}
         </h3>
-        {user.role === "admin" ? 
+        {userInfo.role === "admin" ? 
         <h3 className="p-4 pb-1 text-xl font-semibold text-red-400">
-          Role : {user.role}
+          Role : {userInfo.role}
         </h3> :null
         }
 
@@ -285,8 +288,7 @@ export default function UserProfile() {
           <h3 className="p-2 text-xl font-semibold text-black-500">
             Your Addresses
           </h3>
-          {console.log("user in Profile :", user)}
-          {user.addresses && user.addresses.map((address, index) => (
+          {userInfo.addresses && userInfo.addresses.map((address, index) => (
             <div key={index}>
               {selectedEditAddressIndex === index ? (
                 <form
@@ -519,13 +521,36 @@ export default function UserProfile() {
                     Edit
                   </button>
 
-                  <button
-                    type="button"
-                    className="rounded-md  px-8 py-2 text-white bg-red-400 font-medium hover:bg-red-300"
-                    onClick={(e) => handleRemove(e, index)}
-                  >
-                    Remove
-                  </button>
+                
+
+                  {console.log("address index modal: ",index,"  ",showModalId)}
+
+                  {showModalId===index ? <Modal
+                  title="Delete Address"
+                  message={`Are you sure you want to delete`}
+                  cancelOption="Cancel"
+                  dangerOption="Delete"
+                  handleDangerAction={()=>{
+                    handleRemove(index)}}
+                  handleCancelAction={() => {
+                    setShowModalId(-1);
+                  }}
+                />:null}
+
+                <button
+                  type="submit"
+                  className="rounded-md  px-8 py-2 text-white bg-red-400 font-medium hover:bg-red-300"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowModalId(index);
+                    console.log("button modal: ",index,"  ",showModalId)
+                  }}
+                >
+                  Delete Address
+                </button>
+
+
+                
                 </div>
               </div>
             </div>

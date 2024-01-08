@@ -110,7 +110,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+function App(){
   return (
     <>
       <Provider store={store}>

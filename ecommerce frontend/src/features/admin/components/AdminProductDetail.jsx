@@ -43,7 +43,7 @@ export default function AdminProductDetail() {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const [quantity, setQuantity] = useState(1); // [1,2,3,4,5
   const product = useSelector(selectProduct);
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const params = useParams();
 
@@ -53,7 +53,7 @@ export default function AdminProductDetail() {
 
   const handleCart = (e) => {
     e.preventDefault();
-    const newItem = { ...product, quantity: quantity, user: user.id };
+    const newItem = { ...product, quantity: quantity, user: userInfo.id };
     delete newItem["id"];
     dispatch(addToCartAsync(newItem)).then(()=>{
       navigate("/cart");
@@ -66,7 +66,7 @@ export default function AdminProductDetail() {
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
       {product ? (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
