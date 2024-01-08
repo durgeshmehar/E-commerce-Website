@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createUser,checkUser ,signOut} from './authAPI';
-import { updateUser } from '../user/userAPI';
 
 const initialState = {
     loggedInUser: null,
@@ -34,13 +33,6 @@ export const signOutAsync = createAsyncThunk(
         return response.data;
     }
 );
-export const updateUserAsync = createAsyncThunk(
-    'user/updateUser',
-    async(update) => {
-        const response = await updateUser(update);
-        return response.data;
-    }
-);
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -70,13 +62,6 @@ export const authSlice = createSlice({
           .addCase(checkUserAsync.rejected, (state, action) => {
             state.status = 'loading';
             state.error = action.payload;
-          })
-          .addCase(updateUserAsync.pending, (state) => {
-            state.status = 'loading';
-          }) // Fix: Add an empty arrow function as the second argument
-          .addCase(updateUserAsync.fulfilled, (state, action) => {
-            state.status = 'idle';
-            state.loggedInUser = action.payload;
           })
           .addCase(signOutAsync.pending, (state) => {
             state.status = 'loading';
