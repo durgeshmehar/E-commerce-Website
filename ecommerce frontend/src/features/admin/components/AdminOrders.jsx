@@ -42,11 +42,13 @@ export default function AdminOrders() {
   };
 
   const handleUpdate = (e, order) => {
-    console.log("Order at function:", order);
+    console.log("e.target.value :", e.target.value);
     const newOrder = { ...order, status: e.target.value };
+    console.log("Order at function:", newOrder);
     dispatch(updateOrderAsync(newOrder));
     setEditableStatusId(-1);
   };
+
   const chooseColor = (status) => {
     switch (status) {
       case "pending":
@@ -61,6 +63,7 @@ export default function AdminOrders() {
         return "bg-yellow-500 text-white";
     }
   };
+
   const handleSort = (sortObj) => {
     const newSort = { _sort: sortObj.sort, _order: sortObj.order };
     setSort(newSort);
@@ -154,8 +157,8 @@ export default function AdminOrders() {
                 {order.cart.map((item) => (
                   <div key={item.id} className="mb-2 flex items-center gap-6 ">
                     <img
-                      src={item.thumbnail}
-                      alt={item.title}
+                      src={item.product.thumbnail}
+                      alt={item.product.title}
                       className="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md"
                     />
                     <div className="flex flex-col">
@@ -203,7 +206,7 @@ export default function AdminOrders() {
                   <div key={item.id} className="mb-2 flex items-center gap-6 ">
                     <div className="flex flex-col">
                       <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
-                        {discountedPrice(item)}
+                        {discountedPrice(item.product)}
                       </p>
                     </div>
                   </div>

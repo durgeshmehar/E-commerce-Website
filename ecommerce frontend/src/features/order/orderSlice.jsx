@@ -68,6 +68,7 @@ export const orderSlice = createSlice({
         })
         .addCase(updateOrderAsync.fulfilled, (state, action) => {
             state.status = 'idle';
+            console.log("Action Payload:",action.payload);
             const index = state.orders.findIndex((order)=>order.id === action.payload.id);
             state.orders[index] = action.payload;
         })

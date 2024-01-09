@@ -71,7 +71,7 @@ export default function AdminProductList() {
 
   useEffect(() => {
     // console.log("useeffect sort pagination :",sort,pagination)
-    dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
+    dispatch(fetchProductsByFilterAsync({ filter, sort, pagination,admin:true }));
   }, [dispatch, filter, sort, pagination]);
 
   useEffect(() => {
@@ -452,10 +452,14 @@ export function ProductGrid({ products }) {
                 {product.deleted ? <div>
                   <p className="ml-4 text-red-500">Product Deleted</p>
                 </div> : null}
+                {product.stock==0 ? <div>
+                  <p className="ml-4 text-red-500">Out of stock</p>
+                </div> : null}
               </div>
               <Link
                 type="submit"
                 to={`/admin/product-form/edit/${product.id}`}
+                onAbort={(e)=>e.stopPropagation()}
                 className="mt-4 rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Edit

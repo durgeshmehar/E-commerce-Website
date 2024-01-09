@@ -6,7 +6,6 @@ export default function Modal({ title, message, dangerOption, cancelOption,handl
   const cancelButtonRef = useRef(null)
   const [open, setOpen] = useState(true);
 
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen} >

@@ -9,13 +9,12 @@ import {
   selectProduct,
   updateProductAsync,
   clearSelectedProduct,
-} from "../../product/productSlice";
-import {
   selectCategoriesArray,
   addProductAsync,
   fetchProductByIdAsync,
 } from "../../product/productSlice";
 import { useParams } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 export default function ProductForm() {
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +24,7 @@ export default function ProductForm() {
   const params = useParams();
   const selectedProduct = useSelector(selectProduct);
   const navigate = useNavigate();
+  const alert = useAlert();
 
   const {
     register,
@@ -36,10 +36,10 @@ export default function ProductForm() {
   } = useForm();
 
   const handleDelete = () => {
-    setShowModal(false);
     const product = { ...selectedProduct };
     product.deleted = true;
     dispatch(updateProductAsync(product)).then(() => {
+      setShowModal(false);
       navigate("/admin");
     });
   };
@@ -63,6 +63,7 @@ export default function ProductForm() {
       product.id = params.id;
       product.rating = selectedProduct.rating || 0;
       dispatch(updateProductAsync(product)).then(() => {
+        alert.success("Product Updated")
         reset();
         dispatch(clearSelectedProduct());
         navigate("/admin");
@@ -76,9 +77,9 @@ export default function ProductForm() {
 
   useEffect(() => {
     if (params.id) {
-      dispatch(fetchProductByIdAsync(+params.id));
+      dispatch(fetchProductByIdAsync(params.id));
     }
-  }, [params.id, dispatch]);
+  }, [params, dispatch]);
 
   useEffect(() => {
     if (selectedProduct && params.id) {
@@ -98,7 +99,7 @@ export default function ProductForm() {
   }, [selectedProduct, params.id, setValue]);
 
   return (
-    <>
+    <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8 ">
       <form
         noValidate
         onSubmit={handleSubmit((data) => {
@@ -222,7 +223,7 @@ export default function ProductForm() {
                       type="text"
                       {...register("stock", {
                         required: "stock is required",
-                        min: 1,
+                        min: 0,
                       })}
                       id="stock"
                       autoComplete="stock"
@@ -454,31 +455,33 @@ export default function ProductForm() {
             </fieldset>
           </div>
           <div className="flex items-center justify-center">
-            {selectedProduct && !selectedProduct.deleted ? (
-              <div>
+            <div>
+              {showModal? (
                 <Modal
                   title="Delete Item"
                   message={`Are you sure you want to delete`}
                   cancelOption="Cancel"
                   dangerOption="Delete"
-                  showModal={showModal}
-                  handleDangerAction={handleDelete}
+                  handleDangerAction={()=>{
+                    handleDelete()}}
                   handleCancelAction={() => {
                     setShowModal(false);
                   }}
                 />
+              ) : null}
+
+              {selectedProduct && !selectedProduct.deleted ? (
                 <button
-                  type="submit"
+                  type="button"
                   onClick={(e) => {
-                    e.preventDefault();
                     setShowModal(true);
                   }}
                   className=" align-middle mt-12 mr-8 rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Delete Product
                 </button>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
 
             <button
               type="submit"
@@ -500,6 +503,6 @@ export default function ProductForm() {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 }

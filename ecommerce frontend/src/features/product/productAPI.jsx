@@ -1,11 +1,5 @@
-export  function fetchAllProducts() {
-    return new Promise(async (resolve) =>{
-        const response = await fetch('http://localhost:8080/products')
-        const data = await response.json()
-        resolve({data})
-    });
-}
-export function fetchProductsByFilter({filter,sort,pagination}) {
+
+export function fetchProductsByFilter({filter,sort,pagination,admin}) {
 
     //filter ={"category":["smartphone","laptops"]}
     //sort = {_sort:"price",_order:"asc"}
@@ -27,6 +21,9 @@ export function fetchProductsByFilter({filter,sort,pagination}) {
     }
     if(queryString.length>0){
         queryString = queryString.slice(0,-1)
+    }
+    if(admin){
+        queryString+=`&admin=true`
     }
 
     return new Promise(async (resolve) =>{
@@ -57,12 +54,21 @@ export  function fetchBrands() {
 }
 
 export  function fetchProductById(id) {
-    return new Promise(async (resolve) =>{
-        const response = await fetch('http://localhost:8080/products/'+id)
-        const data = await response.json()
-        resolve({data})
+    console.log('fetchProductById called with id:', id);
+    return new Promise(async (resolve,reject) =>{
+        const response = await fetch('http://localhost:8080/products/'+id);
+        if(response.ok){
+            const data = await response.json()
+            resolve({data})
+            console.log("Product findById at frontend: ",data);
+        }
+        else{
+            const err = await response.json()
+            reject({err})
+        }
     });
 }
+
 export  function addProduct(productData) {
     return new Promise(async (resolve) =>{
         const response = await fetch('http://localhost:8080/products/',{

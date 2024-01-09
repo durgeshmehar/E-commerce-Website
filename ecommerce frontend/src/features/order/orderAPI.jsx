@@ -14,7 +14,9 @@ export function createOrder(order) {
 }
 
 export function updateOrder(order) {
-    return new Promise(async (resolve) =>{
+    console.log("updateOrder at client:",typeof(order.id));
+
+    return new Promise(async (resolve,reject) =>{
         const response = await fetch(`http://localhost:8080/orders/${order.id}`,{
             method:'PATCH',
             headers:{
@@ -22,7 +24,14 @@ export function updateOrder(order) {
             },
             body:JSON.stringify(order)
         })
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error updating order:', errorData);
+            reject(errorData);
+            return;
+        }
         const data = await response.json()
+        console.log("received data : ",data);
         resolve({data})
     });
 }
