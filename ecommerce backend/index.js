@@ -2,12 +2,17 @@ const express = require("express");
 const server = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "SECRET_KEY";
 
 const passport = require("passport");
 const session = require("express-session");
 const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
 
+const { isAuth, sanitiseUser } = require("./services/common");
 const ProductsRouter = require("./routes/Products");
 const CategoriesRouter = require("./routes/Categories");
 const BrandsRouter = require("./routes/Brands");
@@ -16,6 +21,10 @@ const AuthRouter = require("./routes/Auth");
 const CartRouter = require("./routes/Carts");
 const OrderRouter = require("./routes/Orders");
 const { User } = require("./model/User");
+
+var opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = SECRET_KEY;
 
 server.use(
   cors({
@@ -34,57 +43,75 @@ server.use(
 server.use(passport.authenticate("session"));
 
 server.use(express.json());
-server.use("/products", isAuth,ProductsRouter.router);
-server.use("/categories", CategoriesRouter.router);
-server.use("/brands", BrandsRouter.router);
-server.use("/users", UsersRouter.router);
+server.use("/products", isAuth(), ProductsRouter.router);
+server.use("/categories",isAuth(), CategoriesRouter.router);
+server.use("/brands",isAuth(), BrandsRouter.router);
+server.use("/users",isAuth(), UsersRouter.router);
 server.use("/auth", AuthRouter.router);
-server.use("/cart", CartRouter.router);
-server.use("/orders", OrderRouter.router);
+server.use("/cart",isAuth(), CartRouter.router);
+server.use("/orders",isAuth(), OrderRouter.router);
 
 // passport setup
 
-passport.use(
-  new LocalStrategy(async function (username, password, done) {
+passport.use("local",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+    },
+    async function (email, password, done) {
     try {
-      const user = await User.findOne({ email: username });
+      const user = await User.findOne({ email: email });
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
-      const hashPassword= crypto.pbkdf2Sync(user.password,user.salt,1000,32,'sha256');
+      const hashPassword = crypto.pbkdf2Sync(
+        password,
+        user.salt,
+        1000,
+        32,
+        "sha256"
+      );
 
-      if (!crypto.timingSafeEqual(hashPassword,password)) {
+      if (!crypto.timingSafeEqual(hashPassword, user.password)) {
         return done(null, false, { message: "Incorrect password" });
       }
-      return done(null, user);
+      const token = jwt.sign(sanitiseUser(user), SECRET_KEY);
+      return done(null, {token,user});
     } catch (err) {
       done(err);
     }
   })
 );
+
+passport.use(
+  "jwt",
+  new JwtStrategy(opts,async function (jwt_payload, done) {
+    console.log("JWT Payload :", jwt_payload);
+    try {
+      const user =await User.findOne({ id: jwt_payload.sub });
+      if (user) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+    } catch (err) {
+      done(err, false);
+    }
+  })
+);
 // create session id at server
-passport.serializeUser(function(user, done) {
-  console.log("Serialize User :",user);
-  done(null, {id:user.id,role:user.role})
+passport.serializeUser(function (user, done) {
+  done(null, sanitiseUser(user));
 });
 //gives data from session id
-passport.deserializeUser(function(data, done) {
+passport.deserializeUser(function (data, done) {
   done(null, data);
-})
-
+});
 
 // Database connection
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect("mongodb://localhost:27017/ecommerce");
-}
-
-function isAuth(req,res,done){
-  if(req.user){
-    done();
-  }else{
-    res.status(404).json({message:"Not Authenticated"})
-  }
 }
 
 server.listen(8080, () => {

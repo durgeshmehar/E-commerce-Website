@@ -5,6 +5,6 @@ const passport = require('passport');
 
 router.post('/signup',createUser);
 router.post('/login',passport.authenticate('local'),loginUser);
-router.get('/check',checkUser);
+router.get('/check',passport.authenticate('jwt'),checkUser);
 
 exports.router = router;
