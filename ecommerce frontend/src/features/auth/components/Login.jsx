@@ -4,19 +4,28 @@ import { Link } from "react-router-dom";
 import { checkUserAsync, selectError } from "../authSlice";
 import { useForm } from "react-hook-form"
 import { selectLoggedInUser } from "../authSlice";
-import { Navigate } from "react-router-dom"
 import { fetchLoggedInUserAsync } from "../../user/userSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const dispatch = useDispatch();
     const error = useSelector(selectError);
     const user = useSelector(selectLoggedInUser);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if(user && user.email){
+        dispatch(fetchLoggedInUserAsync(user.id)).then(()=>{
+          navigate("/");
+        })
+      }
+    }, [user]);
     
     const { register,handleSubmit, watch, formState: { errors }} = useForm();
 
     return (
         <>
-        {user && user.email && <Navigate to="/" replace={true} />}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img

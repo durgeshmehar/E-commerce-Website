@@ -31,7 +31,6 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
-import { selectLoggedInUser } from "../../auth/authSlice";
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc" },
   { name: "Price: Low to High", sort: "price", order: "asc" },
@@ -122,7 +121,7 @@ export default function ProductList() {
   };
   // this to fetch all products in cart
 
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
 
   useEffect(() => {
     if (user) {

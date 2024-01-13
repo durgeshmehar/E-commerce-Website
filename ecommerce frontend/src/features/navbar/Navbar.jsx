@@ -16,6 +16,7 @@ const navigation = [
   { name: "Products", link: "/admin", admin: true },
   { name: "Orders", link: "/admin/orders", admin: true },
 ];
+
 const userNavigation = [
   { name: "My Profile", link: "/profile" },
   { name: "My Orders", link: "/orders" },
@@ -27,11 +28,11 @@ function classNames(...classes) {
 }
 
 import React from "react";
-import { selectLoggedInUser } from "../auth/authSlice";
+import { selectUserInfo } from "../user/userSlice";
 
 export default function Navbar({ children }) {
   const items = useSelector(selectCartItems);
-  const user = useSelector(selectLoggedInUser)
+  const user = useSelector(selectUserInfo)
 
   return (
     <>
@@ -56,7 +57,7 @@ export default function Navbar({ children }) {
                       {console.log("USER ROLE", user.role)}
                         {
                           navigation.map((item) => (
-                          item[user.role] ?
+                          item[user.role]?
                           <Link
                             key={item.name}
                             to={item.link}

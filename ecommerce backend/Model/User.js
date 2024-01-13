@@ -3,11 +3,12 @@ const { Schema } = mongoose
 
 const UserSchema = new Schema({
     email:{type:String,required:true,unique:true},
-    password: {type:String,required:true},
-    addresses: {type:[Schema.Types.Mixed]},
+    password: {type:Buffer,required:true},
+    addresses: {type:[Schema.Types.Mixed],default:[]},
     role: {type:String,default:"user"},
     name:{type:String},
-    orders:{type:[Schema.Types.Mixed]}
+    orders:{type:[Schema.Types.Mixed],default:[]},
+    salt:{type:Buffer,required:true}
 })
 
 const virtual = UserSchema.virtual('id');

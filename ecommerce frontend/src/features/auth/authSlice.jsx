@@ -26,6 +26,7 @@ export const checkUserAsync = createAsyncThunk(
       }
     }
 );
+
 export const signOutAsync = createAsyncThunk(
     'user/signOut',
     async(userId) => {

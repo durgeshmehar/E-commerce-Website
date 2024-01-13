@@ -10,7 +10,7 @@ exports.createProduct = async (req, res) => {
   }
 };
 exports.fetchProductsByFilter = async (req, res) => {
-  let condition ={};
+   let condition ={};
   if(!req.query.admin){
     condition={deleted:{$ne:true}}
   }
