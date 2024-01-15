@@ -4,15 +4,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "SECRET_KEY";
+const path = require("path");
 
 const passport = require("passport");
 const session = require("express-session");
 const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
 const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
+const cookiParser = require("cookie-parser");
 
-const { isAuth, sanitiseUser } = require("./services/common");
+const { isAuth, sanitiseUser, cookieExtractor } = require("./services/common");
 const ProductsRouter = require("./routes/Products");
 const CategoriesRouter = require("./routes/Categories");
 const BrandsRouter = require("./routes/Brands");
@@ -23,9 +24,11 @@ const OrderRouter = require("./routes/Orders");
 const { User } = require("./model/User");
 
 var opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = SECRET_KEY;
 
+server.use(express.static(path.resolve(__dirname, 'dist')));
+server.use(cookiParser());
 server.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
@@ -53,7 +56,7 @@ server.use("/orders",isAuth(), OrderRouter.router);
 
 // passport setup
 
-passport.use("local",
+passport.use('local',
   new LocalStrategy(
     {
       usernameField: "email",
@@ -70,13 +73,16 @@ passport.use("local",
         1000,
         32,
         "sha256"
-      );
-
+        );
+        
       if (!crypto.timingSafeEqual(hashPassword, user.password)) {
+        console.log("Incorrect password");
         return done(null, false, { message: "Incorrect password" });
       }
+      console.log("Correct password");
       const token = jwt.sign(sanitiseUser(user), SECRET_KEY);
-      return done(null, {token,user});
+      console.log("token :",token)
+      return done(null, {token});
     } catch (err) {
       done(err);
     }
@@ -84,7 +90,7 @@ passport.use("local",
 );
 
 passport.use(
-  "jwt",
+'jwt',
   new JwtStrategy(opts,async function (jwt_payload, done) {
     console.log("JWT Payload :", jwt_payload);
     try {
@@ -99,12 +105,15 @@ passport.use(
     }
   })
 );
+
 // create session id at server
 passport.serializeUser(function (user, done) {
+  console.log("serializeUser :", user)
   done(null, sanitiseUser(user));
 });
 //gives data from session id
 passport.deserializeUser(function (data, done) {
+  console.log("DeserializeUser :", data)
   done(null, data);
 });
 

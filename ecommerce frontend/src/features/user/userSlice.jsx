@@ -16,11 +16,12 @@ export const fetchLoggedInUserOrdersAsync = createAsyncThunk(
 );
 export const fetchLoggedInUserAsync = createAsyncThunk(
     'user/fetchLoggedInUser',
-    async(userId) => {
-        const response = await fetchLoggedInUser(userId);
+    async() => {
+        const response = await fetchLoggedInUser();
         return response.data;
     }
 );
+
 export const updateUserAsync = createAsyncThunk(
     'user/updateUser',
     async(userId) => {

@@ -114,9 +114,9 @@ export default function AdminProductList() {
 
   useEffect(() => {
     if (user) {
-      console.log("Prouductlist :", user.id);
-      dispatch(fetchItemsByUserIdAsync(user.id));
-      dispatch(fetchLoggedInUserAsync(user.id));
+      console.log("Prouductlist AdminProductList called:", user);
+      dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchLoggedInUserAsync());
     }
   }, [dispatch, user]);
 

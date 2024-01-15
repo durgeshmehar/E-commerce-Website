@@ -47,7 +47,6 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const [quantity, setQuantity] = useState(1); // [1,2,3,4,5
   const product = useSelector(selectProduct);
-  const userInfo = useSelector(selectUserInfo);
 
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
@@ -70,7 +69,7 @@ export default function ProductDetail() {
   const handleCart = (e) => {
     e.preventDefault();
     if (cartItems.findIndex((item) => item.product.id === product.id) < 0) {
-      const newItem = { quantity: quantity,product:product.id, user: userInfo.id };
+      const newItem = { quantity: quantity,product:product.id };
       dispatch(addToCartAsync(newItem)).then(() => {
         navigate("/cart");
       });

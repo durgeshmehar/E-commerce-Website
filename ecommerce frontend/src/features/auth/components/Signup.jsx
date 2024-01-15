@@ -1,9 +1,10 @@
 import React,{ useState } from "react";
 import { useSelector , useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { createUserAsync , selectLoggedInUser } from "../authSlice";
+import {selectLoggedInUser,createUserAsync  } from "../authSlice";
 import { useForm } from "react-hook-form"
 import { Navigate } from "react-router-dom"
+import logo from "../../../Images/logo.png"
 
 // import { increment, incrementAsync,selectCount } from "../authSlice";
 
@@ -14,12 +15,12 @@ export default function Signup() {
 
     return (
       <>
-        {user && user.email && <Navigate to="/" replace={true} />}
+        {user && <Navigate to="/" replace={true} />}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-20 w-auto"
-              src="./logo.png"
+              src={logo}
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

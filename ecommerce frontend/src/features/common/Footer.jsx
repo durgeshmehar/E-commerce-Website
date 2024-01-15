@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../../Images/logo.png";
 
 export default function Footer() {
   return (
@@ -8,10 +9,10 @@ export default function Footer() {
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 sm:w-2/3 lg:w-3/12">
               <div className="mb-10 w-full">
-                <a href="javascript:void(0)" className="mb-6 inline-block ">
+                <a href="#" className="mb-6 inline-block ">
                   <div className="flex items-center justify-center">
                     <img
-                      src="../../../logo.png"
+                      src={logo}
                       alt="logo"
                       className="h-12 max-w-full dark:block"
                     />
@@ -66,7 +67,7 @@ export default function Footer() {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       SaaS Development
@@ -74,7 +75,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Our Products
@@ -82,7 +83,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       User Flow
@@ -90,7 +91,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       User Strategy
@@ -107,7 +108,7 @@ export default function Footer() {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       About TailGrids
@@ -115,7 +116,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Contact &amp; Support
@@ -123,7 +124,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Success History
@@ -131,7 +132,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Setting &amp; Privacy
@@ -148,7 +149,7 @@ export default function Footer() {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Premium Support
@@ -156,7 +157,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Our Services
@@ -164,7 +165,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Know Our Team
@@ -172,7 +173,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a
-                      href="javascript:void(0)"
+                      href="#"
                       className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-white"
                     >
                       Download App
@@ -188,7 +189,7 @@ export default function Footer() {
                 </h4>
                 <div className="mb-6 flex items-center">
                   <a
-                    href="javascript:void(0)"
+                    href="#"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
@@ -201,7 +202,7 @@ export default function Footer() {
                     </svg>
                   </a>
                   <a
-                    href="javascript:void(0)"
+                    href="#"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
@@ -214,7 +215,7 @@ export default function Footer() {
                     </svg>
                   </a>
                   <a
-                    href="javascript:void(0)"
+                    href="#"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg
@@ -227,7 +228,7 @@ export default function Footer() {
                     </svg>
                   </a>
                   <a
-                    href="javascript:void(0)"
+                    href="#"
                     className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4"
                   >
                     <svg

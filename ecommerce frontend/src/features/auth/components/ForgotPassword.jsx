@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { checkUserAsync } from "../authSlice";
 import { useForm } from "react-hook-form";
+import logo from "../../../Images/logo.png";
 
 export default function Login() {
   const {
@@ -18,7 +19,7 @@ export default function Login() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-20 w-auto"
-            src="/logo.png"
+            src={logo}
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

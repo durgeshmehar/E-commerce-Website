@@ -1,12 +1,12 @@
 import React,{ useState } from "react";
 import { useSelector , useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { checkUserAsync, selectError } from "../authSlice";
-import { useForm } from "react-hook-form"
-import { selectLoggedInUser } from "../authSlice";
-import { fetchLoggedInUserAsync } from "../../user/userSlice";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
+import { fetchLoggedInUserAsync } from "../../user/userSlice";
+import {selectLoggedInUser, checkUserAsync, selectError} from "../authSlice";
+import logo from "../../../Images/logo.png"
 
 export default function Login() {
     const dispatch = useDispatch();
@@ -14,9 +14,10 @@ export default function Login() {
     const user = useSelector(selectLoggedInUser);
     const navigate = useNavigate();
 
-    useEffect(() => {
-      if(user && user.email){
-        dispatch(fetchLoggedInUserAsync(user.id)).then(()=>{
+    useEffect(async() => {
+      if(user){
+        console.log("User in Login.jsx UseEffect :",user)
+        dispatch(fetchLoggedInUserAsync()).then(()=>{
           navigate("/");
         })
       }
@@ -26,11 +27,12 @@ export default function Login() {
 
     return (
         <>
+        {console.log("User in Login.jsx :",user)}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-20 w-auto"
-              src="/logo.png"
+              src={logo}
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -40,7 +42,7 @@ export default function Login() {
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form noValidate  className="space-y-6" onSubmit={handleSubmit((data)=>{
-              dispatch(checkUserAsync({email:data.email,password:data.password}))
+              dispatch(checkUserAsync({ email:data.email, password:data.password}))
               console.log("data :",data)
               })}>
               <div>

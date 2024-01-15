@@ -60,6 +60,7 @@ export default function ProductList() {
     _limit: ITEMS_PER_PAGE,
   });
 
+  const user = useSelector(selectUserInfo);
   const products = useSelector(selectProductsArray);
   const totalItems = useSelector(selectTotalItems);
   const categories = useSelector(selectCategoriesArray);
@@ -94,6 +95,13 @@ export default function ProductList() {
     dispatch(fetchCategoriesAsync());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (user){
+      console.log("Prouductlist called :", user);
+      dispatch(fetchItemsByUserIdAsync());
+    }
+  }, [dispatch, user]);
+
   const handleFilter = (e, sectionCategory, optionValue) => {
     let newFilter = { ...filter };
     if (e.target.checked === true) {
@@ -121,15 +129,7 @@ export default function ProductList() {
   };
   // this to fetch all products in cart
 
-  const user = useSelector(selectUserInfo);
 
-  useEffect(() => {
-    if (user) {
-      console.log("Prouductlist :", user.id);
-      dispatch(fetchItemsByUserIdAsync(user.id));
-      dispatch(fetchLoggedInUserAsync(user.id));
-    }
-  }, [dispatch, user.id]);
 
   return (
     <>

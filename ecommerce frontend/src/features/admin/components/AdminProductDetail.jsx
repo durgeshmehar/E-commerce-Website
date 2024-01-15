@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { selectProduct , fetchProductByIdAsync } from "../../product/productSlice";
 import { addToCartAsync } from "../../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { selectUserInfo } from '../../user/userSlice';
 import { discountedPrice } from "../../../app/constants";
 
 const colors = [
@@ -43,7 +42,6 @@ export default function AdminProductDetail() {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const [quantity, setQuantity] = useState(1); // [1,2,3,4,5
   const product = useSelector(selectProduct);
-  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const params = useParams();
 
@@ -53,7 +51,7 @@ export default function AdminProductDetail() {
 
   const handleCart = (e) => {
     e.preventDefault();
-    const newItem = { ...product, quantity: quantity, user: userInfo.id };
+    const newItem = { ...product, quantity: quantity };
     delete newItem["id"];
     dispatch(addToCartAsync(newItem)).then(()=>{
       navigate("/cart");
@@ -193,9 +191,6 @@ export default function AdminProductDetail() {
                     ))}
                   </div>
                   <p className="sr-only">{product.rating} out of 5 stars</p>
-                  {/* <a href={reviews.href} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                  {reviews.totalCount} reviews
-                </a> */}
                 </div>
               </div>
 
@@ -270,12 +265,11 @@ export default function AdminProductDetail() {
                 <div className="mt-10">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                    <a
-                      href="#"
+                    <div
                       className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       Size guide
-                    </a>
+                    </div>
                   </div>
 
                   <RadioGroup
