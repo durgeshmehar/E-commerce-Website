@@ -15,7 +15,7 @@ exports.fetchUserById = async (req,res)=>{
 
 exports.updateUserById = async (req,res)=>{
     try{
-        const id = req.params.id;
+        const id = req.user;
         const result = await User.findByIdAndUpdate(id,req.body,{new:true}).select('name email id role orders addresses');
         res.status(200).json(result);
     }

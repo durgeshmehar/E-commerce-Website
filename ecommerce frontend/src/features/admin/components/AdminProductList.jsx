@@ -116,7 +116,6 @@ export default function AdminProductList() {
     if (user) {
       console.log("Prouductlist AdminProductList called:", user);
       dispatch(fetchItemsByUserIdAsync());
-      dispatch(fetchLoggedInUserAsync());
     }
   }, [dispatch, user]);
 

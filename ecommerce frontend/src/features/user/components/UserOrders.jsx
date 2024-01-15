@@ -1,22 +1,35 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserInfo, selectUserOrder } from "../userSlice";
+import { selectUserInfo, selectUserInfoStatus, selectUserOrder } from "../userSlice";
 import { fetchLoggedInUserOrdersAsync } from "../userSlice";
 import { Link } from "react-router-dom";
 import { discountedPrice } from "../../../app/constants";
+import GridLoader from "react-spinners/GridLoader";
+
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
 
 export default function UserOrders() {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
+  const status = useSelector(selectUserInfoStatus)
+  
 
   useEffect(() => {
-    dispatch(fetchLoggedInUserOrdersAsync(userInfo.id));
-  }, [userInfo.id,dispatch]);
+    dispatch(fetchLoggedInUserOrdersAsync());
+  }, [dispatch]);
 
   return (
     <>
+    {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
       {orders &&
         orders.map((order) => (
           <div

@@ -63,7 +63,7 @@ export default function ProductForm() {
       product.id = params.id;
       product.rating = selectedProduct.rating || 0;
       dispatch(updateProductAsync(product)).then(() => {
-        alert.success("Product Updated")
+        alert.success("Product Updated");
         reset();
         dispatch(clearSelectedProduct());
         navigate("/admin");
@@ -71,7 +71,7 @@ export default function ProductForm() {
     } else {
       dispatch(addProductAsync(product));
       reset();
-      console.log("Added successfully");
+      alert.show("Product Added successfully");
     }
   };
 
@@ -456,14 +456,15 @@ export default function ProductForm() {
           </div>
           <div className="flex items-center justify-center">
             <div>
-              {showModal? (
+              {showModal ? (
                 <Modal
                   title="Delete Item"
                   message={`Are you sure you want to delete`}
                   cancelOption="Cancel"
                   dangerOption="Delete"
-                  handleDangerAction={()=>{
-                    handleDelete()}}
+                  handleDangerAction={() => {
+                    handleDelete();
+                  }}
                   handleCancelAction={() => {
                     setShowModal(false);
                   }}

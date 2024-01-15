@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import {
   deleteItemFromCartAsync,
   selectCartItems,
@@ -30,9 +30,10 @@ export default function CheckoutPage() {
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems);
   const userInfo = useSelector(selectUserInfo);
-  const [selectedAddress, setSelectedAddress] = useState({});
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const currentOrder = useSelector(selectCurrentOrder);
+  const form = useRef(null);
 
   const totalItems = products.reduce((total, item) => total + item.quantity, 0);
   const totalAmount = products.reduce(
@@ -54,6 +55,7 @@ export default function CheckoutPage() {
   const handleSelect = (e, cartItem) => {
     dispatch(updateCartAsync({ id: cartItem.id, quantity: +e.target.value }));
   };
+
   const handleRemove = (id) => {
     console.log("Removed id :",id)
     dispatch(deleteItemFromCartAsync(id));
@@ -100,19 +102,18 @@ export default function CheckoutPage() {
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-6 px-2 gap-y-10 md:grid-cols-5">
           <div className="md:col-span-3">
-            <form
+            <form ref={form}
               noValidate
               className="bg-white px-10 mt-12"
               onSubmit={handleSubmit((data) => {
                 console.log("checkout data :", userInfo);
-
                 dispatch(
                   updateUserAsync({
                     id: userInfo.id,
                     addresses: [...(userInfo.addresses || []), data],
                   })
-                  
                 );
+                  handleReset();
               })}
             >
               <div className="space-y-12">
@@ -282,6 +283,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                 </div>
+
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <button
                     type="button"
@@ -291,8 +293,9 @@ export default function CheckoutPage() {
                     Reset
                   </button>
                   <button
-                    type="submit"
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    type="submit"
+                    onClick={()=>{form.submit()}}
                   >
                     Add Address
                   </button>
@@ -407,6 +410,7 @@ export default function CheckoutPage() {
               </div>
             </form>
           </div>
+
           {/* CART */}
           <div className="md:col-span-2">
             <div className="bg-white mx-auto max-w-7xl px-0 mt-12 ">
@@ -514,13 +518,12 @@ export default function CheckoutPage() {
                 </p>
                 <div className="mt-6">
 
-                  <Link
-                    to="/checkout"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                  <div
+                    className=" cursor-pointer flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                     onClick={handleOrder}
                   >
                     Checkout
-                  </Link>
+                  </div>
 
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

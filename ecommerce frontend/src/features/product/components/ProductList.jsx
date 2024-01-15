@@ -100,7 +100,7 @@ export default function ProductList() {
       console.log("Prouductlist called :", user);
       dispatch(fetchItemsByUserIdAsync());
     }
-  }, [dispatch, user]);
+  }, [dispatch,user]);
 
   const handleFilter = (e, sectionCategory, optionValue) => {
     let newFilter = { ...filter };
