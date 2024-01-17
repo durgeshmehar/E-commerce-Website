@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import GridLoader from "react-spinners/GridLoader";
 import { Link } from "react-router-dom";
 import {
   fetchBrandsAsync,
@@ -13,9 +14,7 @@ import {
 } from "../../product/productSlice";
 import {discountedPrice} from "../../../app/constants";
 
-import { fetchItemsByUserIdAsync } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
-import { fetchLoggedInUserAsync } from "../../user/userSlice";
 
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -39,6 +38,15 @@ const sortOptions = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
+
 
 export default function AdminProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -112,14 +120,9 @@ export default function AdminProductList() {
 
   const user = useSelector(selectUserInfo);
 
-  useEffect(() => {
-    if (user) {
-      console.log("Prouductlist AdminProductList called:", user);
-      dispatch(fetchItemsByUserIdAsync());
-    }
-  }, [dispatch, user]);
-
   return (
+    <>
+    {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
     <div className="overflow-hidden">
       <MobileFilter
         mobileFiltersOpen={mobileFiltersOpen}
@@ -227,7 +230,8 @@ export default function AdminProductList() {
         pagination={pagination}
         totalItems={totalItems}
       />
-    </div>
+    </div>      
+    </>
   );
 }
 

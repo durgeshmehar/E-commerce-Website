@@ -4,6 +4,7 @@ import React, {useState } from "react";
 import {
   deleteItemFromCartAsync,
   selectCartItems,
+  selectCartLoaded,
   updateCartAsync,
 } from "./cartSlice";
 import { discountedPrice } from "../../app/constants";
@@ -12,6 +13,7 @@ import Modal from "../common/modal";
 export default function Cart() {
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems);
+  const cartLoaded = useSelector(selectCartLoaded);
   const totalAmount = products.reduce(
     (total, item) => total + discountedPrice(item.product) * item.quantity,
     0
@@ -29,7 +31,7 @@ export default function Cart() {
 
   return (
     <>
-      {totalItems === 0 && <Navigate to="/"></Navigate>}
+      {cartLoaded && totalItems === 0 && <Navigate to="/"></Navigate>}
       <div className="bg-white mx-auto max-w-7xl px-4 mt-12 sm:px-6 lg:px-8 ">
         <h1 id="products-heading" className="p-4 text-3xl font-semibold">
           Cart

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { checkUserAsync } from "../authSlice";
+import { loginUserAsync } from "../authSlice";
 import { useForm } from "react-hook-form";
 import logo from "../../../Images/logo.png";
 

@@ -1,26 +1,16 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { fetchLoggedInUserAsync } from "../../user/userSlice";
-import { selectLoggedInUser, checkUserAsync, selectError } from "../authSlice";
+import { selectLoggedInUser, loginUserAsync, selectError } from "../authSlice";
 import logo from "../../../Images/logo.png";
+import { selectUserInfo } from "../../user/userSlice";
 
 export default function Login() {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
   const user = useSelector(selectLoggedInUser);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      dispatch(fetchLoggedInUserAsync()).then(()=>{
-        navigate("/")
-      })
-    }
-  }, [user, dispatch]);
 
   const {
     register,
@@ -31,6 +21,7 @@ export default function Login() {
   return (
     <>
       {console.log("User in Login.jsx :", user)}
+      {user && <Navigate to="/" ></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-20 w-auto" src={logo} alt="Your Company" />
@@ -45,7 +36,7 @@ export default function Login() {
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
               dispatch(
-                checkUserAsync({ email: data.email, password: data.password })
+                loginUserAsync({ email: data.email, password: data.password })
               );
               console.log("data :", data);
             })}

@@ -21,7 +21,5 @@ exports.cookieExtractor = (req)=>{
 
     //token admin
     token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YTU5NjRiMmM1MTIzNmNlYjE5NzVkZiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzA1MzUwNzMxfQ.qI47wwmr1iuObD3CFxdcAA7T04HkLfW_GKxsQHnUxRc"
-
-
     return token;
 }

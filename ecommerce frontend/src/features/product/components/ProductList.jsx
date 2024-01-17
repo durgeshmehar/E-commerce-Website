@@ -14,9 +14,7 @@ import {
   selectProductsArray,
   selectTotalItems,
 } from "../productSlice";
-import { fetchItemsByUserIdAsync } from "../../cart/cartSlice";
 import { selectUserInfo } from "../../user/userSlice";
-import { fetchLoggedInUserAsync } from "../../user/userSlice";
 
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -95,12 +93,7 @@ export default function ProductList() {
     dispatch(fetchCategoriesAsync());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (user){
-      console.log("Prouductlist called :", user);
-      dispatch(fetchItemsByUserIdAsync());
-    }
-  }, [dispatch,user]);
+
 
   const handleFilter = (e, sectionCategory, optionValue) => {
     let newFilter = { ...filter };

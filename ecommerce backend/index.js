@@ -25,7 +25,7 @@ const { User } = require("./model/User");
 
 var opts = {};
 opts.jwtFromRequest = cookieExtractor;
-opts.secretOrKey = SECRET_KEY;
+opts.secretOrKey = SECRET_KEY ;
 
 server.use(express.static(path.resolve(__dirname, 'dist')));
 server.use(cookiParser());
@@ -82,7 +82,7 @@ passport.use('local',
       console.log("Correct password");
       const token = jwt.sign(sanitiseUser(user), SECRET_KEY);
       console.log("token :",token)
-      return done(null, {token});
+      return done(null, sanitiseUser(user));
     } catch (err) {
       done(err);
     }
@@ -112,6 +112,7 @@ passport.serializeUser(function (user, done) {
 });
 //gives data from session id
 passport.deserializeUser(function (data, done) {
+  console.log("DE-serializeUser called:", data);
   done(null, data);
 });
 

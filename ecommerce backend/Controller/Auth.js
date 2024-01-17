@@ -2,6 +2,7 @@ const { User } = require('../model/User');
 const crypto = require('crypto');
 const { sanitiseUser } = require('../services/common');
 const jwt = require('jsonwebtoken');
+const { serializeUser } = require('passport');
 const SECRET_KEY = "SECRET_KEY";
 
 
@@ -16,7 +17,7 @@ exports.createUser = async (req,res)=>{
             if(err){res.status(400).json(err) }
             else{
                 const token = jwt.sign(sanitiseUser(result),SECRET_KEY);
-                res.cookie('jwt',token,{expires:new Date(Date.now()+ 60*60*1000),httpOnly:true}).status(200).json(token);
+                res.cookie('jwt',token,{expires:new Date(Date.now()+ 60*60*1000),httpOnly:true}).status(200).json(sanitiseUser(result));
             }
         })
     }catch(err){
@@ -30,12 +31,12 @@ exports.loginUser = async (req,res)=>{
     res.cookie('jwt',req.user.token,{expires:new Date(Date.now()+ 60*60*1000),httpOnly:true}).status(200).json(req.user.token);
 }
 
-exports.checkUser = async (req,res)=>{
-    try{
-        const { id, username, email, role } = req.user;
-       res.status(200).json({status:"Success",user:{ id, username, email, role }});
+exports.checkAuth = async (req,res)=>{
+    if(req.user){
+        console.log("user checkauth:",req.user);
+        res.status(200).json(sanitiseUser(req.user));
     }
-    catch(err){
-        res.status(400).json({message:err.message});
-    }
+    else{
+        res.status(400).json({message:"Login First"});
+    }    
 }

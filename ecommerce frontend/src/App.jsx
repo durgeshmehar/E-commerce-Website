@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 import "./App.css";
-import store from "./app/store";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -13,7 +12,7 @@ import AdminProtected from "./features/auth/AdminProtected";
 import AdminHome from "./pages/AdminHome";
 import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 
-import { Provider} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { PageNotFound } from "./pages/404Page";
 import UserOrdersPage from "./pages/UserOrdersPage";
@@ -22,6 +21,13 @@ import Logout from "./features/auth/components/Logout";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
+import { useEffect } from "react";
+import { checkAuthAsync, selectLoggedInUser, selectUserStatus } from "./features/auth/authSlice";
+import {
+  fetchLoggedInUserAsync,
+  selectUserInfo,
+} from "./features/user/userSlice";
+import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 
 const router = createBrowserRouter([
   {
@@ -66,15 +72,29 @@ const router = createBrowserRouter([
   },
   {
     path: "/order-success/:id",
-    element: <Protected><OrderSuccessPage /> </Protected>
+    element: (
+      <Protected>
+        <OrderSuccessPage />{" "}
+      </Protected>
+    ),
   },
   {
     path: "/orders",
-    element: <Protected> <UserOrdersPage /> </Protected>,
+    element: (
+      <Protected>
+        {" "}
+        <UserOrdersPage />{" "}
+      </Protected>
+    ),
   },
   {
     path: "/profile",
-    element: <Protected> <UserProfilePage /> </Protected>,
+    element: (
+      <Protected>
+        {" "}
+        <UserProfilePage />{" "}
+      </Protected>
+    ),
   },
   {
     path: "/logout",
@@ -86,23 +106,43 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminProtected><AdminHome></AdminHome> </AdminProtected>
+    element: (
+      <AdminProtected>
+        <AdminHome></AdminHome>{" "}
+      </AdminProtected>
+    ),
   },
   {
     path: "/admin/product-detail/:id",
-    element: <AdminProtected><AdminProductDetailPage></AdminProductDetailPage> </AdminProtected>
+    element: (
+      <AdminProtected>
+        <AdminProductDetailPage></AdminProductDetailPage>{" "}
+      </AdminProtected>
+    ),
   },
   {
     path: "/admin/product-form",
-    element: <AdminProtected><AdminProductFormPage></AdminProductFormPage> </AdminProtected>
+    element: (
+      <AdminProtected>
+        <AdminProductFormPage></AdminProductFormPage>{" "}
+      </AdminProtected>
+    ),
   },
   {
     path: "/admin/product-form/edit/:id",
-    element: <AdminProtected><AdminProductFormPage></AdminProductFormPage> </AdminProtected>
+    element: (
+      <AdminProtected>
+        <AdminProductFormPage></AdminProductFormPage>{" "}
+      </AdminProtected>
+    ),
   },
   {
     path: "/admin/orders",
-    element: <AdminProtected><AdminOrdersPage></AdminOrdersPage> </AdminProtected>
+    element: (
+      <AdminProtected>
+        <AdminOrdersPage></AdminOrdersPage>{" "}
+      </AdminProtected>
+    ),
   },
   {
     path: "*",
@@ -110,12 +150,29 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App(){
+function App() {
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
+  const UserStatus = useSelector(selectUserStatus);
+
+  useEffect(() => {
+    dispatch(checkAuthAsync());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    if(user){
+      console.log("Prouductlist called :", user);
+      dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchLoggedInUserAsync());
+    }
+  }, [dispatch,user]);
+
   return (
     <>
-      <Provider store={store}>
-        <RouterProvider router={router}></RouterProvider>
-      </Provider>
+    {console.log("USer :",user)}
+    {UserStatus && 
+      <RouterProvider router={router} />
+    }
     </>
   );
 }

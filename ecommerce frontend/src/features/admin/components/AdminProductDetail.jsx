@@ -3,6 +3,7 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import GridLoader from "react-spinners/GridLoader";
 import { selectProduct , fetchProductByIdAsync } from "../../product/productSlice";
 import { addToCartAsync } from "../../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,14 @@ const sizes = [
   { name: "2XL", inStock: true },
   { name: "3XL", inStock: true },
 ];
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
 
 const highlights = [
   "Hand cut and sewn locally",
@@ -65,6 +74,7 @@ export default function AdminProductDetail() {
 
   return (
     <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
+    {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
       {product ? (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
