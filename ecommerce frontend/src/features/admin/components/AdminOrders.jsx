@@ -70,8 +70,11 @@ export default function AdminOrders() {
   };
 
   return (
-    <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
-      <table className="w-full min-w-max table-auto text-left">
+    <div className=" bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
+    <div className=" overflow-x-auto ">
+
+ 
+      <table className=" w-full min-w-max table-auto text-left">
         <thead className="bg-gray-300">
           <tr className="text-lg font-semibold">
             <th
@@ -143,8 +146,8 @@ export default function AdminOrders() {
 
         <tbody>
           {orders.map((order) => (
-            <tr key={order.id}>
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+            <tr key={order.id} className=" border-b-2 border-gray-300">
+              <td className="p-4 py-6 ">
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col">
                     <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
@@ -153,13 +156,13 @@ export default function AdminOrders() {
                   </div>
                 </div>
               </td>
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+              <td className="p-4 py-6 ">
                 {order.cart.map((item) => (
                   <div key={item.id} className="mb-2 flex items-center gap-6 ">
                     <img
                       src={item.product.thumbnail}
                       alt={item.product.title}
-                      className="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md"
+                      className="inline-block relative object-cover object-center !rounded-full w-9 h-9"
                     />
                     <div className="flex flex-col">
                       <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
@@ -170,7 +173,7 @@ export default function AdminOrders() {
                 ))}
               </td>
 
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+              <td className="p-4 py-6 ">
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col">
                     <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
@@ -189,7 +192,7 @@ export default function AdminOrders() {
                 </div>
               </td>
 
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+              <td className="p-4 py-6 ">
                 {order.cart.map((item) => (
                   <div key={item.id} className="mb-2 flex items-center gap-6 ">
                     <div className="flex flex-col">
@@ -201,7 +204,7 @@ export default function AdminOrders() {
                 ))}
               </td>
 
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+              <td className="p-4 py-6 ">
                 {order.cart.map((item) => (
                   <div key={item.id} className="mb-2 flex items-center gap-6 ">
                     <div className="flex flex-col">
@@ -213,7 +216,7 @@ export default function AdminOrders() {
                 ))}
               </td>
 
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+              <td className="p-4 py-6 ">
                 <div className="flex flex-col">
                   <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
                     {order.totalAmount}
@@ -221,7 +224,7 @@ export default function AdminOrders() {
                 </div>
               </td>
 
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+              <td className="p-4 py-6 ">
                 <div className="w-max">
                   {editableStatusId === order.id ? (
                     <select
@@ -246,7 +249,7 @@ export default function AdminOrders() {
                 </div>
               </td>
 
-              <td className="p-4 py-6 border-b border-blue-gray-50">
+              <td className="p-4 py-6 ">
                 <button
                   className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
                   type="button"
@@ -274,8 +277,9 @@ export default function AdminOrders() {
           ))}
         </tbody>
       </table>
+      </div>
 
-      <div className="mt-8">
+      <div className="mt-8 overflow-x-hidden">
         <Pagination
           handlePagination={handlePagination}
           pagination={pagination}

@@ -27,7 +27,7 @@ export function fetchProductsByFilter({filter,sort,pagination,admin}) {
     }
 
     return new Promise(async (resolve) =>{
-        const response = await fetch(`http://localhost:8080/products?${queryString}`)
+        const response = await fetch(`/products?${queryString}`)
         const data = await response.json()
         const totalItems = await response.headers.get('X-Total-Count')
         resolve({data:{products:data,totalItems:totalItems}})
@@ -37,7 +37,7 @@ export function fetchProductsByFilter({filter,sort,pagination,admin}) {
 
 export  function fetchCategories() {
     return new Promise(async (resolve) =>{
-        const response = await fetch('http://localhost:8080/categories')
+        const response = await fetch('/categories')
         const data = await response.json()
         // console.log("cate",data);
         resolve({data})
@@ -46,7 +46,7 @@ export  function fetchCategories() {
 
 export  function fetchBrands() {
     return new Promise(async (resolve) =>{
-        const response = await fetch('http://localhost:8080/brands')
+        const response = await fetch('/brands')
         const data = await response.json()
         // console.log("brand :",data);
         resolve({data})
@@ -56,7 +56,7 @@ export  function fetchBrands() {
 export  function fetchProductById(id) {
     console.log('fetchProductById called with id:', id);
     return new Promise(async (resolve,reject) =>{
-        const response = await fetch('http://localhost:8080/products/'+id);
+        const response = await fetch('/products/'+id);
         if(response.ok){
             const data = await response.json()
             resolve({data})
@@ -71,7 +71,7 @@ export  function fetchProductById(id) {
 
 export  function addProduct(productData) {
     return new Promise(async (resolve) =>{
-        const response = await fetch('http://localhost:8080/products/',{
+        const response = await fetch('/products/',{
             method:"POST",
             headers:{
                 "Content-Type": "application/json"
@@ -85,7 +85,7 @@ export  function addProduct(productData) {
 
 export function updateProduct(product){
     return new Promise(async (resolve)=>{
-        const response = await fetch('http://localhost:8080/products/'+product.id,{
+        const response = await fetch('/products/'+product.id,{
             method:"PATCH",
             headers:{
                 "Content-Type":"application/json"

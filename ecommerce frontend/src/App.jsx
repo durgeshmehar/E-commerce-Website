@@ -25,9 +25,9 @@ import { useEffect } from "react";
 import { checkAuthAsync, selectLoggedInUser, selectUserStatus } from "./features/auth/authSlice";
 import {
   fetchLoggedInUserAsync,
-  selectUserInfo,
 } from "./features/user/userSlice";
 import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
+import StripeCheckout from "./pages/StripeCheckout";
 
 const router = createBrowserRouter([
   {
@@ -142,6 +142,14 @@ const router = createBrowserRouter([
       <AdminProtected>
         <AdminOrdersPage></AdminOrdersPage>{" "}
       </AdminProtected>
+    ),
+  },
+  {
+    path: "/stripe-checkout/",
+    element: (
+      <Protected>
+        <StripeCheckout></StripeCheckout>
+      </Protected>
     ),
   },
   {

@@ -13,7 +13,7 @@ export function OrderSuccessPage() {
   useEffect(() => {
     dispatch(resetCartAsync())
     dispatch(resetOrder())
-  },[dispatch])
+  },[])
 
   return (
     <>

@@ -2,7 +2,6 @@ const { User } = require('../model/User');
 const crypto = require('crypto');
 const { sanitiseUser } = require('../services/common');
 const jwt = require('jsonwebtoken');
-const { serializeUser } = require('passport');
 const SECRET_KEY = "SECRET_KEY";
 
 
@@ -26,9 +25,10 @@ exports.createUser = async (req,res)=>{
 }
 
 exports.loginUser = async (req,res)=>{
-    console.log("User Logged In Successfully :",req.user)
-    console.log("User Logged In Successfully token:",req.user.token)
-    res.cookie('jwt',req.user.token,{expires:new Date(Date.now()+ 60*60*1000),httpOnly:true}).status(200).json(req.user.token);
+    const user = req.user;
+    console.log("User Logged In Successfully :",user)
+    console.log("User Logged In Successfully token:",user.token)
+    res.cookie('jwt',req.user.token,{expires:new Date(Date.now()+ 60*60*1000),httpOnly:true}).status(200).json({id:user.id,role:user.role});
 }
 
 exports.checkAuth = async (req,res)=>{
