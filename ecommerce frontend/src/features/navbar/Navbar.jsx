@@ -13,7 +13,6 @@ import logo from "../../Images/logo.png";
 
 const navigation = [
   { name: "Products", link: "/", user: true },
-  { name: "Team", link: "#", user: true },
   { name: "Products", link: "/admin", admin: true },
   { name: "Orders", link: "/admin/orders", admin: true },
 ];
