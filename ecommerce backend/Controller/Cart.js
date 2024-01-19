@@ -44,7 +44,7 @@ exports.deleteFromCart = async (req, res) => {
       const {id }= req.params;
       console.log("req.params :",req.params)
       const doc = await Cart.findByIdAndDelete(id)
-      console.log("DAta of backend:",{doc})
+      console.log("Data of backend:",{doc})
       res.status(200).json(doc);
     }
     catch(err){
