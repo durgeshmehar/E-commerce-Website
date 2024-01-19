@@ -22,6 +22,7 @@ const AuthRouter = require("./routes/Auth");
 const CartRouter = require("./routes/Carts");
 const OrderRouter = require("./routes/Orders");
 const { User } = require("./model/User");
+const { Order } = require("./model/Order");
 
 var opts = {};
 opts.jwtFromRequest = cookieExtractor;
@@ -32,11 +33,10 @@ opts.secretOrKey = process.env.JWT_SECRET_KEY ;
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 const endpointSecret = process.env.ENDPOINT_SECRET;
 
-server.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
+server.post('/webhook', express.raw({type: 'application/json'}), async(request, response) => {
   const sig = request.headers['stripe-signature'];
 
   let event;
-
   try {
     event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
@@ -48,8 +48,10 @@ server.post('/webhook', express.raw({type: 'application/json'}), (request, respo
   switch (event.type) {
     case 'payment_intent.succeeded':
       const paymentIntentSucceeded = event.data.object;
+      const order = await Order.findById(paymentIntentSucceeded.metadata.orderId);
+      order.paymentStatus = "received";
+      await order.save();
       console.log('PaymentIntent :',{paymentIntentSucceeded});
-      // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
     default:

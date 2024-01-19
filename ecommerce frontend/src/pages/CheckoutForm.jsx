@@ -80,7 +80,6 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      {alert("For testing use card number: 4000003560000008 , country: India , ( Exp date , CVC can be any)")}
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
@@ -88,6 +87,7 @@ export default function CheckoutForm() {
         </span>
       </button>
       {message && <div id="payment-message">{message}</div>}
+      {alert("For testing use card number: 4000003560000008 , country: India , ( Exp date , CVC can be any)")}
     </form>
   );
 }
