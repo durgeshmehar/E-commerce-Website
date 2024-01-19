@@ -66,8 +66,8 @@ export default function CheckoutForm() {
 
     console.log("print Error: ", error);
     if (error.type === "card_error" || error.type === "validation_error") {
-      alert("For testing use card number:4000003560000008 , country: India , ( Exp date , CVC can be any)")
       setMessage(error.message);
+      alert("For testing use card number: 4000003560000008 , country: India , ( Exp date , CVC can be any)")
     } else {
       setMessage("An unexpected error occurred.");
     }
@@ -80,6 +80,7 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      {alert("For testing use card number: 4000003560000008 , country: India , ( Exp date , CVC can be any)")}
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
