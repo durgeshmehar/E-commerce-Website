@@ -60,7 +60,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `/order-success/${currentOrder.id}`,
+        return_url: `https://durgesheshop.vercel.app/order-success/${currentOrder.id}`,
       },
     });
 
