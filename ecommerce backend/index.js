@@ -158,7 +158,7 @@ passport.deserializeUser(function (data, done) {
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 server.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
+  const { items ,orderId} = req.body;
 
   console.log("Items :", items);
   const paymentIntent = await stripe.paymentIntents.create({
@@ -168,6 +168,9 @@ server.post("/create-payment-intent", async (req, res) => {
     automatic_payment_methods: {
       enabled: true,
     },
+    metadata: {
+      orderId
+    }
   });
 
   res.send({
