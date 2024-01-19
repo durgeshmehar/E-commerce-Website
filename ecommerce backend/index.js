@@ -89,7 +89,7 @@ server.use("/auth", AuthRouter.router);
 server.use("/cart",isAuth(), CartRouter.router);
 server.use("/orders",isAuth(), OrderRouter.router);
 
-server.get('*',(req,res)=>res.sendFile(path.resolve('build','index.html')))
+server.get('*',(req,res)=>res.sendFile(path.resolve(__dirname,'build','index.html')))
 
 // passport setup
 
