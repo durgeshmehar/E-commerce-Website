@@ -7,13 +7,23 @@ import {
 } from "@stripe/react-stripe-js";
 import { selectCurrentOrder } from "../features/order/orderSlice";
 
-export default function CheckoutForm() {
+export default function StripeCheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const currentOrder = useSelector(selectCurrentOrder);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      alert(
+        "For testing use \ncard number: 4000003560000008 , country: India , ( Exp date , CVC can be any)"
+      );
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   useEffect(() => {
     if (!stripe) {
@@ -67,7 +77,9 @@ export default function CheckoutForm() {
     console.log("print Error: ", error);
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
-      alert("For testing use card number: 4000003560000008 , country: India , ( Exp date , CVC can be any)")
+      alert(
+        "For testing use card number: 4000003560000008 , country: India , ( Exp date , CVC can be any)"
+      );
     } else {
       setMessage("An unexpected error occurred.");
     }
@@ -79,15 +91,20 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
-      </button>
-      {message && <div id="payment-message">{message}</div>}
-      {alert("For testing use card number: 4000003560000008 , country: India , ( Exp date , CVC can be any)")}
-    </form>
+    <div className=" h-[60vh] flex items-center justify-center">
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+        <button disabled={isLoading || !stripe || !elements} id="submit">
+          <span id="button-text">
+            {isLoading ? (
+              <div className="spinner" id="spinner"></div>
+            ) : (
+              "Pay now"
+            )}
+          </span>
+        </button>
+        {message && <div id="payment-message">{message}</div>}
+      </form>
+    </div>
   );
 }

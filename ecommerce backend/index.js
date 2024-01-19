@@ -65,7 +65,7 @@ server.post('/webhook', express.raw({type: 'application/json'}), async(request, 
 
 // server.use(express.raw({type: 'application/json'}))
 server.use(express.json());
-server.use(express.static(path.resolve(__dirname, 'build')));
+// server.use(express.static(path.resolve(__dirname, 'build')));
 server.use(cookiParser());
 server.use(
   cors({
@@ -187,5 +187,5 @@ async function main() {
 }
 
 server.listen(process.env.PORT, () => {
-  console.log("Server is running...");
+  console.log(`Server is running at ${process.env.PORT} ...`);
 });
