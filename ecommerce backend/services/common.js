@@ -1,4 +1,6 @@
 const passport = require("passport");
+const nodemailer = require("nodemailer");
+
 
 exports.isAuth = (req, res, done) => {
     return passport.authenticate('jwt')
@@ -13,7 +15,25 @@ exports.cookieExtractor = (req)=>{
     if(req && req.cookies){
         token = req.cookies['jwt'];
     }
-    //token admin
-    // token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YTU5NjRiMmM1MTIzNmNlYjE5NzVkZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwNTU4MzMzMX0.kNKyZ0gTI55XWF6t9NzztPJSeawzJrVovXZ7Rj_Jn9E"
     return token;
 }
+
+//nodemailer
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "durgesh7840963569@gmail.com",
+      pass: process.env.EMAIL_PASSWORD,
+    },
+});
+
+//email sending
+exports.sendMail= async({to , subject , text , html})=> {
+    const info = await transporter.sendMail({
+      from: '"E-Shop 🛒" <Eshoporders@gmail.com>',
+      to , subject , text , html
+    });
+    return info;
+};

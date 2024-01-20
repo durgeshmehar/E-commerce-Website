@@ -50,7 +50,6 @@ exports.fetchProductById = async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await Product.findById(id)
-    console.log("Product findById at backend :",doc);
     res.status(200).json(doc);
   }
   catch(err){

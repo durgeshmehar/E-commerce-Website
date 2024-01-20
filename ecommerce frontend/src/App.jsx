@@ -28,6 +28,7 @@ import {
 } from "./features/user/userSlice";
 import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 import StripeCheckout from "./pages/StripeCheckout";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPasswordPage />,
   },
   {
     path: "/admin",

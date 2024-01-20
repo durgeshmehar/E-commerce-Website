@@ -14,7 +14,6 @@ exports.addToCart = async (req, res) => {
 
 exports.fetchCartsByUser = async (req, res) => {
     const {id } = req.user;
-    console.log("User cart info :",req.user)
     try{
       const cartItems = await Cart.find({user:id}).populate('product').populate('user').exec();
       res.status(200).json(cartItems);
@@ -28,9 +27,7 @@ exports.fetchCartsByUser = async (req, res) => {
 exports.updateCart= async (req, res) => {
     try{
       const {id} = req.params ;
-      console.log("DAta of backend Id:",{id})
       const doc = await Cart.findByIdAndUpdate(id,req.body,{new:true}).populate('product').populate('user').exec();
-      console.log("DAta of backend:",{doc})
       res.status(200).json(doc);
     }
     catch(err){
@@ -42,9 +39,7 @@ exports.updateCart= async (req, res) => {
 exports.deleteFromCart = async (req, res) => {
     try{
       const {id }= req.params;
-      console.log("req.params :",req.params)
       const doc = await Cart.findByIdAndDelete(id)
-      console.log("Data of backend:",{doc})
       res.status(200).json(doc);
     }
     catch(err){

@@ -4,14 +4,23 @@ import { Link } from "react-router-dom";
 import { loginUserAsync } from "../authSlice";
 import { useForm } from "react-hook-form";
 import logo from "../../../Images/logo.png";
+import { selectMailSent ,resetPasswordRequestAsync} from "../authSlice";
 
-export default function Login() {
+export default function ForgotPassword() {
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
+
+  const dispatch = useDispatch();
+  const mailSent = useSelector(selectMailSent);
+
+  const handleSendEmail =(data)=>{
+    console.log(data);
+    dispatch(resetPasswordRequestAsync(data))
+  }
 
   return (
     <>
@@ -32,7 +41,7 @@ export default function Login() {
             noValidate
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
-                console.log("Forgot Password data :",data)
+                handleSendEmail(data);
             })}
           >
             <div>
@@ -58,6 +67,9 @@ export default function Login() {
                 />
                 {errors.email && (
                   <p className="text-red-500">{errors.email.message}</p>
+                )}
+                {mailSent && (
+                  <p className="text-green-500 my-2">Mail Sent</p>
                 )}
               </div>
             </div>

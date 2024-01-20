@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 const express = require("express");
 const server = express();
 const mongoose = require("mongoose");
@@ -26,42 +26,46 @@ const { Order } = require("./model/Order");
 
 var opts = {};
 opts.jwtFromRequest = cookieExtractor;
-opts.secretOrKey = process.env.JWT_SECRET_KEY ;
-
+opts.secretOrKey = process.env.JWT_SECRET_KEY;
 
 //webhook
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 const endpointSecret = process.env.ENDPOINT_SECRET;
 
-server.post('/webhook', express.raw({type: 'application/json'}), async(request, response) => {
-  const sig = request.headers['stripe-signature'];
+server.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  async (request, response) => {
+    const sig = request.headers["stripe-signature"];
 
-  let event;
-  try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-  } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
-    return;
+    let event;
+    try {
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case "payment_intent.succeeded":
+        const paymentIntentSucceeded = event.data.object;
+        const order = await Order.findById(
+          paymentIntentSucceeded.metadata.orderId
+        );
+        order.paymentStatus = "received";
+        await order.save();
+        console.log("PaymentIntent :", { paymentIntentSucceeded });
+        break;
+      // ... handle other event types
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
   }
-
-  // Handle the event
-  switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntentSucceeded = event.data.object;
-      const order = await Order.findById(paymentIntentSucceeded.metadata.orderId);
-      order.paymentStatus = "received";
-      await order.save();
-      console.log('PaymentIntent :',{paymentIntentSucceeded});
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
-
-  // Return a 200 response to acknowledge receipt of the event
-  response.send();
-});
-
+);
 
 // server.use(express.raw({type: 'application/json'}))
 server.use(express.json());
@@ -84,56 +88,62 @@ server.use(
 server.use(passport.authenticate("session"));
 
 server.use("/products", isAuth(), ProductsRouter.router);
-server.use("/categories",isAuth(), CategoriesRouter.router);
-server.use("/brands",isAuth(), BrandsRouter.router);
-server.use("/users",isAuth(), UsersRouter.router);
+server.use("/categories", isAuth(), CategoriesRouter.router);
+server.use("/brands", isAuth(), BrandsRouter.router);
+server.use("/users", isAuth(), UsersRouter.router);
 server.use("/auth", AuthRouter.router);
-server.use("/cart",isAuth(), CartRouter.router);
-server.use("/orders",isAuth(), OrderRouter.router);
+server.use("/cart", isAuth(), CartRouter.router);
+server.use("/orders", isAuth(), OrderRouter.router);
 
-server.get('*',(req,res)=>res.sendFile(path.resolve(__dirname,'build','index.html')))
+
+//build file routing
+server.get("*", (res) =>
+  res.sendFile(path.resolve(__dirname, "build", "index.html"))
+);
 
 // passport setup
 
-passport.use('local',
+passport.use(
+  "local",
   new LocalStrategy(
     {
       usernameField: "email",
     },
     async function (email, password, done) {
-    try {
-      const user = await User.findOne({ email: email });
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      }
-      const hashPassword = crypto.pbkdf2Sync(
-        password,
-        user.salt,
-        1000,
-        32,
-        "sha256"
+      try {
+        const user = await User.findOne({ email: email });
+        if (!user) {
+          return done(null, false, { message: "Incorrect username" });
+        }
+        const hashPassword = crypto.pbkdf2Sync(
+          password,
+          user.salt,
+          1000,
+          32,
+          "sha256"
         );
-        
-      if (!crypto.timingSafeEqual(hashPassword, user.password)) {
-        console.log("Incorrect password");
-        return done(null, false, { message: "Incorrect password" });
+
+        if (!crypto.timingSafeEqual(hashPassword, user.password)) {
+          console.log("Incorrect password");
+          return done(null, false, { message: "Incorrect password" });
+        }
+        console.log("Correct password");
+        const token = jwt.sign(sanitiseUser(user), process.env.JWT_SECRET_KEY);
+        console.log("token :", token);
+        return done(null, { ...sanitiseUser(user), token });
+      } catch (err) {
+        done(err);
       }
-      console.log("Correct password");
-      const token = jwt.sign(sanitiseUser(user), process.env.JWT_SECRET_KEY);
-      console.log("token :",token)
-      return done(null, {...sanitiseUser(user),token});
-    } catch (err) {
-      done(err);
     }
-  })
+  )
 );
 
 passport.use(
-'jwt',
-  new JwtStrategy(opts,async function (jwt_payload, done) {
+  "jwt",
+  new JwtStrategy(opts, async function (jwt_payload, done) {
     console.log("JWT Payload :", jwt_payload);
     try {
-      const user =await User.findById(jwt_payload.id);
+      const user = await User.findById(jwt_payload.id);
       if (user) {
         return done(null, user);
       } else {
@@ -160,25 +170,27 @@ passport.deserializeUser(function (data, done) {
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 server.post("/create-payment-intent", async (req, res) => {
-  const { items ,orderId} = req.body;
+  const { items, orderId } = req.body;
 
   console.log("Items :", items);
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: items.totalAmount*100,
+    amount: items.totalAmount * 100,
     currency: "inr",
     description: "This payment about to test my product checkout",
     automatic_payment_methods: {
       enabled: true,
     },
     metadata: {
-      orderId
-    }
+      orderId,
+    },
   });
 
   res.send({
     clientSecret: paymentIntent.client_secret,
   });
 });
+
+
 
 // Database connection
 main().catch((err) => console.log(err));

@@ -9,12 +9,14 @@ function Logout() {
 
     useEffect( ()=>{
       if(user){
+        
         dispatch(signOutAsync());
       }
     },[dispatch,user])
 
   return (
-    <>
+    <> 
+    {console.log("User Logout:",user)}
        {!user && <Navigate to="/login" replace={true} />}
     </>
   )
