@@ -112,6 +112,7 @@ export const authSlice = createSlice({
           .addCase(signOutAsync.fulfilled, (state) => {
             state.status = 'idle';
             state.loggedInUserToken = null;
+            state.error = null;
           })
           .addCase(checkAuthAsync.pending, (state) => {
             state.status = 'loading';

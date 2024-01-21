@@ -79,11 +79,11 @@ export default function AdminOrders() {
   };
 
   return (
-    <div className=" bg-white mx-auto max-w-[98%]  md:max-w-[95%] lg:max-w-[75%]  mt-4 pb-1 ">
-      <div className=" overflow-x-auto ">
+    <div className="  mx-auto max-w-[98%]  md:max-w-[95%] lg:max-w-[80%]  mt-4 pb-1 mb-44">
+      <div className=" overflow-x-auto bg-white">
         <table className=" w-full table-auto text-left">
           <thead className="bg-gray-300">
-            <tr className="text-lg font-semibold">
+            <tr className="text-lg font-semibold align-top ">
               <th
                 className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
@@ -165,6 +165,36 @@ export default function AdminOrders() {
               >
                 Payment Status
                 {sort._sort === "paymentStatus" && sort._order === "desc" ? (
+                  <ArrowDownIcon className="inline w-4 h-4" />
+                ) : (
+                  <ArrowUpIcon className="inline w-4 h-4" />
+                )}
+              </th>
+
+              <th
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                onClick={() => {
+                  const order = sort._order === "asc" ? "desc" : "asc";
+                  handleSort({ sort: "createdAt", order: order });
+                }}
+              >
+                Order Time
+                {sort._sort === "createdAt" && sort._order === "desc" ? (
+                  <ArrowDownIcon className="inline w-4 h-4" />
+                ) : (
+                  <ArrowUpIcon className="inline w-4 h-4" />
+                )}
+              </th>
+
+              <th
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                onClick={() => {
+                  const order = sort._order === "asc" ? "desc" : "asc";
+                  handleSort({ sort: "updatedAt", order: order });
+                }}
+              >
+                Last Updated
+                {sort._sort === "updatedAt" && sort._order === "desc" ? (
                   <ArrowDownIcon className="inline w-4 h-4" />
                 ) : (
                   <ArrowUpIcon className="inline w-4 h-4" />
@@ -328,6 +358,22 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
+                <td className="p-4 py-6 ">
+                  <div className="flex flex-col">
+                    <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
+                      {order.createdAt?new Date(order.createdAt).toLocaleString() :null }
+                    </p>
+                  </div>
+                </td>
+
+                <td className="p-4 py-6 ">
+                  <div className="flex flex-col">
+                    <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
+                      {order.updatedAt ?new Date(order.updatedAt).toLocaleString() :null }
+                    </p>
+                  </div>
+                </td>
+
                 <td className="p-4 py-6">
                   <div className="flex gap-2">
                     <button
@@ -361,7 +407,7 @@ export default function AdminOrders() {
         </table>
       </div>
 
-      <div className="mt-8 overflow-x-hidden">
+      <div className="my-8 overflow-x-hidden">
         <Pagination
           handlePagination={handlePagination}
           pagination={pagination}

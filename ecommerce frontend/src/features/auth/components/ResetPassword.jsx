@@ -129,7 +129,6 @@ export default function ResetPassword() {
               to="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              {" "}
               Login
             </Link>
           </p>

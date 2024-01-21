@@ -4,6 +4,7 @@ import { selectUserInfo } from "../user/userSlice";
 
 function Protected({children}) {
     const userInfo = useSelector(selectUserInfo);
+    
     if(!userInfo){
         return <Navigate to="/login" replace={true} />
     }

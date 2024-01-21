@@ -1,0 +1,18 @@
+.react-alert {
+  text-transform: none !important;
+}
+#__react-alert__ div div div {
+  /* width: auto !important; */
+  -webkit-box-flex: 3;
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  text-transform: initial !important;
+  font: inherit !important;
+  padding: 8px 10px;
+  color: white !important;
+  /* color: #a5f2c6 !important; */
+  background-color: #2d453d !important;
+  font-weight: 600 !important;
+}
+

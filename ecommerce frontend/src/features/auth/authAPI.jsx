@@ -34,23 +34,7 @@ export function loginUser(loginInfo) {
     }
   });
 }
-export function checkAuth() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const response = await fetch("/auth/check");
 
-      if (response.ok) {
-        const data = await response.json();
-        resolve({ data });
-      } else {
-        const err = await response.text();
-        reject(err);
-      }
-    } catch (err) {
-      reject({ err });
-    }
-  });
-}
 export function resetPasswordRequest(email) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -98,6 +82,24 @@ export function resetPassword(data) {
       }
     } catch (err) {
       console.log("ResetPassword error at authApi catch: ", err);
+      reject({ err });
+    }
+  });
+}
+
+export function checkAuth() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch("/auth/check");
+
+      if (response.ok) {
+        const data = await response.json();
+        resolve({ data });
+      } else {
+        const err = await response.text();
+        reject(err);
+      }
+    } catch (err) {
       reject({ err });
     }
   });

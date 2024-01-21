@@ -314,7 +314,7 @@ export default function CheckoutPage() {
                   </p>
                   <div>
                     <ul role="list" className="divide-y divide-gray-100">
-                      {userInfo.addresses &&
+                      {userInfo && userInfo.addresses &&
                         userInfo.addresses.map((address, index) => (
                           <li
                             key={index}

@@ -1,4 +1,6 @@
 const { Order } = require("../model/Order");
+const { User } = require("../model/User");
+const { sendMail,invoiceTemplate } = require("../services/common");
 
 exports.fetchOrdersByUser = async (req, res) => {
   const { id } = req.user;
@@ -12,11 +14,15 @@ exports.fetchOrdersByUser = async (req, res) => {
 };
 
 exports.createOrder = async (req, res) => {
+  const order = new Order(req.body);
   try {
-    const order = new Order(req.body);
-    const doc = await order.save();
-    const result = await doc.populate('user')
-    console.log("createOrder response :",result)
+    const result = await order.save();
+    const user = await User.findById(order.user)
+
+    console.log("order: ",order)
+    console.log("user: ",user)
+    // console.log("invoiceTemplate: ",invoiceTemplate(order));
+   sendMail({to:user.email, subject:"Your Order is Placed Successfully.",text:"Your Order is placed.", html:invoiceTemplate(order)})
     res.status(201).json(result);
   } catch (err) {
     res.status(400).json(err);
@@ -35,7 +41,6 @@ exports.updateOrder= async (req, res) => {
     res.status(400).json(err);
   }
 }
-
 
 exports.deleteOrder = async (req, res) => {
   try{

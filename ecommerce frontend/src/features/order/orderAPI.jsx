@@ -1,6 +1,7 @@
 export function createOrder(order) {
     return new Promise(async (resolve) =>{
-        const response = await fetch('/orders',{
+        console.log("sending data :",order);
+        const response = await fetch(`/orders`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

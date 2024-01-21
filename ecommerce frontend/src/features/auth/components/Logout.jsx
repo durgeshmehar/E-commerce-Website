@@ -9,7 +9,7 @@ function Logout() {
 
     useEffect( ()=>{
       if(user){
-        
+        console.log("User Logout.jsx called:",user)
         dispatch(signOutAsync());
       }
     },[dispatch,user])
