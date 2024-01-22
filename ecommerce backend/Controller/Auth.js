@@ -6,6 +6,10 @@ const SECRET_KEY = "SECRET_KEY";
 
 exports.createUser = async (req, res) => {
   try {
+    const olduser = await User.findOne({ email: req.body.email });
+    if(olduser && olduser.role){
+      res.status(400).json({ message: "User already exists" });
+    }
     const salt = crypto.randomBytes(16);
     const hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 32, "sha256");
     const user = new User({ ...req.body, salt, password: hash });
@@ -26,7 +30,7 @@ exports.createUser = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: "Try again !!" });
   }
 };
 
@@ -78,12 +82,12 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  res
-    .cookie("jwt", null, {
-      expires: new Date(Date.now()),
-      httpOnly: true,
-    })
-    .sendStatus(200);
+  try {
+    res.cookie("jwt", "", { expires: new Date(0), httpOnly: true });
+    res.sendStatus(200);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 exports.checkAuth = async (req, res) => {
