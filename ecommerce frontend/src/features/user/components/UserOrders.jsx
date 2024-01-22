@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo, selectUserInfoStatus, selectUserOrder } from "../userSlice";
 import { fetchLoggedInUserOrdersAsync } from "../userSlice";
 import { Link } from "react-router-dom";
-import { discountedPrice } from "../../../app/constants";
 import GridLoader from "react-spinners/GridLoader";
 
 
@@ -64,7 +63,7 @@ export default function UserOrders() {
                             <h3>
                               <a href={item.product.thumbnail}>{item.product.title}</a>
                             </h3>
-                            <p className="ml-4">{discountedPrice(item.product)}</p>
+                            <p className="ml-4">{ item.product.DiscountPrice}</p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
                             {item.product.brand}

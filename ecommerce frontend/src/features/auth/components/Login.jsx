@@ -21,7 +21,6 @@ export default function Login() {
 
   return (
     <>
-      {console.log("User in Login.jsx :", user)}
       {user && <Navigate to="/" ></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -39,7 +38,6 @@ export default function Login() {
               dispatch(
                 loginUserAsync({ email: data.email, password: data.password })
               );
-              console.log("data :", data);
             })}
           >
             <div>

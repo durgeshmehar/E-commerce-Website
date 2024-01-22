@@ -174,7 +174,6 @@ function App() {
   
   useEffect(() => {
     if(user){
-      console.log("Prouductlist called :", user);
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchLoggedInUserAsync());
     }
@@ -182,7 +181,6 @@ function App() {
 
   return (
     <>
-    {console.log("USer :",user)}
     {UserStatus && 
       <RouterProvider router={router} />
     }

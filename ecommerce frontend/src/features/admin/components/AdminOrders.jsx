@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
+import { ITEMS_PER_PAGE } from "../../../app/constants";
 import {
   fetchAllOrdersAsync,
   selectOrders,
@@ -35,23 +35,18 @@ export default function AdminOrders() {
   };
 
   const handleShow = (order) => {
-    console.log("handleShow :", order);
   };
   const handleEdit = (order) => {
     setEditableStatusId(order.id);
   };
 
   const handleOrderStatus = (e, order) => {
-    console.log("e.target.value :", e.target.value);
     const newOrder = { ...order, status: e.target.value };
-    console.log("Order at function:", newOrder);
     dispatch(updateOrderAsync(newOrder));
     setEditableStatusId(-1);
   };
   const handleOrderPaymentStatus = (e, order) => {
-    console.log("e.target.value :", e.target.value);
     const newOrder = { ...order, paymentStatus: e.target.value };
-    console.log("Order at function:", newOrder);
     dispatch(updateOrderAsync(newOrder));
     setEditableStatusId(-1);
   };
@@ -281,7 +276,7 @@ export default function AdminOrders() {
                     >
                       <div className="flex flex-col">
                         <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
-                          {discountedPrice(item.product)}
+                          {item.product.DiscountPrice}
                         </p>
                       </div>
                     </div>

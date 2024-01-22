@@ -28,11 +28,11 @@ import {
   ChevronRightIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
+import { ITEMS_PER_PAGE } from "../../../app/constants";
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc" },
-  { name: "Price: Low to High", sort: "price", order: "asc" },
-  { name: "Price: High to Low", sort: "price", order: "desc" },
+  { name: "Price: Low to High", sort: "DiscountPrice", order: "asc" },
+  { name: "Price: High to Low", sort: "DiscountPrice", order: "desc" },
 ];
 
 
@@ -80,7 +80,6 @@ export default function ProductList() {
   ];
 
   useEffect(() => {
-    // console.log("useeffect sort pagination :",sort,pagination)
     dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
   }, [dispatch, filter, sort, pagination]);
 
@@ -428,7 +427,7 @@ export function ProductGrid({ products,status }) {
                 <div className="p-4">
                   <div className="flex justify-between font-medium">
                     <div className="font-normal"> {product.title} </div>{" "}
-                    <div>${discountedPrice(product)}</div>
+                    <div>${product.DiscountPrice}</div>
                   </div>
                   <div className="flex justify-between font-medium py-[2px]">
                     <div>

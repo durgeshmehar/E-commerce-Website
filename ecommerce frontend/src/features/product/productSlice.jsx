@@ -35,7 +35,6 @@ export const fetchBrandsAsync = createAsyncThunk(
 export const fetchProductByIdAsync = createAsyncThunk(
     'product/fetchProductById',
     async(id) => {
-        console.log("id at slice :",id);
         const response = await fetchProductById(id);
         return response.data;
     }

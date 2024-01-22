@@ -8,10 +8,8 @@ export function fetchLoggedInUserOrders() {
 }
 export function fetchLoggedInUser() {
     return new Promise(async (resolve) =>{
-        console.log("Calling to fetchLoggedInUser =>");
         const response = await fetch('/users/own')
         const data = await response.json()
-        console.log("data at userAPI fetchLoggedInUser:", data);
         resolve({data})
     });
 }

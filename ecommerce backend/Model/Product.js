@@ -12,16 +12,23 @@ const ProductSchema = new Schema({
     category:{type:String,required:true},
     thumbnail:{type:String,required:true},
     images:{type:[String],required:true},
+    DiscountPrice:{type:Number},
     colors:{type:[Schema.Types.Mixed]},
     sizes:{type:[Schema.Types.Mixed]},
     highlights:{type:[String]},
     deleted:{type:Boolean,default:false},
 })
 
-const virtual = ProductSchema.virtual('id');
-virtual.get(function(){
+const virtualId = ProductSchema.virtual('id');
+virtualId.get(function(){
     return this._id;
 })
+
+// const virtualDiscountPrice = ProductSchema.virtual('DiscountPrice');
+// virtualDiscountPrice.get(function(){
+//     return Math.round(this.price*(1-this.discountPercentage/100));
+// })
+
 ProductSchema.set('toJSON',{virtuals:true,
     versionKey:false,
     transform:function(doc,ret){delete ret._id}})

@@ -16,7 +16,6 @@ export function fetchItemsByUserId(){
     return new Promise( async( resolve)=>{
       const response = await fetch("/cart") 
       const data = await response.json();
-      console.log("data at server:",data);
       resolve({data});
     })
 }
@@ -43,7 +42,6 @@ export function deleteItemFromCart(itemId){
             },
         })
         const data = await response.json();
-        console.log("DAta of backend at frontend :",{data})
         resolve({data:{id:itemId}});
     })
 }

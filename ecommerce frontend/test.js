@@ -1921,11 +1921,11 @@ const products = [
   },
 ];
 
-console.log();
-const categories = [...new Set([...products.map((p) => p.category)])];
-// console.log(categories.map(c=>({value:c,label:c.split('-').join(' ') ,checked:false})))
+// console.log();
+// const categories = [...new Set([...products.map((p) => p.category)])];
+// // console.log(categories.map(c=>({value:c,label:c.split('-').join(' ') ,checked:false})))
 
-const brand = [...new Set([...products.map((p) => p.brand)])];
+// const brand = [...new Set([...products.map((p) => p.brand)])];
 // console.log(
 //   brand.map((c) => ({
 //     value: c,
@@ -1937,4 +1937,4 @@ const brand = [...new Set([...products.map((p) => p.brand)])];
 const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 
-console.log(screenWidth )
+// console.log(screenWidth )

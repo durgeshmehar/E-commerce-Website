@@ -94,7 +94,6 @@ export default function ProductForm() {
         navigate("/admin");
       });
     } else {
-      console.log("product :", product);
       dispatch(addProductAsync(product));
       reset();
       alert.show("Product Added successfully");
@@ -109,7 +108,6 @@ export default function ProductForm() {
 
   useEffect(() => {
     if (selectedProduct && params.id) {
-      console.log("selectedProduct :", selectedProduct);
       setValue("title", selectedProduct.title);
       setValue("description", selectedProduct.description);
       setValue("price", selectedProduct.price);
@@ -162,7 +160,7 @@ export default function ProductForm() {
                     <input
                       type="text"
                       {...register("title", {
-                        required: "product name is required",
+                        required: "product-name is required",
                       })}
                       id="title"
                       autoComplete="product-name"
@@ -367,7 +365,6 @@ export default function ProductForm() {
                     <input
                       type="text"
                       {...register("highlight1", {
-                        required: "highlight1 is required",
                       })}
                       autoComplete="highlight1"
                       className="w-full block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -388,7 +385,6 @@ export default function ProductForm() {
                     <input
                       type="text"
                       {...register("highlight2", {
-                        required: "highlight2 is required",
                       })}
                       autoComplete="highlight2"
                       className="w-full block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -410,7 +406,6 @@ export default function ProductForm() {
                     <input
                       type="text"
                       {...register("highlight3", {
-                        required: "highlight3 is required",
                       })}
                       autoComplete="highlight3"
                       className="w-full block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -431,7 +426,6 @@ export default function ProductForm() {
                     <input
                       type="text"
                       {...register("highlight4", {
-                        required: "highlight4 is required",
                       })}
                       autoComplete="highlight4"
                       className="w-full block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"

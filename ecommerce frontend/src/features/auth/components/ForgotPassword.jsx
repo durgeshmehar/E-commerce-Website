@@ -18,7 +18,6 @@ export default function ForgotPassword() {
   const mailSent = useSelector(selectMailSent);
 
   const handleSendEmail =(data)=>{
-    console.log(data);
     dispatch(resetPasswordRequestAsync(data))
   }
 

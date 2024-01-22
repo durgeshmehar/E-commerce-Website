@@ -27,7 +27,6 @@ export const fetchAllOrdersAsync = createAsyncThunk(
 export const updateOrderAsync = createAsyncThunk(
     'order/updateOrder',
     async(order) => {
-        console.log("order at client:",order);
         const response = await updateOrder(order);
         return response.data;
     }
@@ -51,7 +50,6 @@ export const orderSlice = createSlice({
         })
         .addCase(createOrderAsync.fulfilled, (state, action) => {
             state.status = 'idle';
-            console.log("order at server:",action.payload);
             state.orders.push(action.payload);
             state.currentOrder = action.payload;
         })
@@ -68,7 +66,6 @@ export const orderSlice = createSlice({
         })
         .addCase(updateOrderAsync.fulfilled, (state, action) => {
             state.status = 'idle';
-            console.log("Action Payload:",action.payload);
             const index = state.orders.findIndex((order)=>order.id === action.payload.id);
             state.orders[index] = action.payload;
         })
@@ -79,4 +76,5 @@ export const { increment ,resetOrder} = orderSlice.actions;
 export const selectOrders = (state) => state.order.orders;
 export const selectCurrentOrder= (state) => state.order.currentOrder;
 export const selectTotalOrders = (state) => state.order.totalOrders;
+export const selectStatus = (state) => state.order.status;
 export default orderSlice.reducer;

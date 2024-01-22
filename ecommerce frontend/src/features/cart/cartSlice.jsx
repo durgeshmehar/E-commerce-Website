@@ -61,7 +61,6 @@ export const cartSlice = createSlice({
         })
         .addCase(addToCartAsync.fulfilled, (state, action) => {
             state.status = 'idle';
-            console.log("data at server :",action.payload)
             state.items.push(action.payload);
         })
         .addCase(fetchItemsByUserIdAsync.pending, (state) => {
@@ -83,7 +82,6 @@ export const cartSlice = createSlice({
         .addCase(updateCartAsync.fulfilled, (state, action) => {
             state.status = 'idle';
             const index = state.items.findIndex(item=>item.id===action.payload.id);
-            console.log("data at server :",index, ":",action.payload);
             state.items[index] = action.payload;
         })
         .addCase(deleteItemFromCartAsync.pending, (state) => {
@@ -92,7 +90,6 @@ export const cartSlice = createSlice({
         .addCase(deleteItemFromCartAsync.fulfilled, (state, action) => {
             state.status = 'idle';
             const index = state.items.findIndex(item=>item.id===action.payload.id);
-            console.log("state.items | Deleted : index :",state.items," ",index ,"  ", action.payload)
             state.items.splice(index,1);
         })
         .addCase(resetCartAsync.pending, (state) => {

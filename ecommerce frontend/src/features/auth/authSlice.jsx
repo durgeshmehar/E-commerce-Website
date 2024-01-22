@@ -70,7 +70,6 @@ export const resetPasswordAsync = createAsyncThunk(
 export const signOutAsync = createAsyncThunk(
     'user/signOut',
     async() => {
-       console.log("signOutAsync")
         const response = await signOut();
         console.log("signOutAsync response: ",response)
         return response;

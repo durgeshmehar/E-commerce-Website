@@ -11,7 +11,6 @@ export function OrderSuccessPage() {
   //reset cart
   //reset currentOrder
   useEffect(() => {
-    console.log("Reseting cart and order")
     dispatch(resetCartAsync())
         dispatch(resetOrder())
   },[])

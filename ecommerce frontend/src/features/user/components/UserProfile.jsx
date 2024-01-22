@@ -55,7 +55,6 @@ export default function UserProfile() {
     setSelectedEditAddressIndex(index);
     setShowAddressForm(false);
     const address = userInfo.addresses[index];
-    console.log("index ,user :", index, userInfo.addresses[index]);
     setValue("name", address.name);
     setValue("email", address.email);
     setValue("mobile", address.mobile);
@@ -523,7 +522,6 @@ export default function UserProfile() {
 
                 
 
-                  {console.log("address index modal: ",index,"  ",showModalId)}
 
                   {showModalId===index ? <Modal
                   title="Delete Address"
@@ -543,7 +541,6 @@ export default function UserProfile() {
                   onClick={(e) => {
                     e.preventDefault();
                     setShowModalId(index);
-                    console.log("button modal: ",index,"  ",showModalId)
                   }}
                 >
                   Delete Address

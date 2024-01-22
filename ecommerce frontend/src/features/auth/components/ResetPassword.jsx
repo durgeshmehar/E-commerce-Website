@@ -25,11 +25,9 @@ export default function ResetPassword() {
   const dispatch = useDispatch();
 
   const handleSend = (data) => {
-    console.log("Reseting password by :", { token, email, data });
     dispatch(
       resetPasswordAsync({ token, email, password: data.password })
     )
-    console.log("Password reseted now navigate to login");
   };
 
   return (
@@ -118,7 +116,6 @@ export default function ResetPassword() {
               </button>
             </div>
           </form>
-          {console.log("PasswordResetStatus : ", passwordResetStatus)}
           {passwordResetStatus && (
             <p className="text-green-500 my-2">Password Reset</p>
           )}

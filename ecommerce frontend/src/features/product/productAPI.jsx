@@ -3,13 +3,12 @@ export function fetchProductsByFilter({filter,sort,pagination,admin}) {
 
     //filter ={"category":["smartphone","laptops"]}
     //sort = {_sort:"price",_order:"asc"}
-    // console.log("filter & sort & pagination :",filter,sort,pagination);
     let queryString = '';
+
     for(let key in filter){
         const categoryValue = filter[key]
         if(categoryValue.length>0){
-            const lastValue = categoryValue[categoryValue.length-1]
-            queryString+=`${key}=${lastValue}&`
+            queryString+=`${key}=${categoryValue}&`
         }
     }
      
@@ -39,7 +38,6 @@ export  function fetchCategories() {
     return new Promise(async (resolve) =>{
         const response = await fetch('/categories')
         const data = await response.json()
-        // console.log("cate",data);
         resolve({data})
     });
 }
@@ -48,19 +46,16 @@ export  function fetchBrands() {
     return new Promise(async (resolve) =>{
         const response = await fetch('/brands')
         const data = await response.json()
-        // console.log("brand :",data);
         resolve({data})
     });
 }
 
 export  function fetchProductById(id) {
-    console.log('fetchProductById called with id:', id);
     return new Promise(async (resolve,reject) =>{
         const response = await fetch('/products/'+id);
         if(response.ok){
             const data = await response.json()
             resolve({data})
-            console.log("Product findById at frontend: ",data);
         }
         else{
             const err = await response.json()
@@ -71,7 +66,7 @@ export  function fetchProductById(id) {
 
 export  function addProduct(productData) {
     return new Promise(async (resolve) =>{
-        const response = await fetch('/products/',{
+        const response = await fetch('/products',{
             method:"POST",
             headers:{
                 "Content-Type": "application/json"

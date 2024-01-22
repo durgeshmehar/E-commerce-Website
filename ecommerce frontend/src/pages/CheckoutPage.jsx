@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState,useRef } from "react";
+import { useState } from "react";
 import {
   deleteItemFromCartAsync,
   selectCartItems,
@@ -12,11 +12,22 @@ import {
 import {
   createOrderAsync,
   selectCurrentOrder,
+  selectStatus,
 } from "../features/order/orderSlice";
 import { updateUserAsync } from "../features/user/userSlice";
 import { selectUserInfo } from "../features/user/userSlice";
-import { discountedPrice } from "../app/constants";
+import GridLoader from "react-spinners/GridLoader";
+
 import Modal from "../features/common/modal";
+
+const override = {
+  display: "block",
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
+
 
 export default function CheckoutPage() {
   const {
@@ -30,13 +41,14 @@ export default function CheckoutPage() {
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems);
   const userInfo = useSelector(selectUserInfo);
+  const status = useSelector(selectStatus)
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const currentOrder = useSelector(selectCurrentOrder);
 
   const totalItems = products.reduce((total, item) => total + item.quantity, 0);
   const totalAmount = products.reduce(
-    (total, item) => total + discountedPrice(item.product) * item.quantity,
+    (total, item) => total + item.product.DiscountPrice * item.quantity,
     0
   );
   const [showModalId, setShowModalId] = useState(-1);
@@ -56,7 +68,6 @@ export default function CheckoutPage() {
   };
 
   const handleRemove = (id) => {
-    console.log("Removed id :",id)
     dispatch(deleteItemFromCartAsync(id));
   };
   const handleAddress = (e) => {
@@ -84,7 +95,6 @@ export default function CheckoutPage() {
         selectedAddress,
         status: "Pending",
       };
-      console.log("Order :", order);
       dispatch(createOrderAsync(order));
     }
     // redirect to order-success page
@@ -103,7 +113,7 @@ export default function CheckoutPage() {
       {currentOrder && currentOrder.paymentMethod==="card" && (
         <Navigate to={`/stripe-checkout/`}> </Navigate>
       )}
-
+      {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-6 px-2 gap-y-10 md:grid-cols-5">
           <div className="md:col-span-3">
@@ -111,7 +121,6 @@ export default function CheckoutPage() {
               noValidate
               className="bg-white px-10 mt-12"
               onSubmit={handleSubmit((data) => {
-                console.log("checkout data :", userInfo);
                 dispatch(
                   updateUserAsync({
                     id: userInfo.id,
@@ -443,7 +452,7 @@ export default function CheckoutPage() {
                                 </a>
                               </h3>
                               <p className="ml-4">
-                                {discountedPrice(item.product)}
+                                {item.product.DiscountPrice}
                               </p>
                             </div>
                             <p className="mt-4 text-sm text-gray-500">

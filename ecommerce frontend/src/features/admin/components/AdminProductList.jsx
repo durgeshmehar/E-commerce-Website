@@ -9,10 +9,10 @@ import {
   fetchProductsByFilterAsync,
   selectBrandsArray,
   selectCategoriesArray,
+  selectProductListStatus,
   selectProductsArray,
   selectTotalItems,
 } from "../../product/productSlice";
-import {discountedPrice} from "../../../app/constants";
 
 import { selectUserInfo } from "../../user/userSlice";
 
@@ -31,8 +31,8 @@ import {
 import { ITEMS_PER_PAGE } from "../../../app/constants";
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc" },
-  { name: "Price: Low to High", sort: "price", order: "asc" },
-  { name: "Price: High to Low", sort: "price", order: "desc" },
+  { name: "Price: Low to High", sort: "DiscountPrice", order: "asc" },
+  { name: "Price: High to Low", sort: "DiscountPrice", order: "desc" },
 ];
 
 function classNames(...classes) {
@@ -61,6 +61,7 @@ export default function AdminProductList() {
   const totalItems = useSelector(selectTotalItems);
   const categories = useSelector(selectCategoriesArray);
   const brands = useSelector(selectBrandsArray);
+  const status = useSelector(selectProductListStatus)
   const dispatch = useDispatch();
 
   const filters = [
@@ -77,7 +78,6 @@ export default function AdminProductList() {
   ];
 
   useEffect(() => {
-    // console.log("useeffect sort pagination :",sort,pagination)
     dispatch(fetchProductsByFilterAsync({ filter, sort, pagination,admin:true }));
   }, [dispatch, filter, sort, pagination]);
 
@@ -112,7 +112,6 @@ export default function AdminProductList() {
     setSort(newSort);
   };
   const handlePagination = (pageValue) => {
-    console.log("page :", pageValue);
     const newPagination = { _page: pageValue, _limit: ITEMS_PER_PAGE };
     setPagination(newPagination);
   };
@@ -436,7 +435,7 @@ export function ProductGrid({ products }) {
                       <div className="font-normal"> {product.title} </div>{" "}
                       <div>
                         $
-                         {discountedPrice(product)}
+                        {product.DiscountPrice}
                       </div>
                     </div>
                     <div className="flex justify-between font-medium py-[2px]">

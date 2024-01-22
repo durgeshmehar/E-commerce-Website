@@ -1,6 +1,5 @@
 export function createOrder(order) {
     return new Promise(async (resolve) =>{
-        console.log("sending data :",order);
         const response = await fetch(`/orders`,{
             method:'POST',
             headers:{
@@ -9,13 +8,11 @@ export function createOrder(order) {
             body:JSON.stringify(order)
         })
         const data = await response.json()
-        console.log("received data :",data);
         resolve({data})
     });
 }
 
 export function updateOrder(order) {
-    console.log("updateOrder at client:",typeof(order.id));
 
     return new Promise(async (resolve,reject) =>{
         const response = await fetch(`/orders/${order.id}`,{
@@ -32,7 +29,6 @@ export function updateOrder(order) {
             return;
         }
         const data = await response.json()
-        console.log("received data : ",data);
         resolve({data})
     });
 }

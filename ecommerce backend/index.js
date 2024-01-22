@@ -69,7 +69,7 @@ server.post(
 
 // server.use(express.raw({type: 'application/json'}))
 server.use(express.json());
-// server.use(express.static(path.resolve(__dirname, 'build')));
+server.use(express.static(path.resolve(__dirname, 'build')));
 server.use(cookiParser());
 server.use(
   cors({
@@ -97,7 +97,7 @@ server.use("/orders", isAuth(), OrderRouter.router);
 
 
 //build file routing
-server.get("*", (res) =>
+server.get("*", (req,res) =>
   res.sendFile(path.resolve(__dirname, "build", "index.html"))
 );
 
@@ -124,12 +124,9 @@ passport.use(
         );
 
         if (!crypto.timingSafeEqual(hashPassword, user.password)) {
-          console.log("Incorrect password");
           return done(null, false, { message: "Incorrect password" });
         }
-        console.log("Correct password");
         const token = jwt.sign(sanitiseUser(user), process.env.JWT_SECRET_KEY);
-        console.log("token :", token);
         return done(null, { ...sanitiseUser(user), token });
       } catch (err) {
         done(err);
@@ -141,7 +138,6 @@ passport.use(
 passport.use(
   "jwt",
   new JwtStrategy(opts, async function (jwt_payload, done) {
-    console.log("JWT Payload :", jwt_payload);
     try {
       const user = await User.findById(jwt_payload.id);
       if (user) {
@@ -161,7 +157,6 @@ passport.serializeUser(function (user, done) {
 });
 //gives data from session id
 passport.deserializeUser(function (data, done) {
-  console.log("DE-serializeUser called:", data);
   done(null, data);
 });
 
@@ -172,7 +167,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 server.post("/create-payment-intent", async (req, res) => {
   const { items, orderId } = req.body;
 
-  console.log("Items :", items);
   const paymentIntent = await stripe.paymentIntents.create({
     amount: items.totalAmount * 100,
     currency: "inr",

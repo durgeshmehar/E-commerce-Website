@@ -1,5 +1,6 @@
 const { Order } = require("../model/Order");
 const { User } = require("../model/User");
+const { Product } = require("../model/Product");
 const { sendMail,invoiceTemplate } = require("../services/common");
 
 exports.fetchOrdersByUser = async (req, res) => {
@@ -16,12 +17,15 @@ exports.fetchOrdersByUser = async (req, res) => {
 exports.createOrder = async (req, res) => {
   const order = new Order(req.body);
   try {
+    for(let item of order.cart){
+      let product = await Product.findById(item.product.id);
+      product.$inc('stock',-1*item.quantity);
+      await product.save();
+    }
     const result = await order.save();
     const user = await User.findById(order.user)
 
-    console.log("order: ",order)
-    console.log("user: ",user)
-    // console.log("invoiceTemplate: ",invoiceTemplate(order));
+
    sendMail({to:user.email, subject:"Your Order is Placed Successfully.",text:"Your Order is placed.", html:invoiceTemplate(order)})
     res.status(201).json(result);
   } catch (err) {
@@ -32,9 +36,7 @@ exports.createOrder = async (req, res) => {
 exports.updateOrder= async (req, res) => {
   try{
     const {id} = req.params ;
-    console.log("Id , DAta of backend:",id, "  ",req.body)
     const doc = await Order.findByIdAndUpdate(id,req.body,{new:true});
-    console.log("updateOrder response :", doc)
     res.status(200).json(doc);
   }
   catch(err){

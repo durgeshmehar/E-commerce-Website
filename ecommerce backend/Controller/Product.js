@@ -1,8 +1,9 @@
 const { Product } = require("../model/Product");
 
 exports.createProduct = async (req, res) => {
+  const product = new Product(req.body);
+  product.DiscountPrice = Math.round(product.price*(1-product.discountPercentage/100));
   try {
-    const product = new Product(req.body);
     const doc = await product.save();
     res.status(201).json(doc);
   } catch (err) {
@@ -18,16 +19,16 @@ exports.fetchProductsByFilter = async (req, res) => {
   let query = Product.find(condition);
   let totalProductsQuery = Product.find(condition);
   //category  //brand //sort   //pagination
+
   if (req.query.category) {
-    query = query.find({ category: req.query.category });
-    totalProductsQuery = totalProductsQuery.find({ category: req.query.category });
+    query = query.find({ category: {$in:req.query.category.split(",")}});
+    totalProductsQuery = totalProductsQuery.find({category: {$in:req.query.category.split(",")} });
   }
   if (req.query.brand) {
-    query = query.find({ brand: req.query.brand });
-    totalProductsQuery = totalProductsQuery.find({ brand: req.query.brand });
+    query = query.find({ brand: {$in:req.query.brand.split(",")} });
+    totalProductsQuery = totalProductsQuery.find({ brand: {$in:req.query.brand.split(",")}  });
   }
   const totalProducts = await totalProductsQuery.count().exec();
-  console.log({totalProducts});
   res.set("X-Total-Count", totalProducts);
   if (req.query._sort && req.query._order) {
     query = query.sort({ [req.query._sort]: req.query._order});
@@ -60,7 +61,9 @@ exports.fetchProductById = async (req, res) => {
 exports.updateProductById = async (req, res) => {
   try{
     const id = req.params.id;
-    const doc = await Product.findByIdAndUpdate(id,req.body,{new:true})
+    const product = await Product.findByIdAndUpdate(id,req.body,{new:true})
+    product.DiscountPrice = Math.round(product.price*(1-product.discountPercentage/100));
+    const doc = await product.save();
     res.status(200).json(doc);
   }
   catch(err){

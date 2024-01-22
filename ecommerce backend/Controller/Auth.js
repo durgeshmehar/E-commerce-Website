@@ -44,7 +44,6 @@ exports.resetPassword = async (req, res) => {
       user.password = hash;
       user.resetPasswordToken = "";
       await user.save();
-      console.log("password reset successfully at backend");
 
       const link = `http://localhost:5173/login`;
       const subject = "Password reset successfully";
@@ -52,12 +51,7 @@ exports.resetPassword = async (req, res) => {
       const html = `You have successfully reset your password .Plese Login  <a href=${link}> here </a> to continue`;
 
       if (email) {
-        console.log("sending data :", {
-          to: email,
-          subject,
-          text,
-          html,
-        });
+        
         const response = sendMail({ to: req.body.email, subject, text, html });
         res.status(200).json(response);
       } else {
@@ -73,8 +67,7 @@ exports.resetPassword = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const user = req.user;
-  console.log("User Logged In Successfully :", user);
-  console.log("User Logged In Successfully token:", user.token);
+
   res
     .cookie("jwt", req.user.token, {
       expires: new Date(Date.now() + 60 * 60 * 1000),
@@ -95,7 +88,6 @@ exports.logout = async (req, res) => {
 
 exports.checkAuth = async (req, res) => {
   if (req.user) {
-    console.log("user checkauth:", req.user);
     res.status(200).json(sanitiseUser(req.user));
   } else {
     res.status(400).json("Login First");
@@ -114,12 +106,7 @@ exports.resetPasswordRequest = async (req, res) => {
     const html = `This is the reset Password Request. Please click <a href="${resetPageLink}">here</a> to reset password.`;
 
     if (email) {
-      console.log("sending data :", {
-        to: email,
-        subject,
-        text,
-        html,
-      });
+      
       const response = sendMail({ to: req.body.email, subject, text, html });
       res.status(200).json(response);
     } else {

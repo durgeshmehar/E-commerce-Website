@@ -7,7 +7,7 @@ import {
   selectCartLoaded,
   updateCartAsync,
 } from "./cartSlice";
-import { discountedPrice } from "../../app/constants";
+
 import Modal from "../common/modal";
 
 export default function Cart() {
@@ -15,14 +15,13 @@ export default function Cart() {
   const products = useSelector(selectCartItems);
   const cartLoaded = useSelector(selectCartLoaded);
   const totalAmount = products.reduce(
-    (total, item) => total + discountedPrice(item.product) * item.quantity,
+    (total, item) => total + item.product.DiscountPrice * item.quantity,
     0
   );
   const totalItems = products.reduce((total, item) => total + item.quantity, 0);
   const [showModalId, setShowModalId] = useState(-1);
 
   const handleSelect = (e, product) => {
-    console.log( "id: ", product.id," quantity:", +e.target.value)
     dispatch(updateCartAsync({ id: product.id, quantity: +e.target.value }));
   };
   const handleRemove = (id) => {
@@ -39,7 +38,6 @@ export default function Cart() {
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
-            {console.log("Cart Item :",products)}
               {products && products.map((item) => (
                 <li key={item.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -58,7 +56,7 @@ export default function Cart() {
                             {item.product.title}
                           </a>
                         </h3>
-                        <p className="ml-4">{discountedPrice(item.product)}</p>
+                        <p className="ml-4">{item.product.DiscountPrice}</p>
                       </div>
                       <p className="mt-4 text-sm text-gray-500">
                         {item.product.brand}

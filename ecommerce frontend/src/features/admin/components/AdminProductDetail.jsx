@@ -7,24 +7,6 @@ import GridLoader from "react-spinners/GridLoader";
 import { selectProduct , fetchProductByIdAsync } from "../../product/productSlice";
 import { addToCartAsync } from "../../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { discountedPrice } from "../../../app/constants";
-
-const colors = [
-  { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-  { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-  { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
-];
-
-const sizes = [
-  { name: "XXS", inStock: false },
-  { name: "XS", inStock: true },
-  { name: "S", inStock: true },
-  { name: "M", inStock: true },
-  { name: "L", inStock: true },
-  { name: "XL", inStock: true },
-  { name: "2XL", inStock: true },
-  { name: "3XL", inStock: true },
-];
 
 const override = {
   display: "block",
@@ -34,24 +16,18 @@ const override = {
   transform: "translate(-50%, -50%)",
 };
 
-const highlights = [
-  "Hand cut and sewn locally",
-  "Dyed with our proprietary colors",
-  "Pre-washed & pre-shrunk",
-  "Ultra-soft 100% cotton",
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function AdminProductDetail() {
   const navigate = useNavigate();
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
-  const [selectedSize, setSelectedSize] = useState(sizes[2]);
+  const [selectedColor, setSelectedColor] = useState();
+  const [selectedSize, setSelectedSize] = useState();
   const [quantity, setQuantity] = useState(1); // [1,2,3,4,5
   const product = useSelector(selectProduct);
   const dispatch = useDispatch();
+  const status = useSelector()
   const params = useParams();
 
   useEffect(() => {
@@ -176,7 +152,7 @@ export default function AdminProductDetail() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                $ {discountedPrice(product)}
+                $ {product.DiscountPrice}
               </p>
               <p className="text-lg tracking-tight  text-gray-600 mt-2">
                  <span className="line-through opacity-90">$ {product.price}</span>
@@ -219,8 +195,8 @@ export default function AdminProductDetail() {
                         Choose a color
                       </RadioGroup.Label>
                       <div className="flex items-center space-x-3">
-                        {colors &&
-                          colors.map((color) => (
+                        {product.colors &&
+                          product.colors.map((color) => (
                             <RadioGroup.Option
                               key={color.name}
                               value={color}
@@ -291,8 +267,8 @@ export default function AdminProductDetail() {
                       Choose a size
                     </RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                      {sizes &&
-                        sizes.map((size) => (
+                      {product.sizes &&
+                        product.sizes.map((size) => (
                           <RadioGroup.Option
                             key={size.name}
                             value={size}
@@ -384,8 +360,8 @@ export default function AdminProductDetail() {
                     role="list"
                     className="list-disc space-y-2 pl-4 text-base"
                   >
-                    {highlights &&
-                      highlights.map((highlight) => (
+                    {product.highlights &&
+                      product.highlights.map((highlight) => (
                         <li key={highlight} className="text-gray-400">
                           <span className="text-gray-600">{highlight}</span>
                         </li>

@@ -36,12 +36,8 @@ export default function StripeCheckoutForm() {
     if (!clientSecret) {
       return;
     }
-    {
-      console.log("clientSecret at checkoutForm:", clientSecret);
-    }
-
+   
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      console.log("paymentIntent: ", paymentIntent);
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
@@ -74,7 +70,6 @@ export default function StripeCheckoutForm() {
       },
     });
 
-    console.log("print Error: ", error);
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
       alert(

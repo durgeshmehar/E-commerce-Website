@@ -45,10 +45,8 @@ export function resetPasswordRequest(email) {
         },
         body: JSON.stringify(email),
       });
-      console.log("resetPasswordRequest response: ", response);
       if (response.ok) {
         const data = await response.json();
-        console.log("resetPasswordRequest data: ", data);
         resolve({ data });
       } else {
         const err = await response.text();
@@ -62,7 +60,6 @@ export function resetPasswordRequest(email) {
 export function resetPassword(data) {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("ResetPassword data at authApi: ", data);
       const response = await fetch("/auth/reset-password", {
         method: "POST",
         headers: {
@@ -70,18 +67,14 @@ export function resetPassword(data) {
         },
         body: JSON.stringify(data),
       });
-      console.log("ResetPassword response : ", response);
       if (response.ok) {
         const data = await response.json();
-        console.log("ResetPassword data at authApi: ", data);
         resolve({ data });
       } else {
-        console.log("ResetPassword error at authApi try: ", response);
         const err = await response.text();
         reject(err);
       }
     } catch (err) {
-      console.log("ResetPassword error at authApi catch: ", err);
       reject({ err });
     }
   });
@@ -110,15 +103,12 @@ export function signOut() {
     try {
       const response = await fetch("/auth/logout");
       if (response.ok) {
-        console.log("Signout response: ", response);
         resolve({ data: "Logged out successfully" });
       } else {
-        console.log("Signout error at authApi try: ", response);
         const err = await response.text();
         reject(err);
       }
     } catch (err) {
-      console.log("Signout error at authApi catch: ", err);
       reject({ err });
     }
   });

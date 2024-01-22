@@ -9,16 +9,8 @@ import { fetchProductByIdAsync } from "../productSlice";
 import { addToCartAsync, selectCartItems } from "./../../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import GridLoader from "react-spinners/GridLoader";
-import { discountedPrice } from "./../../../app/constants";
 import { selectUserInfo } from "./../../user/userSlice";
 import { useAlert } from "react-alert";
-
-const highlights = [
-  "13-inch Retina display for stunning visuals",
-  "Apple M1 chip for powerful performance",
-  "Up to 20 hours of battery life",
-  "macOS Big Sur for the latest features and security",
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -61,7 +53,6 @@ export default function ProductDetail() {
       const newItem = { quantity: quantity, product: product.id };
       if (selectedSize) newItem.size = selectedSize;
       if (selectedColor) newItem.color = selectedColor;
-      console.log("new Item :", newItem);
       dispatch(addToCartAsync(newItem)).then(() => {
         navigate("/cart");
       });
@@ -182,7 +173,7 @@ export default function ProductDetail() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                $ {discountedPrice(product)}
+                $ {product.DiscountPrice}
               </p>
               <p className="text-lg tracking-tight  text-gray-600 mt-2">
                 <span className="line-through opacity-90">
@@ -400,7 +391,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {product.highlights && product.highlights.length > 0 ? (
+              {product.highlights && product.highlights.length > 0 &&
                 <div className="mt-10">
                   <h3 className="text-lg font-medium text-gray-900">
                     Highlights
@@ -412,35 +403,15 @@ export default function ProductDetail() {
                       className="list-disc space-y-2 pl-4 text-base"
                     >
                       {product.highlights &&
-                        product.highlights.map((highlight) => (
-                          <li key={highlight} className="text-gray-400">
+                        product.highlights.map((highlight,idx) => (
+                          <li key={idx} className="text-gray-400">
                             <span className="text-gray-600">{highlight}</span>
                           </li>
                         ))}
                     </ul>
                   </div>
                 </div>
-              ) : (
-                <div className="mt-10">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    Highlights
-                  </h3>
-
-                  <div className="mt-4">
-                    <ul
-                      role="list"
-                      className="list-disc space-y-2 pl-4 text-base"
-                    >
-                      {highlights &&
-                        highlights.map((highlight) => (
-                          <li key={highlight} className="text-gray-400">
-                            <span className="text-gray-600">{highlight}</span>
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
+              }
 
               <div className="mt-10">
                 <h2 className="text-lg font-medium text-gray-900">Details</h2>
