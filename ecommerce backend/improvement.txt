@@ -1,0 +1,14 @@
+    Mail system not work 
+    Already created user dont allow to sign up
+    Sign out means token delete functionality
+    Remove un necessary things,icon from orderdetails from admin,from productlist near sort option icon
+    Pagination status should see in mobile
+
+show out of stock in productdetail if yes then unable to add in cart only select less than = stock quantity
+checkoutPage not allow to update quantity more than stock available
+Checkout some mobile responsiveness
+Add some intractive images in login /loguout
+chekcout stripe not gives fast responce
+Look for another deployment server
+Make slider in productdetails
+Use Docker to improve server code
