@@ -398,7 +398,7 @@ export function DesktopFilter({ handleFilter, filters }) {
 export function ProductGrid({ products,status }) {
   return (
     <div>
-      <div className="grid items-stretch px-4 gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
+      <div className="grid items-stretch px-4 gap-3 sm:gap-8 md:gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
         {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
         {products &&
           products.map((product) => (
@@ -416,24 +416,32 @@ export function ProductGrid({ products,status }) {
                 </div>
 
                 <div className="p-4">
-                  <div className="flex justify-between font-medium">
-                    <div className="font-normal"> {product.title} </div>{" "}
-                    <div>${product.DiscountPrice}</div>
-                  </div>
-                  <div className="flex justify-between font-medium py-[2px]">
-                    <div>
-                      <StarIcon className="w-4 h-4 inline text-yellow-500"></StarIcon>
-                      <span className="align-bottom">{product.rating}</span>
+                    <div className="flex justify-between font-medium">
+                      <div className="font-normal"> {product.title} </div>{" "}
+                      <div>
+                        $
+                        {product.DiscountPrice}
+                      </div>
                     </div>
-                    <div className="opacity-60 font-normal line-through">
-                      {" "}
-                      {product.price}
+                    <div className="flex justify-between items-center text-sm py-[2px]">
+                      <div className="border-2 rounded-md mt-1 px-1 bg-green-600 border-none text-white">
+                        <p className="inline align-bottom mt-1">{product.rating}</p>{" "}
+                        <StarIcon className="w-3 h-3 mb-1 inline"></StarIcon>
+                      </div>
+                      <div className="opacity-60 font-normal line-through">
+                        {" "}
+                        {product.price}
+                      </div>
                     </div>
                   </div>
-                </div>
+
               </Link>
+
               {product.stock <= 0 ? <div>
-                  <p className="ml-4 text-red-500">Out of stock</p>
+                  <p className="ml-3 mb-1 font-semibold text-red-500">Out of stock</p>
+                </div> : null}
+              {product.stock <= 10 && product.stock >=1 ? <div>
+                  <p className="ml-3 mb-1 font-semibold text-[rgb(199,0,85)]">Only {product.stock} left</p>
                 </div> : null}
             </div>
           ))}

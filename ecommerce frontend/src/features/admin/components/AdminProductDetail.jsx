@@ -163,7 +163,11 @@ export default function AdminProductDetail() {
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
+                  <div className="border-2 rounded-md mt-1 px-1 bg-green-600 border-none text-white">
+                        <p className="inline align-bottom mt-1">{product.rating}</p>{" "}
+                        <StarIcon className="w-3 h-3 mb-1 inline"></StarIcon>
+                      </div>{" "}
+                    {/* {[0, 1, 2, 3, 4].map((rating) => (
                       <StarIcon
                         key={rating}
                         className={classNames(
@@ -174,7 +178,7 @@ export default function AdminProductDetail() {
                         )}
                         aria-hidden="true"
                       />
-                    ))}
+                    ))} */}
                   </div>
                   <p className="sr-only">{product.rating} out of 5 stars</p>
                 </div>

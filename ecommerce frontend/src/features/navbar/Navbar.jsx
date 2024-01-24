@@ -48,7 +48,7 @@ export default function Navbar({ children }) {
                       <div className="flex-shrink-0">
                         <Link to="/">
                           <img
-                            className="h-11 w-11"
+                            className="h-10 w-10 lg:h-11 lg:w-11"
                             src={logo}
                             alt="Your Company"
                           />
@@ -65,7 +65,7 @@ export default function Navbar({ children }) {
                                   item.current
                                     ? "bg-gray-900 text-white"
                                     : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                                  "rounded-md px-3 py-2 text-sm font-medium"
+                                  "rounded-md px-3 py-2 text-md font-medium border-[1px] border-slate-700"
                                 )}
                                 aria-current={item.current ? "page" : undefined}
                               >
@@ -150,6 +150,8 @@ export default function Navbar({ children }) {
                       </div>
                     </div>
                     <div className="-mr-2 flex md:hidden">
+
+
                       {/* Mobile menu button */}
                       <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-0.5" />
@@ -171,7 +173,7 @@ export default function Navbar({ children }) {
                 </div>
 
                 <Disclosure.Panel className="md:hidden">
-                  <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                  <div className="flex justify-between  mt-2 px-2 pb-3 pt-2 sm:px-3">
                     {navigation.map((item) =>
                       item[userInfo.role] ? (
                         <Link to={item.link} key={item.name}>
@@ -181,7 +183,7 @@ export default function Navbar({ children }) {
                               item.current
                                 ? "bg-gray-900 text-white"
                                 : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "block rounded-md px-3 py-2 text-base font-medium"
+                              "block rounded-md px-3 py-2 text-base font-medium border-[2px] border-slate-700"
                             )}
                             aria-current={item.current ? "page" : undefined}
                           >
@@ -190,10 +192,29 @@ export default function Navbar({ children }) {
                         </Link>
                       ) : null
                     )}
+                    <div>
+                    <Link to="/cart">
+                        <button
+                          type="button"
+                          className="mr-2 flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        >
+                          <ShoppingCartIcon
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        </button>
+                      </Link>
+                      {items.length > 0 && (
+                        <span className="relative -top-4 -left-2 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-1 -ml-3">
+                          {items.length}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="border-t border-gray-700 pb-3 pt-4">
-                    <div className="flex items-center px-5">
-                      <div className="flex-shrink-0">
+
+                  <div className="border-t border-gray-700 pb-3 pt-4  border-b-2">
+                    <div className="flex items-center px-5  border-b border-gray-700 pb-2" >
+                      <div className="flex-shrink-0 ">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -217,24 +238,9 @@ export default function Navbar({ children }) {
                           {userInfo.email}
                         </div>
                       </div>
-                      <Link to="/cart">
-                        <button
-                          type="button"
-                          className="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                          <span className="absolute -inset-1.5" />
-                          <ShoppingCartIcon
-                            className="h-6 w-6"
-                            aria-hidden="true"
-                          />
-                        </button>
-                      </Link>
-                      {items.length > 0 && (
-                        <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 mb-6 -ml-3">
-                          {items.length}
-                        </span>
-                      )}
+                
                     </div>
+
                     <div className="mt-3 space-y-1 px-2">
                       {userNavigation.map((item) => (
                         <Disclosure.Button
@@ -247,6 +253,7 @@ export default function Navbar({ children }) {
                       ))}
                     </div>
                   </div>
+
                 </Disclosure.Panel>
               </>
             )}

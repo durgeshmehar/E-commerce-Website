@@ -11,10 +11,82 @@ import { useNavigate } from "react-router-dom";
 import GridLoader from "react-spinners/GridLoader";
 import { selectUserInfo } from "./../../user/userSlice";
 import { useAlert } from "react-alert";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, background: "gray",opacity:"0.5",marginRight:"10px" }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, background: "gray",opacity:"0.5",marginLeft:"10px" }}
+      onClick={onClick}
+    />
+  );
+}
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 2,
+  slidesToScroll: 2,
+  swipeToSlide: true,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        initialSlide: 1,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
 
 export default function ProductDetail() {
   const navigate = useNavigate();
@@ -66,7 +138,6 @@ export default function ProductDetail() {
     e.preventDefault();
     setQuantity(+e.target.value);
   };
-
   return (
     <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
       {status === "loading" ? (
@@ -112,7 +183,7 @@ export default function ProductDetail() {
           </nav>
 
           {/* Image gallery */}
-          <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+          {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
             <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
               <img
                 src={
@@ -159,14 +230,39 @@ export default function ProductDetail() {
                 className="h-full w-full object-cover object-center"
               />
             </div>
+          </div> */}
+
+          <div className="mt-4 p-8">
+            <Slider {...settings}>
+              {product.images &&
+                product.images.map((imgLink, index) => (
+                  <div key={index} className="space-x-4 hidden lg:block p-4">
+                    <img key={index} src={imgLink} alt={product.title}  className="item-stretch w-full h-full  border-2"/>
+                  </div>
+                ))}
+            </Slider>
           </div>
 
           {/* Product info */}
           <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
-            <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+            <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 flex flex-row justify-between">
               <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                 {product.title}
               </h1>
+              <div className="mt-4">
+                {product.stock <= 0 ? (
+                  <div>
+                    <p className=" font-semibold text-red-500">Out of stock</p>
+                  </div>
+                ) : null}
+                {product.stock <= 10 && product.stock >= 1 ? (
+                  <div>
+                    <p className=" font-semibold text-[rgb(199,0,85)]">
+                      Only {product.stock} left
+                    </p>
+                  </div>
+                ) : null}
+              </div>
             </div>
 
             {/* Options */}
@@ -189,7 +285,13 @@ export default function ProductDetail() {
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
+                    <div className="border-2 rounded-md mt-1 px-1 bg-green-600 border-none text-white">
+                      <p className="inline align-bottom mt-1">
+                        {product.rating}
+                      </p>{" "}
+                      <StarIcon className="w-3 h-3 mb-1 inline"></StarIcon>
+                    </div>{" "}
+                    {/* {[0, 1, 2, 3, 4].map((rating) => (
                       <StarIcon
                         key={rating}
                         className={classNames(
@@ -200,7 +302,7 @@ export default function ProductDetail() {
                         )}
                         aria-hidden="true"
                       />
-                    ))}
+                    ))} */}
                   </div>
                   <p className="sr-only">{product.rating} out of 5 stars</p>
                   {/* <a href={reviews.href} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -274,11 +376,13 @@ export default function ProductDetail() {
                       }}
                       value={product.quantity}
                     >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[...Array(Math.min(product.stock, 5)).keys()].map(
+                        (_, index) => (
+                          <option key={index + 1} value={index + 1}>
+                            {index + 1}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
                 </div>
@@ -391,7 +495,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {product.highlights && product.highlights.length > 0 &&
+              {product.highlights && product.highlights.length > 0 && (
                 <div className="mt-10">
                   <h3 className="text-lg font-medium text-gray-900">
                     Highlights
@@ -403,7 +507,7 @@ export default function ProductDetail() {
                       className="list-disc space-y-2 pl-4 text-base"
                     >
                       {product.highlights &&
-                        product.highlights.map((highlight,idx) => (
+                        product.highlights.map((highlight, idx) => (
                           <li key={idx} className="text-gray-400">
                             <span className="text-gray-600">{highlight}</span>
                           </li>
@@ -411,7 +515,7 @@ export default function ProductDetail() {
                     </ul>
                   </div>
                 </div>
-              }
+              )}
 
               <div className="mt-10">
                 <h2 className="text-lg font-medium text-gray-900">Details</h2>
@@ -425,7 +529,9 @@ export default function ProductDetail() {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <GridLoader color="rgb(40,116,240)" cssOverride={override} />
+      )}
     </div>
   );
 }

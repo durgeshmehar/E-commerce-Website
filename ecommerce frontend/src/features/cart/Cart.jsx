@@ -77,11 +77,9 @@ export default function Cart() {
                           }}
                           value={item.quantity}
                         >
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
+                           {[...Array(Math.min(item.product.stock, 5)).keys()].map((_,index)=>(
+                      <option key={index+1} value={index+1}>{index+1}</option>
+                     ))}
                         </select>
                       </div>
 

@@ -28,7 +28,6 @@ const override = {
   transform: "translate(-50%, -50%)",
 };
 
-
 export default function CheckoutPage() {
   const {
     register,
@@ -41,7 +40,7 @@ export default function CheckoutPage() {
   const dispatch = useDispatch();
   const products = useSelector(selectCartItems);
   const userInfo = useSelector(selectUserInfo);
-  const status = useSelector(selectStatus)
+  const status = useSelector(selectStatus);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const currentOrder = useSelector(selectCurrentOrder);
@@ -84,13 +83,13 @@ export default function CheckoutPage() {
         type: "manual",
         message: "Please select an address.",
       });
-      alert("Please select an address.")
+      alert("Please select an address.");
     } else {
       const order = {
-        cart:products,
+        cart: products,
         totalAmount,
         totalItems,
-        user:userInfo.id,
+        user: userInfo.id,
         paymentMethod,
         selectedAddress,
         status: "Pending",
@@ -106,20 +105,25 @@ export default function CheckoutPage() {
     <>
       {totalItems === 0 && <Navigate to="/"></Navigate>}
 
-      {currentOrder && currentOrder.paymentMethod==="cash" && (
+      {currentOrder && currentOrder.paymentMethod === "cash" && (
         <Navigate to={`/order-success/${currentOrder.id}`}></Navigate>
       )}
 
-      {currentOrder && currentOrder.paymentMethod==="card" && (
+      {currentOrder && currentOrder.paymentMethod === "card" && (
         <Navigate to={`/stripe-checkout/`}> </Navigate>
       )}
-      {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
-      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-x-6 px-2 gap-y-10 md:grid-cols-5">
-          <div className="md:col-span-3">
+      {status === "loading" ? (
+        <GridLoader color="rgb(40,116,240)" cssOverride={override} />
+      ) : null}
+
+      <div className="mx-auto max-w-7xl lg:px-8">
+        <div className="grid grid-cols-1 md:gap-x-4 px-2 gap-y-10 md:grid-cols-5 md:px-4">
+
+          {/* ADDRESS FORM */}
+          <div className="col-span-1 md:col-span-3 ">
             <form
               noValidate
-              className="bg-white px-10 mt-12"
+              className="bg-white mx-auto px-8 mt-4 md:mt-8 "
               onSubmit={handleSubmit((data) => {
                 dispatch(
                   updateUserAsync({
@@ -127,7 +131,7 @@ export default function CheckoutPage() {
                     addresses: [...(userInfo.addresses || []), data],
                   })
                 );
-                  handleReset();
+                handleReset();
               })}
             >
               <div className="space-y-12">
@@ -139,7 +143,7 @@ export default function CheckoutPage() {
                     Use a permanent address where you can receive mail.
                   </p>
 
-                  <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                  <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
                     <div className="sm:col-span-4">
                       <label
                         htmlFor="name"
@@ -323,7 +327,8 @@ export default function CheckoutPage() {
                   </p>
                   <div>
                     <ul role="list" className="divide-y divide-gray-100">
-                      {userInfo && userInfo.addresses &&
+                      {userInfo &&
+                        userInfo.addresses &&
                         userInfo.addresses.map((address, index) => (
                           <li
                             key={index}
@@ -426,7 +431,7 @@ export default function CheckoutPage() {
 
           {/* CART */}
           <div className="md:col-span-2">
-            <div className="bg-white mx-auto max-w-7xl px-0 mt-12 ">
+            <div className="bg-white mx-auto max-w-7xl px-0 mt-8 ">
               <h1 id="products-heading" className="p-4 text-3xl font-semibold">
                 Cart
               </h1>
@@ -474,11 +479,15 @@ export default function CheckoutPage() {
                                 }}
                                 value={item.quantity}
                               >
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                {[
+                                  ...Array(
+                                    Math.min(item.product.stock, 5)
+                                  ).keys(),
+                                ].map((_, index) => (
+                                  <option key={index + 1} value={index + 1}>
+                                    {index + 1}
+                                  </option>
+                                ))}
                               </select>
                             </div>
 
@@ -530,14 +539,12 @@ export default function CheckoutPage() {
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
-
                   <div
                     className=" cursor-pointer flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                     onClick={handleOrder}
                   >
-                    Checkout
+                    Order Now
                   </div>
-
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   or&nbsp;
@@ -547,8 +554,10 @@ export default function CheckoutPage() {
                   </Link>
                 </div>
               </div>
+
             </div>
           </div>
+
         </div>
       </div>
     </>
