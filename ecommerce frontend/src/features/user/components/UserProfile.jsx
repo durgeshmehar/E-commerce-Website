@@ -68,13 +68,13 @@ export default function UserProfile() {
     <>
       <div className="bg-white mx-auto max-w-7xl px-4 mt-6 sm:px-6 lg:px-8 ">
         <h1 id="products-heading" className="p-4 pb-1 text-2xl font-semibold">
-          Name : {userInfo.name ? userInfo.name : " New Name"}
+          Name : {userInfo.name ? userInfo.name : "Username"}
         </h1>
-        <h3 className="p-4 pb-1 text-xl font-semibold text-red-400">
+        <h3 className="p-4 pb-1 text-xl font-semibold text-slate-800">
           Email : {userInfo.email}
         </h3>
         {userInfo.role === "admin" ? 
-        <h3 className="p-4 pb-1 text-xl font-semibold text-red-400">
+        <h3 className="p-4 pb-1 text-xl font-semibold text-slate-800">
           Role : {userInfo.role}
         </h3> :null
         }
@@ -83,7 +83,7 @@ export default function UserProfile() {
         <button
           type="button"
           onClick={handleNewAddressBtn}
-          className="ml-4 my-4 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="ml-4 my-6 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Add New Address
         </button>
@@ -283,8 +283,8 @@ export default function UserProfile() {
           </form>
         ) : null}
 
-        <div className="px-4 py-6 sm:px-6">
-          <h3 className="p-2 text-xl font-semibold text-black-500">
+        <div className="">
+          <h3 className="p-2 text-xl pr-0 font-semibold text-black-500">
             Your Addresses
           </h3>
           {userInfo.addresses && userInfo.addresses.map((address, index) => (
@@ -487,22 +487,23 @@ export default function UserProfile() {
                 </form>
               ) : null}
 
-              <div className="flex justify-between px-4 py-6 my-4 sm:px-6 border-2">
+              <div className="grid grid-cols-3 my-4 py-4 px-2 border-2 text-sm">
+
                 <div className="flex min-w-0 gap-x-4">
                   <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-gray-900">
+                    <p className="text-md font-semibold leading-6 text-gray-900">
                       {address.name}
                     </p>
-                    <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                    <p className="mt-1 truncate text-sm leading-5 text-gray-500">
                       {address.street}
                     </p>
-                    <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                    <p className="mt-1 truncate text-sm leading-5 text-gray-500">
                       {address.postalcode}
                     </p>
                   </div>
                 </div>
 
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                <div className="block shrink-0 sm:flex sm:flex-col sm:items-end">
                   <p className="text-sm leading-6 text-gray-900">
                     Phone: {address.mobile}
                   </p>
@@ -511,17 +512,25 @@ export default function UserProfile() {
                   </p>
                 </div>
 
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-center">
+                <div className=" sm:flex sm:flex-col sm:items-center text-sm">
                   <button
                     type="button"
-                    className=" rounded-md px-8 py-2  bg-blue-400 font-medium text-white  hover:bg-blue-300 mb-2"
+                    className=" rounded-md px-8 py-2  bg-blue-400   font-medium text-white  hover:bg-blue-300 mb-2"
                     onClick={() => handleSelectEdit(index)}
                   >
                     Edit
                   </button>
 
-                
-
+                  <button
+                  type="submit"
+                  className="rounded-md  px-3 py-2 text-white bg-red-400 font-medium hover:bg-red-300"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowModalId(index);
+                  }}
+                >
+                  Delete Address
+                 </button>
 
                   {showModalId===index ? <Modal
                   title="Delete Address"
@@ -535,19 +544,6 @@ export default function UserProfile() {
                   }}
                 />:null}
 
-                <button
-                  type="submit"
-                  className="rounded-md  px-8 py-2 text-white bg-red-400 font-medium hover:bg-red-300"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowModalId(index);
-                  }}
-                >
-                  Delete Address
-                </button>
-
-
-                
                 </div>
               </div>
             </div>

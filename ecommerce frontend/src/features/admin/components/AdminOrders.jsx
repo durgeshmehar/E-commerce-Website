@@ -74,13 +74,13 @@ export default function AdminOrders() {
   };
 
   return (
-    <div className="  mx-auto max-w-[98%]  md:max-w-[95%] lg:max-w-[80%]  mt-4 pb-1 mb-44">
-      <div className=" overflow-x-auto bg-white">
-        <table className=" w-full table-auto text-left">
-          <thead className="bg-gray-300">
-            <tr className="text-lg font-semibold align-top ">
+    <div className="  mx-auto max-w-[98%]  md:max-w-[95%] lg:max-w-[80%]  mt-4 pb-1 mb-44 text-sm md:text-md lg:text-lg">
+      <div className=" overflow-x-auto bg-white ">
+        <table className=" w-full table-auto  text-left ">
+          <thead className="bg-gray-300 ">
+            <tr className="text-sm md:text-md lg:text-lg font-semibold align-top ">
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "id", order: order });
@@ -94,20 +94,20 @@ export default function AdminOrders() {
                 )}
               </th>
 
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
                 Items
               </th>
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
                 Shipping Address
               </th>
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
                 Qty
               </th>
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
                 Price($)
               </th>
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "totalAmount", order: order });
@@ -122,7 +122,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "status", order: order });
@@ -137,7 +137,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "paymentMethod", order: order });
@@ -152,7 +152,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "paymentStatus", order: order });
@@ -167,7 +167,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "createdAt", order: order });
@@ -182,7 +182,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "updatedAt", order: order });
@@ -196,7 +196,7 @@ export default function AdminOrders() {
                 )}
               </th>
 
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
                 Actions
               </th>
             </tr>
@@ -205,7 +205,7 @@ export default function AdminOrders() {
           <tbody>
             {orders.map((order) => (
               <tr key={order.id} className=" border-b-2 border-gray-300">
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="flex items-center gap-3">
                     <div className="flex flex-col">
                       <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
@@ -214,7 +214,7 @@ export default function AdminOrders() {
                     </div>
                   </div>
                 </td>
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   {order.cart.map((item) => (
                     <div
                       key={item.id}
@@ -234,7 +234,7 @@ export default function AdminOrders() {
                   ))}
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="flex items-center gap-3">
                     <div className="flex flex-col">
                       <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
@@ -253,7 +253,7 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   {order.cart.map((item) => (
                     <div
                       key={item.id}
@@ -268,7 +268,7 @@ export default function AdminOrders() {
                   ))}
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   {order.cart.map((item) => (
                     <div
                       key={item.id}
@@ -283,7 +283,7 @@ export default function AdminOrders() {
                   ))}
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="flex flex-col">
                     <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
                       {order.totalAmount}
@@ -291,7 +291,7 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="w-max">
                     {editableStatusId === order.id ? (
                       <select
@@ -319,7 +319,7 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="flex flex-col">
                     <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
                       {order.paymentMethod}
@@ -327,7 +327,7 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="w-max">
                     {editableStatusId === order.id ? (
                       <select
@@ -353,7 +353,7 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="flex flex-col">
                     <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
                       {order.createdAt?new Date(order.createdAt).toLocaleString() :null }
@@ -361,7 +361,7 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
-                <td className="p-4 py-6 ">
+                <td className="p-2 py-4 md:p-4 md:py-6 ">
                   <div className="flex flex-col">
                     <p className="block antialiased font-sans  leading-normal text-blue-gray-900 ">
                       {order.updatedAt ?new Date(order.updatedAt).toLocaleString() :null }
@@ -369,7 +369,7 @@ export default function AdminOrders() {
                   </div>
                 </td>
 
-                <td className="p-4 py-6">
+                <td className="p-2 py-4 md:p-4 md:py-6">
                   <div className="flex gap-2">
                     {/* <button
                       className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-gray-600/10 active:bg-blue-500/30"

@@ -24,9 +24,11 @@ exports.createOrder = async (req, res) => {
     }
     const result = await order.save();
     const user = await User.findById(order.user)
-
+    // to delete the cart after order is placed
+    
 
    sendMail({to:user.email, subject:"Your Order is Placed Successfully.",text:"Your Order is placed.", html:invoiceTemplate(order)})
+   
     res.status(201).json(result);
   } catch (err) {
     res.status(400).json(err);

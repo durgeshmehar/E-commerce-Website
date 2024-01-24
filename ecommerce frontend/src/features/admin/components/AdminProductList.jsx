@@ -420,9 +420,6 @@ export function ProductGrid({ products }) {
   return (
     <div>
       <div className="grid items-stretch px-4 gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
-        {status === "loading" ? (
-          <GridLoader color="rgb(40,116,240)" cssOverride={override} />
-        ) : null}
         {products &&
           products.map((product) => (
             <div
@@ -489,16 +486,6 @@ export function ProductGrid({ products }) {
       </div>
     </div>
   );
-}
-
-{
-  /* <Link
-                type="submit"
-                to={`/admin/product-form/edit/${product.id}`}
-                className="mt-4 rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Edit
-              </Link> */
 }
 
 export function Pagination({ handlePagination, pagination, totalItems }) {

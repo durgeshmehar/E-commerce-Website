@@ -10,7 +10,6 @@ import Protected from "./features/auth/Protected";
 import { OrderSuccessPage } from "./pages/OrderSuccessPage";
 import AdminProtected from "./features/auth/AdminProtected";
 import AdminHome from "./pages/AdminHome";
-import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -114,14 +113,6 @@ const router = createBrowserRouter([
     element: (
       <AdminProtected>
         <AdminHome></AdminHome>{" "}
-      </AdminProtected>
-    ),
-  },
-  {
-    path: "/admin/product-detail/:id",
-    element: (
-      <AdminProtected>
-        <AdminProductDetailPage></AdminProductDetailPage>{" "}
       </AdminProtected>
     ),
   },

@@ -92,7 +92,7 @@ export default function CheckoutPage() {
         user: userInfo.id,
         paymentMethod,
         selectedAddress,
-        status: "Pending",
+        status: "pending",
       };
       dispatch(createOrderAsync(order));
     }

@@ -24,7 +24,15 @@ function SampleNextArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, background: "gray",opacity:"0.5",marginRight:"10px" }}
+      style={{
+        ...style,
+        background: "gray",
+        opacity: "0.7",
+        scale: "1.5",
+        marginRight: "10px",
+        zIndex: "100",
+        display: "block",
+      }}
       onClick={onClick}
     />
   );
@@ -35,7 +43,14 @@ function SamplePrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, background: "gray",opacity:"0.5",marginLeft:"10px" }}
+      style={{
+        ...style,
+        background: "gray",
+        opacity: "0.7",
+        scale: "1.5",
+        marginLeft: "10px",
+        display: "block",
+      }}
       onClick={onClick}
     />
   );
@@ -55,10 +70,12 @@ const settings = {
     {
       breakpoint: 1024,
       settings: {
+        dots: true,
         slidesToShow: 2,
         slidesToScroll: 2,
         infinite: true,
-        dots: true,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
       },
     },
     {
@@ -68,6 +85,8 @@ const settings = {
         slidesToScroll: 1,
         infinite: true,
         dots: true,
+        nextArrow: null,
+        prevArrow: null,
       },
     },
     {
@@ -76,6 +95,8 @@ const settings = {
         slidesToShow: 1,
         slidesToScroll: 1,
         initialSlide: 1,
+        nextArrow: null,
+        prevArrow: null,
       },
     },
     {
@@ -83,6 +104,8 @@ const settings = {
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
+        nextArrow: null,
+        prevArrow: null,
       },
     },
   ],
@@ -115,13 +138,7 @@ export default function ProductDetail() {
 
   const handleCart = (e) => {
     e.preventDefault();
-    if (product.colors && product.colors.length > 0 && !selectedColor) {
-      alert.show("Please select colour");
-    } else if (product.sizes && product.sizes.length > 0 && !selectedSize) {
-      alert.show("Please select size");
-    } else if (
-      cartItems.findIndex((item) => item.product.id === product.id) < 0
-    ) {
+    if (cartItems.findIndex((item) => item.product.id === product.id) < 0) {
       const newItem = { quantity: quantity, product: product.id };
       if (selectedSize) newItem.size = selectedSize;
       if (selectedColor) newItem.color = selectedColor;
@@ -139,7 +156,7 @@ export default function ProductDetail() {
     setQuantity(+e.target.value);
   };
   return (
-    <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
+    <div className="bg-white mx-auto max-w-7xl mt-4 py-2 pb-1 md:px-6 lg:px-8 overflow-x-hidden">
       {status === "loading" ? (
         <GridLoader color="rgb(40,116,240)" cssOverride={override} />
       ) : null}
@@ -183,61 +200,20 @@ export default function ProductDetail() {
           </nav>
 
           {/* Image gallery */}
-          {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-            <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-              <img
-                src={
-                  product.images.length >= 1 && product.images[0]
-                    ? product.images[0]
-                    : ""
-                }
-                alt={product.title}
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-            <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-              <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                <img
-                  src={
-                    product.images.length >= 2 && product.images[1]
-                      ? product.images[1]
-                      : ""
-                  }
-                  alt={product.title}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-              <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                <img
-                  src={
-                    product.images.length >= 3 && product.images[2]
-                      ? product.images[2]
-                      : ""
-                  }
-                  alt={product.title}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-            </div>
-            <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-              <img
-                src={
-                  product.images.length >= 4 && product.images[3]
-                    ? product.images[3]
-                    : ""
-                }
-                alt={product.title}
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-          </div> */}
-
-          <div className="mt-4 p-8">
+          <div className="mt-4 md:p-8 max-h-[50%]">
             <Slider {...settings}>
               {product.images &&
                 product.images.map((imgLink, index) => (
-                  <div key={index} className="space-x-4 hidden lg:block p-4">
-                    <img key={index} src={imgLink} alt={product.title}  className="item-stretch w-full h-full  border-2"/>
+                  <div
+                    key={index}
+                    className="space-x-4 hidden md:block md:p-4 max-h-[50%] "
+                  >
+                    <img
+                      key={index}
+                      src={imgLink}
+                      alt={product.title}
+                      className="item-stretch w-full max-h-[50%] lg:border-2"
+                    />
                   </div>
                 ))}
             </Slider>
@@ -311,7 +287,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              <form className="mt-6">
+              <form className="mt-6 mx-auto">
                 {/* Colors */}
                 <div className="flex justify-between">
                   {product.colors && product.colors.length > 0 && (

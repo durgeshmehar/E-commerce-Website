@@ -8,7 +8,7 @@ import GridLoader from "react-spinners/GridLoader";
 const chooseColor = (status) => {
     switch (status) {
       case "pending":
-        return "text-yellow-600";
+        return "text-black-600 ";
       case "dispatched":
         return "text-blue-600 ";
       case "completed":
@@ -18,7 +18,7 @@ const chooseColor = (status) => {
       case "cancelled":
         return "text-red-600 ";
       default:
-        return "text-yellow-600 ";
+        return "text-black-600 ";
     }
   };
 
@@ -44,7 +44,7 @@ export default function UserOrders() {
   return (
     <>
     {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
-      {orders &&
+      {orders && orders.length >0?
         orders.map((order) => (
           <div
             key={order.id}
@@ -59,8 +59,11 @@ export default function UserOrders() {
             {/* <h3 className=" text-red-500">
               Order Status : {order.status}
             </h3> */}
-            <div className={`${chooseColor(order.status)} pl-4 pt-2 pb-4 text-xl`}>
+            <div className={`${chooseColor(order.status)} pl-4 py-1 text-xl`}>
               Order Status : {order.status}
+            </div>
+            <div className={`${chooseColor(order.paymentStatus)} pl-4 pb-4 text-xl`}>
+              Payment Status : {order.paymentStatus}
             </div>
 
             <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
@@ -128,7 +131,7 @@ export default function UserOrders() {
                     </div>
                   </div>
 
-                  <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                  <div className="shrink-0 sm:flex sm:flex-col sm:items-end">
                     <p className="text-sm leading-6 text-gray-900">
                       Phone: {order.selectedAddress.mobile}
                     </p>
@@ -141,7 +144,7 @@ export default function UserOrders() {
               )}
             </div>
           </div>
-        ))}
+        )) : <div className="text-center text-md mt-16">No Orders Found</div>}
     </>
   );
 }
