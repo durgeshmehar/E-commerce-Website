@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo, selectUserInfoStatus, selectUserOrder } from "../userSlice";
+import { Link } from "react-router-dom";
 import { fetchLoggedInUserOrdersAsync } from "../userSlice";
 import GridLoader from "react-spinners/GridLoader";
 
@@ -56,9 +57,6 @@ export default function UserOrders() {
             >
               Order #{order.id}
             </h1>
-            {/* <h3 className=" text-red-500">
-              Order Status : {order.status}
-            </h3> */}
             <div className={`${chooseColor(order.status)} pl-4 py-1 text-xl`}>
               Order Status : {order.status}
             </div>
@@ -71,6 +69,7 @@ export default function UserOrders() {
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
                   {order.cart &&
                     order.cart.map((item) => (
+                      <Link to={`/product-detail/${item.product.id}`} key={item.product.id}>
                       <li key={item.product.id} className=" flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
@@ -95,6 +94,7 @@ export default function UserOrders() {
                           </div>
                         </div>
                       </li>
+                      </Link>
                     ))}
                 </ul>
               </div>
