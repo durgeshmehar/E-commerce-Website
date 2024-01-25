@@ -66,7 +66,7 @@ export default function UserProfile() {
 
   return (
     <>
-      <div className="bg-white mx-auto max-w-7xl px-4 mt-6 sm:px-6 lg:px-8 ">
+      <div className="bg-white mx-auto max-w-7xl px-4 mb-6 sm:px-6 lg:px-8 ">
         <h1 id="products-heading" className="p-4 pb-1 text-2xl font-semibold">
           Name : {userInfo.name ? userInfo.name : "Username"}
         </h1>
@@ -283,7 +283,7 @@ export default function UserProfile() {
           </form>
         ) : null}
 
-        <div className="">
+        <div className="pb-4">
           <h3 className="p-2 text-xl pr-0 font-semibold text-black-500">
             Your Addresses
           </h3>
@@ -512,10 +512,10 @@ export default function UserProfile() {
                   </p>
                 </div>
 
-                <div className=" sm:flex sm:flex-col sm:items-center text-sm">
+                <div className="flex shrink-0 flex-col items-end  text-sm">
                   <button
                     type="button"
-                    className=" rounded-md px-8 py-2  bg-blue-400   font-medium text-white  hover:bg-blue-300 mb-2"
+                    className="w-fit rounded-md px-6 py-1  bg-blue-400   font-medium text-white  hover:bg-blue-300 mb-2"
                     onClick={() => handleSelectEdit(index)}
                   >
                     Edit
@@ -523,13 +523,13 @@ export default function UserProfile() {
 
                   <button
                   type="submit"
-                  className="rounded-md  px-3 py-2 text-white bg-red-400 font-medium hover:bg-red-300"
+                  className="w-fit rounded-md  px-4 py-1 text-white bg-red-400 font-medium hover:bg-red-300"
                   onClick={(e) => {
                     e.preventDefault();
                     setShowModalId(index);
                   }}
                 >
-                  Delete Address
+                  Delete
                  </button>
 
                   {showModalId===index ? <Modal

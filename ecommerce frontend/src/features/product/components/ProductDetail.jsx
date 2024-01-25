@@ -59,7 +59,7 @@ function SamplePrevArrow(props) {
 const settings = {
   dots: true,
   infinite: true,
-  speed: 500,
+  speed: 200,
   slidesToShow: 2,
   slidesToScroll: 2,
   swipeToSlide: true,

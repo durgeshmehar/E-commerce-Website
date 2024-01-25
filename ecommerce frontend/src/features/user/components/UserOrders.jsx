@@ -49,7 +49,7 @@ export default function UserOrders() {
         orders.map((order) => (
           <div
             key={order.id}
-            className="bg-white rounded-sm mx-auto max-w-7xl px-4 mt-8 sm:px-6 lg:px-8 "
+            className="bg-white rounded-sm mx-auto max-w-7xl px-4 mb-8 sm:px-6 lg:px-8 "
           >
             <h1
               id="products-heading"
