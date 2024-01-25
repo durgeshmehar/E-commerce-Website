@@ -19,14 +19,14 @@ exports.cookieExtractor = (req) => {
 
 //nodemailer
 const transporter = nodemailer.createTransport({
-  service:'gmail',
+  host:'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
     user: "durgesh7840963569@gmail.com",
     pass: process.env.EMAIL_PASSWORD,
-    // clientId: '616815397407-udf9hiau1df6t57922f2o06r1n52e2f6.apps.googleusercontent.com',
-    // clientSecret: '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',
-    // refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
-    // accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
+    clientId: '616815397407-udf9hiau1df6t57922f2o06r1n52e2f6.apps.googleusercontent.com',
+    clientSecret: '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',
   },
 });
 
