@@ -20,8 +20,8 @@ exports.cookieExtractor = (req) => {
 //nodemailer
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: "durgesh7840963569@gmail.com",
     pass: process.env.EMAIL_PASSWORD,
