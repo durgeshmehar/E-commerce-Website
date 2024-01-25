@@ -19,25 +19,32 @@ exports.cookieExtractor = (req) => {
 
 //nodemailer
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  service:'gmail',
   auth: {
     user: "durgesh7840963569@gmail.com",
     pass: process.env.EMAIL_PASSWORD,
+    // clientId: '616815397407-udf9hiau1df6t57922f2o06r1n52e2f6.apps.googleusercontent.com',
+    // clientSecret: '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',
+    // refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
+    // accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x'
   },
 });
 
 //email sending
 exports.sendMail = async ({ to, subject, text, html }) => {
-  const info = await transporter.sendMail({
-    from: '"E-Shop 🛒" <Eshoporders@gmail.com>',
-    to,
-    subject,
-    text,
-    html,
-  });
-  return info;
+  try{  
+    const info = await transporter.sendMail({
+      from: '"E-Shop 🛒" <Eshoporders@gmail.com>',
+      to,
+      subject,
+      text,
+      html,
+    });
+    return info;
+  }
+  catch(err){
+    console.log("Error to send error :", err);
+  }
 };
 
 exports.invoiceTemplate = function (order) {

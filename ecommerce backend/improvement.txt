@@ -11,6 +11,8 @@
     checkoutPage not allow to update quantity more than stock available
     Checkout some mobile responsiveness
     Make slider in productdetails
+    order success page modified
 
+cart reloads the json comes response
 Look for another deployment server
 Use Docker to improve server code
