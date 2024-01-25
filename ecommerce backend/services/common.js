@@ -307,6 +307,7 @@ exports.invoiceTemplate = function (order) {
     order.selectedAddress.postalcode
   }</p>
                        <p>${order.selectedAddress.mobile}</p>
+                       <p>${new Date().toLocaleString()}</p>
  
                        </td>
                    </tr>

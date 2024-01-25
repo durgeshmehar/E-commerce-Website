@@ -82,7 +82,6 @@ export const signOutAsync = createAsyncThunk(
     'user/signOut',
     async() => {
         const response = await signOut();
-        console.log("signOutAsync response: ",response)
         return response;
     }
 );

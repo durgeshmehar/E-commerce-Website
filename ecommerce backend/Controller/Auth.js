@@ -83,7 +83,7 @@ exports.resetPasswordRequest = async (req, res) => {
       const subject = "Reset Password Request";
       const text = `This is the reset Password Request.Please click on the ${resetPageLink} to reset your password`;
       const html = `This is the reset Password Request. Please click <a href="${resetPageLink}">here</a> to reset password.`;
-      const response = sendMail({ to: req.body.email, subject, text, html });
+      const response = sendMail({to:email,subject:subject, text:text, html:html });
       res.status(200).json(response);
     } else {
       res.status(400).json({ message:"User Not Found" });
@@ -114,7 +114,7 @@ exports.resetPassword = async (req, res) => {
       const text = `You have successfully reset your password .Plese Login  <a href=${link}> here </a> to continue`;
       const html = `You have successfully reset your password .Plese Login  <a href=${link}> here </a> to continue`;
 
-      const response = sendMail({ to: req.body.email, subject, text, html });
+      const response = sendMail({to:email,subject:subject, text:text, html:html });
       res.status(200).json(response);
     } else {
       res.status(400).json({ message: "Invalid User" });

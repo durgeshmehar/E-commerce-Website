@@ -112,7 +112,6 @@ passport.use(
     async function (email, password, done) {
       try {
         const user = await User.findOne({ email: email});
-        console.log("user :",user)
         if (user===null) {
          return done(null,false,{message:"User not found"});
         }

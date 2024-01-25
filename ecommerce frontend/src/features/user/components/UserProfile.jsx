@@ -67,10 +67,10 @@ export default function UserProfile() {
   return (
     <>
       <div className="bg-white mx-auto max-w-7xl px-4 mb-6 sm:px-6 lg:px-8 ">
-        <h1 id="products-heading" className="p-4 pb-1 text-2xl font-semibold">
+        <h1 id="products-heading" className="p-4 pb-1 text-lg font-semibold">
           Name : {userInfo.name ? userInfo.name : "Username"}
         </h1>
-        <h3 className="p-4 pb-1 text-xl font-semibold text-slate-800">
+        <h3 className="p-4 pb-1 text-lg font-semibold text-slate-800">
           Email : {userInfo.email}
         </h3>
         {userInfo.role === "admin" ? 

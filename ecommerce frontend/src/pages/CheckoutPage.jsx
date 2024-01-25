@@ -116,14 +116,14 @@ export default function CheckoutPage() {
         <GridLoader color="rgb(40,116,240)" cssOverride={override} />
       ) : null}
 
-      <div className="mx-auto max-w-7xl lg:px-8">
-        <div className="grid grid-cols-1 md:gap-x-4 px-2 gap-y-10 md:grid-cols-5 md:px-4">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1sgap-y-10 md:grid-cols-5">
 
           {/* ADDRESS FORM */}
-          <div className="col-span-1 md:col-span-3 ">
+          <div className="col-span-1 md:col-span-3 md:mr-4">
             <form
               noValidate
-              className="bg-white mx-auto px-8 mt-4 md:mt-8 "
+              className="bg-white mx-auto px-8 mt-4 md:mt-8 w-full"
               onSubmit={handleSubmit((data) => {
                 dispatch(
                   updateUserAsync({
@@ -432,7 +432,7 @@ export default function CheckoutPage() {
           {/* CART */}
           <div className="md:col-span-2">
             <div className="bg-white mx-auto max-w-7xl px-0 mt-8 ">
-              <h1 id="products-heading" className="p-4 text-3xl font-semibold">
+              <h1 id="products-heading" className="p-4 text-2xl font-semibold">
                 Cart
               </h1>
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
