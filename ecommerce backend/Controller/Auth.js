@@ -79,7 +79,7 @@ exports.resetPasswordRequest = async (req, res) => {
       const token = crypto.randomBytes(32).toString("hex");
       user.resetPasswordToken = token;
       await user.save();
-      const resetPageLink = `http://localhost:5173/reset-password?token=${token}&email=${email}`;
+      const resetPageLink = `https://durgesheshop.vercel.app/reset-password?token=${token}&email=${email}`;
       const subject = "Reset Password Request";
       const text = `This is the reset Password Request.Please click on the ${resetPageLink} to reset your password`;
       const html = `This is the reset Password Request. Please click <a href="${resetPageLink}">here</a> to reset password.`;
