@@ -109,7 +109,7 @@ exports.resetPassword = async (req, res) => {
       user.resetPasswordToken = "";
       await user.save();
 
-      const link = `http://localhost:5173/login`;
+      const link = `https://durgesheshop.vercel.app/login`;
       const subject = "Password reset successfully";
       const text = `You have successfully reset your password .Plese Login  <a href=${link}> here </a> to continue`;
       const html = `You have successfully reset your password .Plese Login  <a href=${link}> here </a> to continue`;
