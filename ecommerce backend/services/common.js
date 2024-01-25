@@ -1,5 +1,6 @@
 const passport = require("passport");
 const nodemailer = require("nodemailer");
+const { google } = require('googleapis');
 
 exports.isAuth = (req, res, done) => {
   return passport.authenticate("jwt");
@@ -17,14 +18,25 @@ exports.cookieExtractor = (req) => {
   return token;
 };
 
+
+// Set up OAuth2 client
+const oAuth2Client = new google.auth.OAuth2(
+  '616815397407-udf9hiau1df6t57922f2o06r1n52e2f6.apps.googleusercontent.com',
+  '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',
+  'https://developers.google.com/oauthplayground'
+);
+
+// Set the access token
+oAuth2Client.setCredentials({
+  access_token: 'ya29.a0AfB_byCfEW2s2kl247BtDlMh4e5M9QaDnAjMOJNG_8DEIwzMjSVxmNXjBHd9QqFONru5Qtc_GFPnmcadsgrUcQLVp7DSG6InTziotrxxnCOoAFwQQTQX6sjVbfyBA1mlepaJfMjsMxgtZul4FRry8aRJfvN8BcioYFz5aCgYKAdoSARESFQHGX2MimxII_q1JzSsZL9WssufphA0171',
+});
+
 //nodemailer
 const transporter = nodemailer.createTransport({
-  host:'smtp.gmail.com',
-  port: 587,
-  secure: false,
+  service: 'gmail',
   auth: {
+    type: 'OAuth2',
     user: "durgesh7840963569@gmail.com",
-    pass: process.env.EMAIL_PASSWORD,
     clientId: '616815397407-udf9hiau1df6t57922f2o06r1n52e2f6.apps.googleusercontent.com',
     clientSecret: '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',
     refreshToken: '1//04DiAz5ghS0b-CgYIARAAGAQSNgF-L9Ir5XawhbeAY0plI8MY86PVje7W5vaoExWhxkkJlByqGslKQNhf7IpQiNotrNhxmQHEAw',
