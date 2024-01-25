@@ -27,6 +27,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD,
     clientId: '616815397407-udf9hiau1df6t57922f2o06r1n52e2f6.apps.googleusercontent.com',
     clientSecret: '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',
+    refreshToken: '1//04DiAz5ghS0b-CgYIARAAGAQSNgF-L9Ir5XawhbeAY0plI8MY86PVje7W5vaoExWhxkkJlByqGslKQNhf7IpQiNotrNhxmQHEAw',
+    accessToken: 'ya29.a0AfB_byCfEW2s2kl247BtDlMh4e5M9QaDnAjMOJNG_8DEIwzMjSVxmNXjBHd9QqFONru5Qtc_GFPnmcadsgrUcQLVp7DSG6InTziotrxxnCOoAFwQQTQX6sjVbfyBA1mlepaJfMjsMxgtZul4FRry8aRJfvN8BcioYFz5aCgYKAdoSARESFQHGX2MimxII_q1JzSsZL9WssufphA0171'
   },
 });
 
