@@ -124,8 +124,7 @@ export default function AdminProductList() {
     <>
       {status === "loading" ? (
         <GridLoader color="rgb(40,116,240)" cssOverride={override} />
-      ) : null}
-      <div className="overflow-hidden">
+      ) : <div className="overflow-hidden">
         <MobileFilter
           mobileFiltersOpen={mobileFiltersOpen}
           setMobileFiltersOpen={setMobileFiltersOpen}
@@ -232,7 +231,8 @@ export default function AdminProductList() {
           pagination={pagination}
           totalItems={totalItems}
         />
-      </div>
+      </div>}
+      
     </>
   );
 }

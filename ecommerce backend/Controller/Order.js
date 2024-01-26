@@ -26,7 +26,7 @@ exports.createOrder = async (req, res) => {
     const user = await User.findById(order.user)
     const email = user.email;
     
-   const doc = sendMail({to:email, subject:"Your Order is Placed Successfully.",text:"Your Order is placed.", 
+   const doc = await sendMail({to:email, subject:"Your Order is Placed Successfully.",text:"Your Order is placed.", 
    html:invoiceTemplate(order)})
     res.status(201).json(result);
   } catch (err) {

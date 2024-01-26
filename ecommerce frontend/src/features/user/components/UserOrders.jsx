@@ -1,27 +1,31 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserInfo, selectUserInfoStatus, selectUserOrder } from "../userSlice";
+import {
+  selectUserInfo,
+  selectUserInfoStatus,
+  selectUserOrder,
+} from "../userSlice";
 import { Link } from "react-router-dom";
 import { fetchLoggedInUserOrdersAsync } from "../userSlice";
 import GridLoader from "react-spinners/GridLoader";
 
 const chooseColor = (status) => {
-    switch (status) {
-      case "pending":
-        return "text-black-600 ";
-      case "dispatched":
-        return "text-blue-600 ";
-      case "completed":
-        return "text-green-600 ";
-      case "received":
-        return "text-green-600 ";
-      case "cancelled":
-        return "text-red-600 ";
-      default:
-        return "text-black-600 ";
-    }
-  };
+  switch (status) {
+    case "pending":
+      return "text-black-600 ";
+    case "dispatched":
+      return "text-blue-600 ";
+    case "completed":
+      return "text-green-600 ";
+    case "received":
+      return "text-green-600 ";
+    case "cancelled":
+      return "text-red-600 ";
+    default:
+      return "text-black-600 ";
+  }
+};
 
 const override = {
   display: "block",
@@ -35,8 +39,7 @@ export default function UserOrders() {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
-  const status = useSelector(selectUserInfoStatus)
-  
+  const status = useSelector(selectUserInfoStatus);
 
   useEffect(() => {
     dispatch(fetchLoggedInUserOrdersAsync());
@@ -44,8 +47,9 @@ export default function UserOrders() {
 
   return (
     <>
-    {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
-      {orders && orders.length >0?
+      {status === "loading" ? (
+        <GridLoader color="rgb(40,116,240)" cssOverride={override} />
+      ) : orders && orders.length > 0 ? (
         orders.map((order) => (
           <div
             key={order.id}
@@ -60,7 +64,11 @@ export default function UserOrders() {
             <div className={`${chooseColor(order.status)} pl-4 py-1 text-xl`}>
               Order Status : {order.status}
             </div>
-            <div className={`${chooseColor(order.paymentStatus)} pl-4 pb-4 text-xl`}>
+            <div
+              className={`${chooseColor(
+                order.paymentStatus
+              )} pl-4 pb-4 text-xl`}
+            >
               Payment Status : {order.paymentStatus}
             </div>
 
@@ -69,31 +77,38 @@ export default function UserOrders() {
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
                   {order.cart &&
                     order.cart.map((item) => (
-                      <Link to={`/product-detail/${item.product.id}`} key={item.product.id}>
-                      <li key={item.product.id} className=" flex py-6">
-                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                          <img
-                            src={item.product.thumbnail}
-                            alt={item.product.title}
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
+                      <Link
+                        to={`/product-detail/${item.product.id}`}
+                        key={item.product.id}
+                      >
+                        <li key={item.product.id} className=" flex py-6">
+                          <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                            <img
+                              src={item.product.thumbnail}
+                              alt={item.product.title}
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </div>
 
-                        <div className="ml-4 flex flex-1 flex-col">
-                          <div className="flex justify-between  text-base font-medium text-gray-900">
-                            <h3>
-                              <a href={item.product.thumbnail}>{item.product.title}</a>
-                            </h3>
-                            <p className="ml-4">{ item.product.DiscountPrice}</p>
+                          <div className="ml-4 flex flex-1 flex-col">
+                            <div className="flex justify-between  text-base font-medium text-gray-900">
+                              <h3>
+                                <a href={item.product.thumbnail}>
+                                  {item.product.title}
+                                </a>
+                              </h3>
+                              <p className="ml-4">
+                                {item.product.DiscountPrice}
+                              </p>
+                            </div>
+                            <p className="mt-1 text-sm text-gray-500">
+                              {item.product.brand}
+                            </p>
+                            <div className="text-base font-medium text-gray-700 mt-4">
+                              <h3>Qty : {item.quantity}</h3>
+                            </div>
                           </div>
-                          <p className="mt-1 text-sm text-gray-500">
-                            {item.product.brand}
-                          </p>
-                          <div className="text-base font-medium text-gray-700 mt-4">
-                            <h3>Qty : {item.quantity}</h3>
-                          </div>
-                        </div>
-                      </li>
+                        </li>
                       </Link>
                     ))}
                 </ul>
@@ -144,7 +159,10 @@ export default function UserOrders() {
               )}
             </div>
           </div>
-        )) : <div className="text-center text-md mt-16">No Orders Found</div>}
+        ))
+      ) : (
+        <div className="text-center text-md mt-16">No Orders Found</div>
+      )}
     </>
   );
 }
