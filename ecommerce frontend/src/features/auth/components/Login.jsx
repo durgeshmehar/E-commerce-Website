@@ -2,7 +2,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { selectLoggedInUser, loginUserAsync, selectLoginError } from "../authSlice";
+import {
+  selectLoggedInUser,
+  loginUserAsync,
+  selectLoginError,
+} from "../authSlice";
 import logo from "../../../Images/logo.png";
 
 export default function Login() {
@@ -18,11 +22,10 @@ export default function Login() {
 
   return (
     <>
-      {user && user.role==="user" && <Navigate to="/"></Navigate>}
-      {user && user.role==="admin" && <Navigate to="/admin"></Navigate>}
-      
-      <div className="flex flex-1 flex-col justify-center px-6 py-12 ">
+      {user && user.role === "user" && <Navigate to="/"></Navigate>}
+      {user && user.role === "admin" && <Navigate to="/admin"></Navigate>}
 
+      <div className="flex flex-1 flex-col justify-center px-6 py-12 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-20 w-auto" src={logo} alt="Your Company" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -127,7 +130,6 @@ export default function Login() {
             Create an Account
           </Link>
         </p>
-
       </div>
     </>
   );

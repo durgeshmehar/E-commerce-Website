@@ -543,7 +543,7 @@ export default function CheckoutPage() {
                     className=" cursor-pointer flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                     onClick={handleOrder}
                   >
-                    Order Now
+                    Buy Now
                   </div>
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

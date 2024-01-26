@@ -66,8 +66,14 @@ export default function ForgotPassword() {
                 {errors.email && (
                   <p className="text-red-500 my-4">{errors.email.message}</p>
                 )}
-                {mailSent && (
+                {mailSent==1 && (
+                  <p className="text-green-500 my-4">Mail is sending ...</p>
+                )}
+                {mailSent==2 && (
                   <p className="text-green-500 my-4">Mail Sent</p>
+                )}
+                {mailSent==3 && (
+                  <p className="text-red-500 my-4">Invalid Email Address</p>
                 )}
                 {error &&  (
                   <p className="text-red-500 my-4">{error.message}</p>

@@ -9,7 +9,7 @@ const initialState = {
     loginError :null,
     requestError :null,
     resetPasswordError :null,
-    mailSent:false,
+    mailSent:0,
     passwordResetStatus:false,
     };
 
@@ -106,7 +106,8 @@ export const authSlice = createSlice({
             state.createError =null,
             state.loginError =null,
             state.requestError =null,
-            state.resetPasswordError =null
+            state.resetPasswordError =null,
+            state.mailSent = 0;
           })
           .addCase(createUserAsync.rejected, (state, action) => {
             state.status = 'idle';
@@ -121,7 +122,9 @@ export const authSlice = createSlice({
             state.createError =null,
             state.loginError =null,
             state.requestError =null,
-            state.resetPasswordError =null
+            state.resetPasswordError =null,
+            state.mailSent = 0;
+            
           })
           .addCase(loginUserAsync.rejected, (state, action) => {
             state.status = 'loading';
@@ -133,7 +136,8 @@ export const authSlice = createSlice({
           .addCase(signOutAsync.fulfilled, (state) => {
             state.status = 'idle';
             state.error = null;
-            state.loggedInUserToken = null;
+            state.loggedInUserToken = null,
+            state.mailSent = 0;
           })
           .addCase(checkAuthAsync.pending, (state) => {
             state.status = 'loading';
@@ -150,11 +154,11 @@ export const authSlice = createSlice({
           })
           .addCase(resetPasswordRequestAsync.pending, (state) => {
             state.status = 'loading';
-            state.mailSent = false;
+            state.mailSent = 1;
           }) 
           .addCase(resetPasswordRequestAsync.fulfilled, (state) => {
             state.status = 'idle';
-            state.mailSent = true;
+            state.mailSent = 2;
             state.createError =null,
             state.loginError =null,
             state.requestError =null,
@@ -162,7 +166,7 @@ export const authSlice = createSlice({
           })
           .addCase(resetPasswordRequestAsync.rejected, (state,action) => {
             state.status = 'idle';
-            state.mailSent = false;
+            state.mailSent = 3;
             state.requestError = action.payload;
           })
           .addCase(resetPasswordAsync.pending, (state) => {
@@ -175,7 +179,8 @@ export const authSlice = createSlice({
             state.createError =null,
             state.loginError =null,
             state.requestError =null,
-            state.resetPasswordError =null
+            state.resetPasswordError =null,
+            state.mailSent = 0;
           })
           .addCase(resetPasswordAsync.rejected, (state,action) => {
             state.status = 'idle';

@@ -83,7 +83,8 @@ exports.resetPasswordRequest = async (req, res) => {
       const subject = "Reset Password Request";
       const text = `This is the reset Password Request.Please click on the ${resetPageLink} to reset your password`;
       const html = `This is the reset Password Request. Please click <a href="${resetPageLink}">here</a> to reset password.`;
-      const response = sendMail({to:email,subject:subject, text:text, html:html });
+      const response = await sendMail({to:email,subject:subject, text:text, html:html });
+      console.log("nodemailer response :",response);
       res.status(200).json(response);
     } else {
       res.status(400).json({ message:"User Not Found" });
