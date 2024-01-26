@@ -56,7 +56,13 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-    res.cookie("jwt", "", { expires: new Date(0), httpOnly: true,secure: true  }).status(200);
+  try{
+    res.cookie("jwt", "", { expires: new Date(0), httpOnly: true,secure: true  }).status(200).json({ message: "Logout successfully" });
+    console.log("Logout successfully")
+  }
+  catch(err){
+    res.status(400).json({ message: "Try again !!" });
+  }
 };
 
 exports.checkAuth = async (req, res) => {
