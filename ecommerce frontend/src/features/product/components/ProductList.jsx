@@ -397,9 +397,13 @@ export function DesktopFilter({ handleFilter, filters }) {
 
 export function ProductGrid({ products,status }) {
   return (
-    <div>
-      <div className="grid items-stretch px-4 gap-3 sm:gap-8 md:gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
-        {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
+
+        <>
+
+        {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:
+
+        <div>
+        <div className="grid items-stretch px-4 gap-3 sm:gap-8 md:gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
         {products &&
           products.map((product) => (
             <div
@@ -444,8 +448,14 @@ export function ProductGrid({ products,status }) {
                   <p className="ml-3 mb-1 font-semibold text-[rgb(199,0,85)]">Only {product.stock} left</p>
                 </div> : null}
             </div>
-          ))}
-      </div>
-    </div>
+          )) }
+          </div>
+         </div>
+
+          }
+        
+          </>
+
+
   );
 }
