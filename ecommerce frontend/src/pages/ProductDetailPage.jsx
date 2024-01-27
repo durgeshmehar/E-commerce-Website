@@ -9,14 +9,7 @@ import { selectSingleProductStatus } from "../features/product/productSlice";
 import { useEffect } from "react";
 import GridLoader from "react-spinners/GridLoader";
 import { useDispatch } from "react-redux";
-
-const override = {
-  display: "block",
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
+import { override } from "../app/constants";
 
 export default function ProductDetailPage() {
   const singleProductStatus = useSelector(selectSingleProductStatus);

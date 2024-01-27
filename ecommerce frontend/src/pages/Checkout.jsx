@@ -2,6 +2,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
+import { override } from "../app/constants"
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import {
@@ -20,13 +21,6 @@ import GridLoader from "react-spinners/GridLoader";
 
 import Modal from "../features/common/Modal";
 
-const override = {
-  display: "block",
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
 
 export default function Checkout() {
   const {

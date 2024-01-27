@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
+import { override } from "../../app/constants";
 import React, { useEffect, useState } from "react";
 import {
   deleteItemFromCartAsync,
@@ -11,14 +12,6 @@ import {
 
 import Modal from "../common/Modal";
 import GridLoader from "react-spinners/GridLoader";
-
-const override = {
-  display: "block",
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
 
 export default function Cart() {
   const dispatch = useDispatch();

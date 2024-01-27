@@ -191,6 +191,7 @@ export const authSlice = createSlice({
     });
 
 export const { increment } = authSlice.actions;
+export const selectStatus = (state) => state.auth.status;
 export const selectLoggedInUser = (state) => state.auth.loggedInUserToken;
 export const selectUserStatus = (state) => state.auth.UserStatus;
 export const selectMailSent = (state) => state.auth.mailSent;

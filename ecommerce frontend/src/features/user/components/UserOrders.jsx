@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { override } from "../../../app/constants";
 import {
   selectUserInfo,
   selectUserInfoStatus,
@@ -27,13 +28,6 @@ const chooseColor = (status) => {
   }
 };
 
-const override = {
-  display: "block",
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
 
 export default function UserOrders() {
   const dispatch = useDispatch();

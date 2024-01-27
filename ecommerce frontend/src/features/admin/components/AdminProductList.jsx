@@ -2,6 +2,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GridLoader from "react-spinners/GridLoader";
+import { override } from "../../../app/constants"
 import { Link } from "react-router-dom";
 import {
   fetchBrandsAsync,
@@ -39,13 +40,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const override = {
-  display: "block",
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
 
 export default function AdminProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);

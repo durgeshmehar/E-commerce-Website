@@ -65,7 +65,7 @@ export default function Navbar({ children }) {
                                   item.current
                                     ? "bg-gray-900 text-white"
                                     : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                                  "rounded-md px-3 py-2 text-md font-medium border-[1px] border-slate-700"
+                                  "rounded-md px-3 py-2 text-lg font-medium "
                                 )}
                                 aria-current={item.current ? "page" : undefined}
                               >
@@ -183,7 +183,7 @@ export default function Navbar({ children }) {
                               item.current
                                 ? "bg-gray-900 text-white"
                                 : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "block rounded-md px-3 py-2 text-base font-medium border-[2px] border-slate-700"
+                              "block rounded-md px-3 py-2 font-medium text-lg"
                             )}
                             aria-current={item.current ? "page" : undefined}
                           >

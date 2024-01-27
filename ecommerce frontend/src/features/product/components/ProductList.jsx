@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import  Pagination  from "../../common/Pagination";
 import GridLoader from "react-spinners/GridLoader";
+import { override } from "../../../app/constants";
 import { selectProductListStatus } from "../productSlice";
 import {
   fetchBrandsAsync,
@@ -41,13 +42,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const override = {
-  display: "block",
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
 
 export default function ProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);

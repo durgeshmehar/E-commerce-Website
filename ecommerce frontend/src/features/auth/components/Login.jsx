@@ -2,10 +2,13 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { GridLoader } from "react-spinners";
+import { override } from "../../../app/constants";
 import {
   selectLoggedInUser,
   loginUserAsync,
   selectLoginError,
+  selectStatus,
 } from "../authSlice";
 import logo from "../../../Images/logo.png";
 
@@ -19,11 +22,15 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const status = useSelector(selectStatus)
 
   return (
     <>
+
       {user && user.role === "user" && <Navigate to="/"></Navigate>}
       {user && user.role === "admin" && <Navigate to="/admin"></Navigate>}
+
+      {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:
 
       <div className="flex flex-1 flex-col justify-center px-6 py-12 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -131,6 +138,7 @@ export default function Login() {
           </Link>
         </p>
       </div>
+      }
     </>
   );
 }
