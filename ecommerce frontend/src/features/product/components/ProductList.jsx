@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useState, Fragment, useEffect, CSSProperties } from "react";
+import React, { useState, Fragment, useEffect,CSSProperties } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Pagination from "../../common/Pagination";
+import  Pagination  from "../../common/Pagination";
 import GridLoader from "react-spinners/GridLoader";
 import { selectProductListStatus } from "../productSlice";
 import {
@@ -34,6 +34,8 @@ const sortOptions = [
   { name: "Price: Low to High", sort: "DiscountPrice", order: "asc" },
   { name: "Price: High to Low", sort: "DiscountPrice", order: "desc" },
 ];
+
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -90,6 +92,8 @@ export default function ProductList() {
     dispatch(fetchCategoriesAsync());
   }, [dispatch]);
 
+
+
   const handleFilter = (e, sectionCategory, optionValue) => {
     let newFilter = { ...filter };
     if (e.target.checked === true) {
@@ -125,7 +129,7 @@ export default function ProductList() {
         filters={filters}
       />
 
-      <main className="bg-white mx-auto max-w-7xl py-2 sm:px-6 lg:px-8">
+      <main className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 px-4 pt-2">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             All Products
@@ -177,6 +181,7 @@ export default function ProductList() {
               </Transition>
             </Menu>
 
+           
             <button
               type="button"
               className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -196,7 +201,7 @@ export default function ProductList() {
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
             <DesktopFilter handleFilter={handleFilter} filters={filters} />
             <div className="lg:col-span-3">
-              <ProductGrid products={products} status={status} />
+              <ProductGrid products={products}  status={status} />
             </div>
           </div>
         </section>
@@ -390,38 +395,37 @@ export function DesktopFilter({ handleFilter, filters }) {
   );
 }
 
-export function ProductGrid({ products, status }) {
+export function ProductGrid({ products,status }) {
   return (
     <div>
-      {status === "loading" ? (
-        <GridLoader color="rgb(40,116,240)" cssOverride={override} />
-      ) : (
-        <div className="grid items-stretch px-4 gap-3 sm:gap-8 md:gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
-          {products &&
-            products.map((product) => (
-              <div
-                className="group text-md w-[95%] sm:w-full border border-solid border-spacing-2  border-gray-300 rounded-md"
-                key={product.id}
-              >
-                <Link to={`/product-detail/${product.id}`}>
-                  <div className="aspect-h-1 aspect-w-1  md:w-full bg-gray-200 lg:aspect-none overflow-hidden rounded-md lg:h-72">
-                    <img
-                      src={product.thumbnail}
-                      className=" h-full w-full object-cover object-center  lg:h-full lg:w-full group-hover:opacity-70 transition-opacity duration-100 cursor-pointer "
-                      alt="cloth-image"
-                    />
-                  </div>
+      <div className="grid items-stretch px-4 gap-3 sm:gap-8 md:gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
+        {status === "loading"? <GridLoader color="rgb(40,116,240)" cssOverride={override} />:null}
+        {products &&
+          products.map((product) => (
+            <div
+              className="group text-md w-[95%] sm:w-full border border-solid border-spacing-2  border-gray-300 rounded-md"
+              key={product.id}
+            >
+              <Link to={`/product-detail/${product.id}`}>
+                <div className="aspect-h-1 aspect-w-1  md:w-full bg-gray-200 lg:aspect-none overflow-hidden rounded-md lg:h-72">
+                  <img
+                    src={product.thumbnail}
+                    className=" h-full w-full object-cover object-center  lg:h-full lg:w-full group-hover:opacity-70 transition-opacity duration-100 cursor-pointer "
+                    alt="cloth-image"
+                  />
+                </div>
 
-                  <div className="p-4">
+                <div className="p-4">
                     <div className="flex justify-between font-medium">
                       <div className="font-normal"> {product.title} </div>{" "}
-                      <div>${product.DiscountPrice}</div>
+                      <div>
+                        $
+                        {product.DiscountPrice}
+                      </div>
                     </div>
                     <div className="flex justify-between items-center text-sm py-[2px]">
                       <div className="border-2 rounded-md mt-1 px-1 bg-green-600 border-none text-white">
-                        <p className="inline align-bottom mt-1">
-                          {product.rating}
-                        </p>{" "}
+                        <p className="inline align-bottom mt-1">{product.rating}</p>{" "}
                         <StarIcon className="w-3 h-3 mb-1 inline"></StarIcon>
                       </div>
                       <div className="opacity-60 font-normal line-through">
@@ -430,26 +434,18 @@ export function ProductGrid({ products, status }) {
                       </div>
                     </div>
                   </div>
-                </Link>
 
-                {product.stock <= 0 ? (
-                  <div>
-                    <p className="ml-3 mb-1 font-semibold text-red-500">
-                      Out of stock
-                    </p>
-                  </div>
-                ) : null}
-                {product.stock <= 10 && product.stock >= 1 ? (
-                  <div>
-                    <p className="ml-3 mb-1 font-semibold text-[rgb(199,0,85)]">
-                      Only {product.stock} left
-                    </p>
-                  </div>
-                ) : null}
-              </div>
-            ))}
-        </div>
-      )}
+              </Link>
+
+              {product.stock <= 0 ? <div>
+                  <p className="ml-3 mb-1 font-semibold text-red-500">Out of stock</p>
+                </div> : null}
+              {product.stock <= 10 && product.stock >=1 ? <div>
+                  <p className="ml-3 mb-1 font-semibold text-[rgb(199,0,85)]">Only {product.stock} left</p>
+                </div> : null}
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

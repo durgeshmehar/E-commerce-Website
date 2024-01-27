@@ -28,6 +28,7 @@ import {
 import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 import StripeCheckout from "./pages/StripeCheckout";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import { fetchProductByIdAsync } from "./features/product/productSlice";
 
 const router = createBrowserRouter([
   {
@@ -47,10 +48,10 @@ const router = createBrowserRouter([
     element: <SignupPage />,
   },
   {
-    path: "/cart",
+    path: "/cart-item",
     element: (
       <Protected>
-        <CartPage />{" "}
+        <CartPage />
       </Protected>
     ),
   },

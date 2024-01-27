@@ -5,7 +5,7 @@ const initialState = {
     products:[],
     categories:[],
     brands:[],
-    status: 'idle',
+    status: 'null',
     singleProductStatus: 'idle',
     totalItems:0,
     selectedProduct:null,

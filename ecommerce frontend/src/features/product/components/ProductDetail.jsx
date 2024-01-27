@@ -3,12 +3,15 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectProduct, selectProductListStatus, selectSingleProductStatus } from "../productSlice";
+import {
+  selectProduct,
+  selectProductListStatus,
+  selectSingleProductStatus,
+} from "../productSlice";
 import { updateCartAsync } from "./../../cart/cartSlice";
 import { fetchProductByIdAsync } from "../productSlice";
 import { addToCartAsync, selectCartItems } from "./../../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
-import GridLoader from "react-spinners/GridLoader";
 import { selectUserInfo } from "./../../user/userSlice";
 import { useAlert } from "react-alert";
 import Slider from "react-slick";
@@ -27,6 +30,9 @@ function SampleNextArrow(props) {
       style={{
         ...style,
         background: "gray",
+        "borderRadius": "50%",
+        "padding": "0",
+        "margin":"0",
         opacity: "0.7",
         scale: "1.5",
         marginRight: "10px",
@@ -46,9 +52,13 @@ function SamplePrevArrow(props) {
       style={{
         ...style,
         background: "gray",
+        "borderRadius": "50%",
+        "padding": "0",
+        "margin":"0",
         opacity: "0.7",
         scale: "1.5",
-        marginLeft: "10px",
+        marginRight: "10px",
+        zIndex: "100",
         display: "block",
       }}
       onClick={onClick}
@@ -122,19 +132,8 @@ export default function ProductDetail() {
   const dispatch = useDispatch();
   const params = useParams();
   const alert = useAlert();
-  const status = useSelector(selectSingleProductStatus);
 
-  const override = {
-    display: "block",
-    position: "absolute",
-    top: "40%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
 
-  useEffect(() => {
-    dispatch(fetchProductByIdAsync(params.id));
-  }, [dispatch, params.id]);
 
   const handleCart = (e) => {
     e.preventDefault();
@@ -143,7 +142,7 @@ export default function ProductDetail() {
       if (selectedSize) newItem.size = selectedSize;
       if (selectedColor) newItem.color = selectedColor;
       dispatch(addToCartAsync(newItem)).then(() => {
-        navigate("/cart");
+        navigate("/cart-item");
       });
       alert.success("Item added to cart");
     } else {
@@ -157,9 +156,7 @@ export default function ProductDetail() {
   };
   return (
     <>
-      {status === "loading" ? (
-        <GridLoader color="rgb(40,116,240)" cssOverride={override} />
-      ) : (product &&
+      {product && (
         <div className="bg-white mx-auto max-w-7xl mt-4 py-2 pb-1 md:px-6 lg:px-8 overflow-x-hidden">
           <div className="pt-6">
             <nav aria-label="Breadcrumb">

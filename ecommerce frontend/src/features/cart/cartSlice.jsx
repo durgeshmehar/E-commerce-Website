@@ -74,7 +74,7 @@ export const cartSlice = createSlice({
         })
         .addCase(fetchItemsByUserIdAsync.rejected, (state) => {
             state.status = 'idle';
-            state.cartLoaded = true;
+            state.cartLoaded = false;
         })
         .addCase(updateCartAsync.pending, (state) => {
             state.status = 'loading';
