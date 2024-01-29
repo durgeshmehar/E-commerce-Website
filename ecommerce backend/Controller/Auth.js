@@ -69,7 +69,7 @@ exports.checkAuth = async (req, res) => {
   if (req.user) {
     res.status(200).json(sanitiseUser(req.user));
   } else {
-    res.status(400).json({ message: "Try again !!" });
+    res.sendStatus(400);
   }
 };
 exports.resetPasswordRequest = async (req, res) => {

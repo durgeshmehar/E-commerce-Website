@@ -46,7 +46,7 @@ export const checkAuthAsync = createAsyncThunk(
         return response.data;
       }
       catch(error){
-        console.log("Error at checkAuthSlice",error)
+        console.log("User not Authorised:",error)
       }
     }
 );

@@ -53,7 +53,6 @@ export default function Cart() {
                 {products &&
                   products.map((item) => (
                     <li key={item.id} className="flex py-6">
-                      {console.log("item :", item)}
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <img
                           src={item.product.thumbnail}
