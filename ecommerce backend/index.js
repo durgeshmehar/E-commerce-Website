@@ -4,6 +4,7 @@ const server = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const compression = require("compression");
 const path = require("path");
 
 const passport = require("passport");
@@ -68,6 +69,7 @@ server.post(
 );
 
 // server.use(express.raw({type: 'application/json'}))
+server.use(compression());
 server.use(express.json());
 server.use(express.static(path.resolve(__dirname, 'build')));
 server.use(cookiParser());
