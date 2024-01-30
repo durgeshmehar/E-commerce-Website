@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -10,11 +10,19 @@ import {
   selectResetPasswordError,
 } from "../authSlice";
 
+import { Icon } from "react-icons-kit";
+import { eyeOff } from "react-icons-kit/feather/eyeOff";
+import { eye } from "react-icons-kit/feather/eye";
+
 export default function ResetPassword() {
   const query = new URLSearchParams(window.location.search);
   const token = query.get("token");
   const email = query.get("email");
   const error = useSelector(selectResetPasswordError);
+  const [type, setType] = useState("password");
+  const handleToggle = () => {
+    setType(type === "password" ? "text" : "password");
+  };
 
   const {
     register,
@@ -56,7 +64,7 @@ export default function ResetPassword() {
                   New Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password"
                   {...register("password", {
@@ -69,9 +77,20 @@ export default function ResetPassword() {
 - Can contain special characters`,
                     },
                   })}
-                  type="password"
+                  type={type}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {/* show password  */}
+                <span
+                    className="absolute top-1/2 transform -translate-y-1/2 right-2"
+                    onClick={handleToggle}
+                  >
+                    {type === "password" ? (
+                      <Icon icon={eyeOff} className="h-8 w-8 text-black" />
+                    ) : (
+                      <Icon icon={eye} className="h-8 w-8 text-black" />
+                    )}
+                  </span>
                 {errors.password && (
                   <p className="text-red-500">{errors.password.message}</p>
                 )}
@@ -87,7 +106,7 @@ export default function ResetPassword() {
                   Confirm Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="confirmPassword"
                   {...register("confirmPassword", {
@@ -95,9 +114,20 @@ export default function ResetPassword() {
                     validate: (value, formValues) =>
                       value === formValues.password || "Password doesn't match",
                   })}
-                  type="password"
+                  type={type}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {/* show password  */}
+                <span
+                    className="absolute top-1/2 transform -translate-y-1/2 right-2"
+                    onClick={handleToggle}
+                  >
+                    {type === "password" ? (
+                      <Icon icon={eyeOff} className="h-8 w-8 text-black" />
+                    ) : (
+                      <Icon icon={eye} className="h-8 w-8 text-black" />
+                    )}
+                  </span>
                 {errors.confirmPassword && (
                   <p className="text-red-500">
                     {errors.confirmPassword.message}
@@ -106,7 +136,7 @@ export default function ResetPassword() {
               </div>
             </div>
 
-            <div className="my-4">
+            <div className="my-4 ">
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"

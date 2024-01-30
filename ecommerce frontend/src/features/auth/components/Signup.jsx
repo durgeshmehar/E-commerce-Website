@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState}from "react";
 import { useSelector , useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {selectLoggedInUser,createUserAsync, selectCreateError,   } from "../authSlice";
@@ -6,11 +6,20 @@ import { useForm } from "react-hook-form"
 import { Navigate } from "react-router-dom"
 import logo from "../../../Images/logo.png"
 
+import { Icon } from "react-icons-kit";
+import { eyeOff } from "react-icons-kit/feather/eyeOff";
+import { eye } from "react-icons-kit/feather/eye";
+
 export default function Signup() {
     const { register,handleSubmit, formState: { errors }} = useForm();
     const user = useSelector(selectLoggedInUser);
     const dispatch = useDispatch();
     const error = useSelector(selectCreateError)
+
+    const [type, setType] = useState("password");
+    const handleToggle = () => {
+      setType(type === "password" ? "text" : "password");
+    };
 
     return (
       <>
@@ -55,7 +64,7 @@ export default function Signup() {
                     Password
                   </label>
                 </div>
-                <div className="mt-2">
+                <div className="mt-2 relative">
                   <input
                     id="password"
                     {...register("password", { required: "Password is required" ,pattern:{
@@ -64,9 +73,21 @@ export default function Signup() {
 - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n
 - Can contain special characters`
                     } })}
-                    type="password"
+                    type={type}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  {/* show password  */}
+                  <span
+                    className="absolute top-1/2 transform -translate-y-1/2 right-2"
+                    onClick={handleToggle}
+                  >
+                    {type === "password" ? (
+                      <Icon icon={eyeOff} className="h-8 w-8 text-black" />
+                    ) : (
+                      <Icon icon={eye} className="h-8 w-8 text-black" />
+                    )}
+                  </span>
+
                    {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                 </div>
               </div>
@@ -77,14 +98,26 @@ export default function Signup() {
                     Confirm Password
                   </label>
                 </div>
-                <div className="mt-2">
+                <div className="mt-2 relative">
                   <input
                     id="confirmPassword"
                     {...register("confirmPassword", { required: "Password doesn't match", 
                     validate: (value,formValues) =>value === formValues.password || "Password doesn't match"})}
-                    type="password"
+                    type={type}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  {/* show password  */}
+                  <span
+                    className="absolute top-1/2 transform -translate-y-1/2 right-2"
+                    onClick={handleToggle}
+                  >
+                    {type === "password" ? (
+                      <Icon icon={eyeOff} className="h-8 w-8 text-black" />
+                    ) : (
+                      <Icon icon={eye} className="h-8 w-8 text-black" />
+                    )}
+                  </span>
+
                    {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
                     {error && <p className="text-red-500 my-4">{error.message}</p>}          
                 </div>
