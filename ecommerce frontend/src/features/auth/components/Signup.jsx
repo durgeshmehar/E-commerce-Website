@@ -88,8 +88,8 @@ export default function Signup() {
                     )}
                   </span>
 
-                   {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                 </div>
+                   {errors.password && <p className="text-red-500">{errors.password.message}</p>}
               </div>
               
               <div className="my-4">
@@ -118,9 +118,9 @@ export default function Signup() {
                     )}
                   </span>
 
+                </div>
                    {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
                     {error && <p className="text-red-500 my-4">{error.message}</p>}          
-                </div>
               </div>
 
               <div>

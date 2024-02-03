@@ -91,10 +91,10 @@ export default function ResetPassword() {
                       <Icon icon={eye} className="h-8 w-8 text-black" />
                     )}
                   </span>
+              </div>
                 {errors.password && (
                   <p className="text-red-500">{errors.password.message}</p>
                 )}
-              </div>
             </div>
 
             <div className="my-4">
@@ -128,12 +128,12 @@ export default function ResetPassword() {
                       <Icon icon={eye} className="h-8 w-8 text-black" />
                     )}
                   </span>
+              </div>
                 {errors.confirmPassword && (
                   <p className="text-red-500">
                     {errors.confirmPassword.message}
                   </p>
                 )}
-              </div>
             </div>
 
             <div className="my-4 ">

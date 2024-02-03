@@ -13,9 +13,11 @@ const options = {
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
     <ReduxProvider store={store}>
       <AlertProvider template={AlertTemplate} {...options}>
         <App />
       </AlertProvider>
     </ReduxProvider>
+  </React.StrictMode>
 );
