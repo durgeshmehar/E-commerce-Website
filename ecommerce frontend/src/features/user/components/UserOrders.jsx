@@ -55,15 +55,13 @@ export default function UserOrders() {
             >
               Order #{order.id}
             </h1>
-            <div className={`${chooseColor(order.status)} pl-4 py-1 text-xl`}>
-              Order Status : {order.status}
+            <div className={`pl-4 py-1 text-xl`}>
+              Order Status :<span className={`${chooseColor(order.status)}`}>{" "+order.status} </span> 
             </div>
             <div
-              className={`${chooseColor(
-                order.paymentStatus
-              )} pl-4 pb-4 text-xl`}
+              className={`pl-4 pb-4 text-xl`}
             >
-              Payment Status : {order.paymentStatus}
+              Payment Status :<span className={`${chooseColor(order.paymentStatus)}`}> {" "+order.paymentStatus}</span> 
             </div>
 
             <div className="border-t border-gray-200 px-4 py-6 sm:px-6">

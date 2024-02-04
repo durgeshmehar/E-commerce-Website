@@ -27,7 +27,7 @@ export default function ProductDetailPage() {
       ) : (
         <Navbar>
           <ProductDetail />
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
         </Navbar>
       )}
     </>
