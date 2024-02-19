@@ -43,8 +43,8 @@ export default function Cart() {
       {cartLoaded === false ? (
         <GridLoader color="rgb(40,116,240)" cssOverride={override} />
       ) : (
-        <div className="bg-gray-800  mx-auto max-w-7xl px-4 mt-0 sm:px-6 lg:px-8 ">
-          
+
+        <div className="bg-gray-800  mx-auto max-w-7xl px-4 mt-0 sm:px-6 lg:px-8 "> 
           <div className=" px-4 py-6 sm:px-6">
             <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">

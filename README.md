@@ -5,8 +5,11 @@ Snappy is chat application build with the power of MERN Stack & Socket io. You c
 ![login page](./Images/login.png)
 
 ![home page](./Images/products.png)
+
 ![home page](./Images/product_detail.png)
+
 ![home page](./Images/cart.png)
+
 ![home page](./Images/checkout.png)
 
 ## Installation Guide

@@ -29,13 +29,14 @@ function SampleNextArrow(props) {
       className={className}
       style={{
         ...style,
-        background: "gray",
+        background: "transparent",
         "borderRadius": "50%",
         "padding": "0",
         "margin":"0",
-        opacity: "0.7",
-        scale: "1.5",
-        marginRight: "10px",
+        opacity: "1",
+        "color":"red",
+        scale: "2",
+        marginRight: "-20px",
         zIndex: "100",
         display: "block",
       }}
@@ -51,13 +52,13 @@ function SamplePrevArrow(props) {
       className={className}
       style={{
         ...style,
-        background: "gray",
+        background: "transparent",
         "borderRadius": "50%",
         "padding": "0",
         "margin":"0",
-        opacity: "0.7",
-        scale: "1.5",
-        marginRight: "10px",
+        opacity: "1",
+        scale: "2",
+        marginLeft: "-20px",
         zIndex: "100",
         display: "block",
       }}
@@ -157,7 +158,7 @@ export default function ProductDetail() {
   return (
     <>
       {product && (
-        <div className="bg-white mx-auto max-w-7xl mt-4 py-2 pb-1 md:px-6 lg:px-8 overflow-x-hidden">
+        <div className="bg-slate-900 mx-auto max-w-7xl mt-4 py-2 pb-1 md:px-6 lg:px-8 overflow-x-hidden">
           <div className="pt-6">
             <nav aria-label="Breadcrumb">
               <ol
@@ -169,7 +170,7 @@ export default function ProductDetail() {
                   product.breadcrumbs.map((breadcrumb) => (
                     <li key={breadcrumb.id}>
                       <div className="flex items-center">
-                        <div className="mr-2 text-sm font-medium text-gray-900">
+                        <div className="mr-2 text-md font-medium text-gray-200">
                           {product.title}
                         </div>
                         <svg
@@ -197,19 +198,19 @@ export default function ProductDetail() {
             </nav>
 
             {/* Image gallery */}
-            <div className="mt-4 md:p-8 max-h-[50%]">
+            <div className="mt-4 md:p-8 max-h-[50%] ">
               <Slider {...settings}>
                 {product.images &&
                   product.images.map((imgLink, index) => (
                     <div
                       key={index}
-                      className="space-x-4 hidden md:block md:p-4 max-h-[50%]"
+                      className="space-x-4 hidden md:block md:p-4  h-[40vh] md:h-[50vh]"
                     >
                       <img
                         key={index}
                         src={imgLink}
                         alt={product.title}
-                        className="item-stretch w-full max-h-[50%] hover:lg:border-2 border-gray-300"
+                        className="w-full h-full hover:lg:border-2 border-gray-300"
                       />
                     </div>
                   ))}
@@ -219,7 +220,7 @@ export default function ProductDetail() {
             {/* Product info */}
             <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
               <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 flex flex-row justify-between">
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+                <h1 className="text-2xl font-bold tracking-tight text-gray-200 sm:text-3xl">
                   {product.title}
                 </h1>
                 <div className="mt-4">
@@ -243,11 +244,11 @@ export default function ProductDetail() {
               {/* Options */}
               <div className="mt-4 lg:row-span-3 lg:mt-0">
                 <h2 className="sr-only">Product information</h2>
-                <p className="text-3xl tracking-tight text-gray-900">
+                <p className="text-3xl tracking-tight text-gray-200">
                   $ {product.DiscountPrice}
                 </p>
-                <p className="text-lg tracking-tight  text-gray-600 mt-2">
-                  <span className="line-through opacity-90">
+                <p className="text-lg tracking-tight  text-gray-200 mt-2">
+                  <span className="line-through opacity-[0.6]">
                     $ {product.price}
                   </span>
                   <span className="text-green-700 font-semibold ml-2">
@@ -291,7 +292,7 @@ export default function ProductDetail() {
                   <div className="flex justify-between">
                     {product.colors && product.colors.length > 0 && (
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">
+                        <h3 className="text-sm font-medium text-gray-200">
                           Color
                         </h3>
 
@@ -312,11 +313,8 @@ export default function ProductDetail() {
                                   className={({ active, checked }) =>
                                     classNames(
                                       color.selectedClass,
-                                      active && checked
-                                        ? "ring ring-offset-1"
-                                        : "",
-                                      !active && checked ? "ring-2" : "",
-                                      "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none"
+                                      active && checked ? "ring-2 ring-indigo-500": "",
+                                      !active && checked ? "ring-2 ring-indigo-500" : "", "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none outline-none "
                                     )
                                   }
                                 >
@@ -330,7 +328,7 @@ export default function ProductDetail() {
                                     aria-hidden="true"
                                     className={classNames(
                                       color.class,
-                                      "h-8 w-8 rounded-full border border-black border-opacity-10"
+                                      "h-10 w-10 rounded-full border border-gray-400"
                                     )}
                                   />
                                 </RadioGroup.Option>
@@ -343,12 +341,12 @@ export default function ProductDetail() {
                     <div className=" align-middle">
                       <label
                         htmlFor="quantity"
-                        className=" block text-sm font-medium text-gray-900"
+                        className=" block text-sm font-medium text-gray-200"
                       >
                         Qty
                       </label>
                       <select
-                        className="text-xs mt-4"
+                        className="text-xs mt-4 text-white bg-slate-700"
                         onChange={(e) => {
                           handleSelect(e);
                         }}
@@ -369,7 +367,7 @@ export default function ProductDetail() {
                   {product.sizes && product.sizes.length > 0 && (
                     <div className="mt-10">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium text-gray-900">
+                        <h3 className="text-sm font-medium text-gray-200">
                           Size
                         </h3>
                         <a
@@ -398,10 +396,10 @@ export default function ProductDetail() {
                                 className={({ active }) =>
                                   classNames(
                                     size.inStock
-                                      ? "cursor-pointer bg-white text-gray-900 shadow-sm"
-                                      : "cursor-not-allowed bg-gray-50 text-gray-200",
+                                      ? "cursor-pointer bg-slate-700 text-gray-200 shadow-sm"
+                                      : "cursor-not-allowed bg-slate-600 text-gray-200",
                                     active ? "ring-2 ring-indigo-500" : "",
-                                    "group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
+                                    "group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-slate-500 text-white focus:outline-none sm:flex-1 sm:py-6"
                                   )
                                 }
                               >
@@ -467,7 +465,7 @@ export default function ProductDetail() {
                   <h3 className="sr-only">Description</h3>
 
                   <div className="space-y-6">
-                    <p className="text-base text-gray-900">
+                    <p className="text-base text-gray-200">
                       {product.description}
                     </p>
                   </div>
@@ -475,7 +473,7 @@ export default function ProductDetail() {
 
                 {product.highlights && product.highlights.length > 0 && (
                   <div className="mt-10">
-                    <h3 className="text-lg font-medium text-gray-900">
+                    <h3 className="text-lg font-medium text-gray-200">
                       Highlights
                     </h3>
 
@@ -487,7 +485,7 @@ export default function ProductDetail() {
                         {product.highlights &&
                           product.highlights.map((highlight, idx) => (
                             <li key={idx} className="text-gray-400">
-                              <span className="text-gray-600">{highlight}</span>
+                              <span className="text-gray-400">{highlight}</span>
                             </li>
                           ))}
                       </ul>
@@ -496,10 +494,10 @@ export default function ProductDetail() {
                 )}
 
                 <div className="mt-10">
-                  <h2 className="text-lg font-medium text-gray-900">Details</h2>
+                  <h2 className="text-lg font-medium text-gray-200">Details</h2>
 
                   <div className="mt-4 space-y-6">
-                    <p className=" text-base text-gray-600">
+                    <p className=" text-base text-gray-400">
                       {product.description}
                     </p>
                   </div>

@@ -36,7 +36,7 @@ export default function StripeCheckoutForm() {
     if (!clientSecret) {
       return;
     }
-   
+
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
         case "succeeded":
@@ -86,20 +86,25 @@ export default function StripeCheckoutForm() {
   };
 
   return (
-    <div className=" h-[60vh] flex items-center justify-center">
-      <form id="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
-            {isLoading ? (
-              <div className="spinner" id="spinner"></div>
-            ) : (
-              "Pay now"
-            )}
-          </span>
-        </button>
-        {message && <div id="payment-message">{message}</div>}
-      </form>
+    <div className=" bg-slate-900 h-[100vh] w-[100vw]">
+      <div className="flex flex-col items-center justify-center">
+        <form id="payment-form" onSubmit={handleSubmit} >
+          <PaymentElement
+            id="payment-element"
+            options={paymentElementOptions}
+          />
+          <button disabled={isLoading || !stripe || !elements} id="submit">
+            <span id="button-text">
+              {isLoading ? (
+                <div className="spinner" id="spinner"></div>
+              ) : (
+                "Pay now"
+              )}
+            </span>
+          </button>
+          {message && <div id="payment-message">{message}</div>}
+        </form>
+      </div>
     </div>
   );
 }
