@@ -129,7 +129,7 @@ export default function ProductForm() {
   }, [selectedProduct, params.id, setValue,dispatch]);
 
   return (
-    <div className="bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 px-16">
+    <div className="bg-white mx-auto max-w-7xl   py-2 pb-1 px-16">
       <form
         noValidate
         onSubmit={handleSubmit((data) => {

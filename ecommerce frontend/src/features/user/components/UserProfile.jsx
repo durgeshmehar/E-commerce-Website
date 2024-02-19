@@ -4,12 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo, updateUserAsync } from "../userSlice";
 import { useForm } from "react-hook-form";
 import Modal from "../../common/Modal"
+import {
+  PencilIcon
+} from "@heroicons/react/24/outline";
 
 export default function UserProfile() {
   const {
     register,
     handleSubmit,
-    setError,
     reset,
     setValue,
     formState: { errors },
@@ -66,15 +68,15 @@ export default function UserProfile() {
 
   return (
     <>
-      <div className="bg-white mx-auto max-w-7xl px-4 mb-6 sm:px-6 lg:px-8 ">
+      <div className="bg-gray-800 mx-auto max-w-7xl px-4 mb-6 sm:px-6 lg:px-8 ">
         <h1 id="products-heading" className="p-4 pb-1 text-lg font-semibold">
-          Name : {userInfo.name ? userInfo.name : "Username"}
+          Name : {userInfo.name ? userInfo.name : "Username "} <PencilIcon className="h-4 w-4 inline"/>
         </h1>
-        <h3 className="p-4 pb-1 text-lg font-semibold text-slate-800">
+        <h3 className="p-4 pb-1 text-lg font-semibold text-gray-300">
           Email : {userInfo.email}
         </h3>
         {userInfo.role === "admin" ? 
-        <h3 className="p-4 pb-1 text-xl font-semibold text-slate-800">
+        <h3 className="p-4 pb-1 text-xl font-semibold text-gray-300">
           Role : {userInfo.role}
         </h3> :null
         }
@@ -89,8 +91,8 @@ export default function UserProfile() {
         </button>
         {showAddressForm ? (
           <form
-            noValidate
-            className="bg-white px-10 mt-8 mb-4"
+     noValidate
+            className="bg-white px-10 mb-4 py-4"
             onSubmit={handleSubmit((data) => {
               handleAddNewAddress(data);
               reset();
@@ -98,10 +100,10 @@ export default function UserProfile() {
           >
             <div className="space-y-0 mt-12">
               <div className="border-t border-gray-800/10 pb-12 ">
-                <h2 className="text-2xl font-bold leading-7 text-gray-900 py-4 ">
+                <h2 className="text-2xl font-bold leading-7 text-black py-4 ">
                   Personal Information
                 </h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
+                <p className="mt-1 text-sm leading-6 text-black">
                   Use a permanent address where you can receive mail.
                 </p>
 
@@ -109,7 +111,7 @@ export default function UserProfile() {
                   <div className="sm:col-span-4">
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-black"
                     >
                       Full name
                     </label>
@@ -121,7 +123,7 @@ export default function UserProfile() {
                         })}
                         id="name"
                         autoComplete="given-name"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
@@ -129,7 +131,7 @@ export default function UserProfile() {
                   <div className="sm:col-span-4">
                     <label
                       htmlFor="email"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-black"
                     >
                       Email address
                     </label>
@@ -145,7 +147,7 @@ export default function UserProfile() {
                         })}
                         type="email"
                         autoComplete="email"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                       {errors.email && (
                         <p className="text-red-500">{errors.email.message}</p>
@@ -156,7 +158,7 @@ export default function UserProfile() {
                   <div className="sm:col-span-3">
                     <label
                       htmlFor="mobile"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-black"
                     >
                       Mobile No.
                     </label>
@@ -172,7 +174,7 @@ export default function UserProfile() {
                         })}
                         type="tel"
                         autoComplete="tel"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                       {errors.mobile && (
                         <p className="text-red-500">{errors.mobile.message}</p>
@@ -183,7 +185,7 @@ export default function UserProfile() {
                   <div className="col-span-full">
                     <label
                       htmlFor="street-address"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-black"
                     >
                       Street address
                     </label>
@@ -195,7 +197,7 @@ export default function UserProfile() {
                           required: "Street is required",
                         })}
                         autoComplete="address"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
@@ -203,7 +205,7 @@ export default function UserProfile() {
                   <div className="sm:col-span-2 sm:col-start-1">
                     <label
                       htmlFor="city"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-black"
                     >
                       City
                     </label>
@@ -215,7 +217,7 @@ export default function UserProfile() {
                         })}
                         id="city"
                         autoComplete="address-level2"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
@@ -223,7 +225,7 @@ export default function UserProfile() {
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="region"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-black"
                     >
                       State / Province
                     </label>
@@ -235,7 +237,7 @@ export default function UserProfile() {
                         })}
                         id="region"
                         autoComplete="address-level1"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
@@ -243,7 +245,7 @@ export default function UserProfile() {
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="postal-code"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-black"
                     >
                       ZIP / Postal code
                     </label>
@@ -255,7 +257,7 @@ export default function UserProfile() {
                         })}
                         id="postalcode"
                         autoComplete="postal-code"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
@@ -292,17 +294,17 @@ export default function UserProfile() {
               {selectedEditAddressIndex === index ? (
                 <form
                   noValidate
-                  className="bg-white px-10 mt-8 mb-4"
+                  className="bg-white px-10 py-4 mb-4"
                   onSubmit={handleSubmit((data) => {
                     handleSubmitAddress(data, index);
                   })}
                 >
                   <div className="space-y-0 mt-12">
                     <div className="border-t border-gray-800/10 pb-12 ">
-                      <h2 className="text-2xl font-bold leading-7 text-gray-900 py-4 ">
+                      <h2 className="text-2xl font-bold leading-7 text-black py-4 ">
                         Personal Information
                       </h2>
-                      <p className="mt-1 text-sm leading-6 text-gray-600">
+                      <p className="mt-1 text-sm leading-6 text-black">
                         Use a permanent address where you can receive mail.
                       </p>
 
@@ -310,7 +312,7 @@ export default function UserProfile() {
                         <div className="sm:col-span-4">
                           <label
                             htmlFor="name"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-black"
                           >
                             Full name
                           </label>
@@ -322,7 +324,7 @@ export default function UserProfile() {
                               })}
                               id="name"
                               autoComplete="given-name"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                           </div>
                         </div>
@@ -330,7 +332,7 @@ export default function UserProfile() {
                         <div className="sm:col-span-4">
                           <label
                             htmlFor="email"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-black"
                           >
                             Email address
                           </label>
@@ -346,7 +348,7 @@ export default function UserProfile() {
                               })}
                               type="email"
                               autoComplete="email"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                             {errors.email && (
                               <p className="text-red-500">
@@ -359,7 +361,7 @@ export default function UserProfile() {
                         <div className="sm:col-span-3">
                           <label
                             htmlFor="mobile"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-black"
                           >
                             Mobile No.
                           </label>
@@ -375,7 +377,7 @@ export default function UserProfile() {
                               })}
                               type="tel"
                               autoComplete="tel"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                             {errors.mobile && (
                               <p className="text-red-500">
@@ -388,7 +390,7 @@ export default function UserProfile() {
                         <div className="col-span-full">
                           <label
                             htmlFor="street-address"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-black"
                           >
                             Street address
                           </label>
@@ -400,7 +402,7 @@ export default function UserProfile() {
                                 required: "Street is required",
                               })}
                               autoComplete="address"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                           </div>
                         </div>
@@ -408,7 +410,7 @@ export default function UserProfile() {
                         <div className="sm:col-span-2 sm:col-start-1">
                           <label
                             htmlFor="city"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-black"
                           >
                             City
                           </label>
@@ -420,7 +422,7 @@ export default function UserProfile() {
                               })}
                               id="city"
                               autoComplete="address-level2"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                           </div>
                         </div>
@@ -428,7 +430,7 @@ export default function UserProfile() {
                         <div className="sm:col-span-2">
                           <label
                             htmlFor="region"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-black"
                           >
                             State / Province
                           </label>
@@ -440,7 +442,7 @@ export default function UserProfile() {
                               })}
                               id="region"
                               autoComplete="address-level1"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                           </div>
                         </div>
@@ -448,7 +450,7 @@ export default function UserProfile() {
                         <div className="sm:col-span-2">
                           <label
                             htmlFor="postal-code"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-black"
                           >
                             ZIP / Postal code
                           </label>
@@ -460,10 +462,11 @@ export default function UserProfile() {
                               })}
                               id="postalcode"
                               autoComplete="postal-code"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                           </div>
                         </div>
+
                       </div>
                     </div>
                     <div className="flex items-center justify-end gap-x-6">
@@ -491,23 +494,24 @@ export default function UserProfile() {
 
                 <div className="flex min-w-0 gap-x-4">
                   <div className="min-w-0 flex-auto">
-                    <p className="text-md font-semibold leading-6 text-gray-900">
+                    <p className="text-md font-semibold leading-6 text-gray-300">
                       {address.name}
+
                     </p>
-                    <p className="mt-1 truncate text-sm leading-5 text-gray-500">
+                    <p className="mt-1 truncate text-sm leading-5 text-gray-300">
                       {address.street}
                     </p>
-                    <p className="mt-1 truncate text-sm leading-5 text-gray-500">
+                    <p className="mt-1 truncate text-sm leading-5 text-gray-300">
                       {address.postalcode}
                     </p>
                   </div>
                 </div>
 
                 <div className="block shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p className="text-sm leading-6 text-gray-900">
+                  <p className="text-sm leading-6 text-gray-300">
                     Phone: {address.mobile}
                   </p>
-                  <p className="text-sm leading-6 text-gray-900">
+                  <p className="text-sm leading-6 text-gray-300">
                     {address.city}, {address.state}
                   </p>
                 </div>
@@ -515,7 +519,7 @@ export default function UserProfile() {
                 <div className="flex shrink-0 flex-col items-end  text-sm">
                   <button
                     type="button"
-                    className="w-fit rounded-md px-6 py-1  bg-blue-400   font-medium text-white  hover:bg-blue-300 mb-2"
+                    className="w-fit rounded-md px-6 py-1  bg-blue-500   font-medium text-white  hover:bg-blue-400 mb-2"
                     onClick={() => handleSelectEdit(index)}
                   >
                     Edit
@@ -523,7 +527,7 @@ export default function UserProfile() {
 
                   <button
                   type="submit"
-                  className="w-fit rounded-md  px-4 py-1 text-white bg-red-400 font-medium hover:bg-red-300"
+                  className="w-fit rounded-md  px-4 py-1 text-white bg-red-500 font-medium hover:bg-red-400"
                   onClick={(e) => {
                     e.preventDefault();
                     setShowModalId(index);
@@ -549,6 +553,7 @@ export default function UserProfile() {
             </div>
           ))}
         </div>
+
       </div>
     </>
   );

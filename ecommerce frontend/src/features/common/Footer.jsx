@@ -4,8 +4,8 @@ import logo from "../../Images/logo.png";
 export default function Footer() {
   return (
     <>
-      <footer className="relative z-10   bg-gray-800">
-          {/* wrapper of five cols start */}
+      <footer className=" bg-slate-800">
+        
           <div className="py-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 text-sm">
 
             <div className="p-4 pl-6">

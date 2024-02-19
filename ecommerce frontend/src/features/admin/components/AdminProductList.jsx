@@ -2,7 +2,8 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GridLoader from "react-spinners/GridLoader";
-import { override } from "../../../app/constants"
+import Pagination from "../../common/Pagination"
+import { override } from "../../../app/constants";
 import { Link } from "react-router-dom";
 import {
   fetchBrandsAsync,
@@ -40,8 +41,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
 export default function AdminProductList() {
+  
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
@@ -118,115 +119,107 @@ export default function AdminProductList() {
     <>
       {status === "loading" ? (
         <GridLoader color="rgb(40,116,240)" cssOverride={override} />
-      ) : <div className="overflow-hidden">
-        <MobileFilter
-          mobileFiltersOpen={mobileFiltersOpen}
-          setMobileFiltersOpen={setMobileFiltersOpen}
-          handleFilter={handleFilter}
-          filters={filters}
-        />
+      ) : (
+        <div className="overflow-hidden">
+          <MobileFilter
+            mobileFiltersOpen={mobileFiltersOpen}
+            setMobileFiltersOpen={setMobileFiltersOpen}
+            handleFilter={handleFilter}
+            filters={filters}
+          />
 
-        <main className="overflow-hidden bg-white mx-auto max-w-7xl  mt-4 py-2 pb-1 sm:px-6 lg:px-8 ">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 px-4 pt-2">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              All Products
-            </h1>
+          <main className="mx-auto  pt-4 py-2 pb-1 sm:px-6 lg:px-8">
+            <div className="text-white flex items-baseline justify-between border-b border-gray-200 pb-6 px-4 pt-2">
+              <h1 className="text-3xl font-bold tracking-tigh">All Products</h1>
 
-            <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
-                    <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                  </Menu.Button>
-                </div>
+              <div className="flex items-center">
+                <Menu as="div" className="relative inline-block text-left">
+                  <div>
+                    <Menu.Button className="group inline-flex justify-center text-sm font-medium text-white ">
+                      Sort
+                      <ChevronDownIcon
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-200 group-hover:text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </Menu.Button>
+                  </div>
 
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
-                          {({ active }) => (
-                            <p
-                              onClick={(e) => handleSort(e, option)}
-                              className={classNames(
-                                option.current
-                                  ? "font-medium text-gray-900"
-                                  : "text-gray-500",
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              {option.name}
-                            </p>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
-
-              <button
-                type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                onClick={() => setMobileFiltersOpen(true)}
-              >
-                <span className="sr-only">Filters</span>
-                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-
-          <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <h2 id="products-heading" className="sr-only">
-              Products
-            </h2>
-
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-              <DesktopFilter handleFilter={handleFilter} filters={filters} />
-
-              <div className="lg:col-span-3">
-                <div className="mb-8">
-                  <Link
-                    to="/admin/product-form"
-                    className="ml-4 my-8 px-4 py-2 mb-28  rounded-md bg-green-600  text-sm font-semibold text-white shadow-sm hover:bg-green-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
                   >
-                    Add New Product
-                  </Link>
-                </div>
-                {/* productGrid */}
-                <ProductGrid products={products} />
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-slate-600 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none ">
+                  <div className="py-1">
+                    {sortOptions.map((option) => (
+                      <Menu.Item key={option.name}>
+                        {({ active }) => (
+                          <p
+                            onClick={(e) => handleSort(e, option)}
+                            className={classNames(
+                              option.current ? "font-medium " : "text-white",
+                              active ? "bg-slate-500" : "",
+                              "block px-4 py-2 text-sm",
+                              "cursor-pointer"
+                            )}
+                          >
+                            {option.name}
+                          </p>
+                        )}
+                      </Menu.Item>
+                    ))}
+                  </div>
+                </Menu.Items>
+
+                  </Transition>
+                </Menu>
+
+                <button
+                  type="button"
+                  className="-m-2 ml-4 p-2 text-gray-100 hover:text-gray-300 sm:ml-6 lg:hidden"
+                  onClick={() => setMobileFiltersOpen(true)}
+                >
+                  <span className="sr-only">Filters</span>
+                  <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                </button>
               </div>
             </div>
-          </section>
-        </main>
 
-        <Pagination
-          handlePagination={handlePagination}
-          pagination={pagination}
-          totalItems={totalItems}
-        />
-      </div>}
-      
+            <section aria-labelledby="products-heading" className="pb-24 pt-6">
+              <h2 id="products-heading" className="sr-only">
+                Products
+              </h2>
+
+              <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-6">
+                <DesktopFilter handleFilter={handleFilter} filters={filters} />
+
+                <div className="lg:col-span-5">
+                  <div className="mb-8">
+                    <Link
+                      to="/admin/product-form"
+                      className="ml-4 my-8 px-4 py-2 mb-28  rounded-md bg-green-600  text-sm font-semibold text-white shadow-sm hover:bg-green-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Add New Product
+                    </Link>
+                  </div>
+                  {/* productGrid */}
+                  <ProductGrid products={products} />
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <Pagination
+            handlePagination={handlePagination}
+            pagination={pagination}
+            totalItems={totalItems}
+          />
+        </div>
+      )}
     </>
   );
 }
@@ -238,10 +231,10 @@ export function MobileFilter({
   filters,
 }) {
   return (
-    <Transition.Root show={mobileFiltersOpen} as={Fragment}>
+    <Transition.Root show={mobileFiltersOpen} as={Fragment} className="bg-slate-800">
       <Dialog
         as="div"
-        className="relative z-40 lg:hidden"
+        className="relative z-40 lg:hidden bg-slate-800"
         onClose={setMobileFiltersOpen}
       >
         <Transition.Child
@@ -266,12 +259,12 @@ export function MobileFilter({
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-slate-800 py-4 pb-12 shadow-xl">
               <div className="flex items-center justify-between px-4">
-                <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                <h2 className="text-lg font-medium text-gray-200">Filters</h2>
                 <button
                   type="button"
-                  className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                  className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-gray-600 p-2 text-gray-100"
                   onClick={() => setMobileFiltersOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
@@ -291,8 +284,8 @@ export function MobileFilter({
                       {({ open }) => (
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
-                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">
+                            <Disclosure.Button className="flex w-full items-center justify-between px-2 py-3 text-gray-100 hover:text-gray-300">
+                              <span className="font-medium text-white">
                                 {section.name}
                               </span>
                               <span className="ml-6 flex items-center">
@@ -326,11 +319,11 @@ export function MobileFilter({
                                       handleFilter(e, section.id, option.value)
                                     }
                                     defaultChecked={option.checked}
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    className="h-4 w-4 cursor-pointer rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
                                     htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                    className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    className="ml-3 min-w-0 flex-1 text-gray-300 cursor-pointer"
                                   >
                                     {option.label}
                                   </label>
@@ -343,6 +336,7 @@ export function MobileFilter({
                     </Disclosure>
                   ))}
               </form>
+
             </Dialog.Panel>
           </Transition.Child>
         </div>
@@ -350,9 +344,10 @@ export function MobileFilter({
     </Transition.Root>
   );
 }
+
 export function DesktopFilter({ handleFilter, filters }) {
   return (
-    <form className="hidden lg:block">
+    <form className="hidden lg:block ">
       {filters &&
         filters.map((section) => (
           <Disclosure
@@ -363,15 +358,21 @@ export function DesktopFilter({ handleFilter, filters }) {
             {({ open }) => (
               <>
                 <h3 className="-my-3 flow-root">
-                  <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                    <span className="font-medium text-gray-900">
+                  <Disclosure.Button className="flex w-full items-center justify-between py-3 text-sm">
+                    <span className="font-medium text-white">
                       {section.name}
                     </span>
                     <span className="ml-6 flex items-center">
                       {open ? (
-                        <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                        <MinusIcon
+                          className="h-5 w-5 text-white"
+                          aria-hidden="true"
+                        />
                       ) : (
-                        <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                        <PlusIcon
+                          className="h-5 w-5 text-white"
+                          aria-hidden="true"
+                        />
                       )}
                     </span>
                   </Disclosure.Button>
@@ -390,11 +391,11 @@ export function DesktopFilter({ handleFilter, filters }) {
                             onChange={(e) =>
                               handleFilter(e, section.id, option.value)
                             }
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500  cursor-pointer"
                           />
                           <label
                             htmlFor={`filter-${section.id}-${optionIdx}`}
-                            className="ml-3 text-sm text-gray-600"
+                            className="ml-3 text-sm text-white cursor-pointer"
                           >
                             {option.label}
                           </label>
@@ -413,7 +414,7 @@ export function DesktopFilter({ handleFilter, filters }) {
 export function ProductGrid({ products }) {
   return (
     <div>
-      <div className="grid items-stretch px-4 gap-10 gap-y-20 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:gap-x-6 place-content-center place-items-center">
+      <div className="text-white grid items-stretch px-4 gap-3 xs:gap-8 md:gap-10 gap-y-20 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 place-content-center place-items-center ">
         {products &&
           products.map((product) => (
             <div
@@ -482,102 +483,4 @@ export function ProductGrid({ products }) {
   );
 }
 
-export function Pagination({ handlePagination, pagination, totalItems }) {
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-  return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white xs:px-4 py-3 sm:px-6">
-      <div className="flex flex-1 justify-between sm:hidden">
-        <div
-          onClick={() =>
-            handlePagination(
-              pagination._page - 1 >= 1
-                ? pagination._page - 1
-                : pagination._page
-            )
-          }
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          Previous
-        </div>
-        <div
-          onClick={() =>
-            handlePagination(
-              pagination._page + 1 <= totalPages
-                ? pagination._page + 1
-                : pagination._page
-            )
-          }
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          Next
-        </div>
-      </div>
-      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm text-gray-700">
-            Showing{" "}
-            <span className="font-medium">
-              {(pagination._page - 1) * ITEMS_PER_PAGE + 1}
-            </span>{" "}
-            to{" "}
-            <span className="font-medium">
-              {pagination._page * ITEMS_PER_PAGE > totalItems
-                ? totalItems
-                : pagination._page * ITEMS_PER_PAGE}
-            </span>{" "}
-            of <span className="font-medium">{totalItems}</span> results
-          </p>
-        </div>
-        <div>
-          <nav
-            className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-            aria-label="Pagination"
-          >
-            <div
-              onClick={() =>
-                handlePagination(
-                  pagination._page - 1 >= 1
-                    ? pagination._page - 1
-                    : pagination._page
-                )
-              }
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-            >
-              <span className="sr-only">Previous</span>
-              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-            </div>
 
-            {Array.from({ length: totalPages }).map((val, index) => (
-              <div
-                key={index}
-                onClick={() => handlePagination(index + 1)}
-                aria-current="page"
-                className={`cursor-pointer relative z-10 inline-flex items-center ${
-                  index + 1 === pagination._page
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-400 "
-                } px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              >
-                {index + 1}
-              </div>
-            ))}
-
-            <div
-              onClick={() =>
-                handlePagination(
-                  pagination._page + 1 <= totalPages
-                    ? pagination._page + 1
-                    : pagination._page
-                )
-              }
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-            >
-              <span className="sr-only">Next</span>
-              <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-            </div>
-          </nav>
-        </div>
-      </div>
-    </div>
-  );
-}

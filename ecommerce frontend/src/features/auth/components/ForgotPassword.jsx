@@ -24,14 +24,14 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="bg-slate-900  h-[100vh] w-[100vw] flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-20 w-auto"
             src={logo}
             alt="Your Company"
           />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-200">
             Enter email to reset password
           </h2>
         </div>
@@ -45,7 +45,7 @@ export default function ForgotPassword() {
             <div className="my-4">
               <label
                 htmlFor="email"
-                className="block text-md font-medium leading-6 text-gray-900"
+                className="block text-md font-medium leading-6 text-gray-200"
               >
                 Email address
               </label>
@@ -61,7 +61,7 @@ export default function ForgotPassword() {
                   })}
                   type="email"
                   autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
                 {errors.email && (

@@ -38,7 +38,7 @@ export default function Navbar({ children }) {
   return (
     <>
       {userInfo && (
-        <div className="min-h-full">
+        <div className="min-h-[100lvh] bg-slate-900  ">
           <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
               <>
@@ -128,15 +128,15 @@ export default function Navbar({ children }) {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                   {({ active }) => (
                                     <Link
                                       to={item.link}
                                       className={classNames(
-                                        active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm text-gray-700"
+                                        active ? "bg-gray-700" : "",
+                                        "block px-4 py-2 text-sm text-gray-100"
                                       )}
                                     >
                                       {item.name}
@@ -149,10 +149,9 @@ export default function Navbar({ children }) {
                         </Menu>
                       </div>
                     </div>
+
                     <div className="-mr-2 flex md:hidden">
-
-
-{/* Mobile menu button */}
+                      {/* Mobile menu button */}
                       <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-0.5" />
                         <span className="sr-only">Open main menu</span>
@@ -169,6 +168,7 @@ export default function Navbar({ children }) {
                         )}
                       </Disclosure.Button>
                     </div>
+
                   </div>
                 </div>
 
@@ -193,7 +193,7 @@ export default function Navbar({ children }) {
                       ) : null
                     )}
                     <div>
-                    <Link to="/cart-item">
+                      <Link to="/cart-item">
                         <button
                           type="button"
                           className="mr-2 flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -213,7 +213,7 @@ export default function Navbar({ children }) {
                   </div>
 
                   <div className="border-t border-gray-700 pb-3 pt-4  border-b-2">
-                    <div className="flex items-center px-5  border-b border-gray-700 pb-2" >
+                    <div className="flex items-center px-5  border-b border-gray-700 pb-2">
                       <div className="flex-shrink-0 ">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -238,38 +238,30 @@ export default function Navbar({ children }) {
                           {userInfo.email}
                         </div>
                       </div>
-                
                     </div>
 
                     <div className="mt-3 space-y-1 px-2">
                       {userNavigation.map((item) => (
                         <Link to={item.link} key={item.name}>
-                        <Disclosure.Button
-                          as="a"
-                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                        >
-                          {item.name}
-                        </Disclosure.Button>
+                          <Disclosure.Button
+                            as="a"
+                            className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                          >
+                            {item.name}
+                          </Disclosure.Button>
                         </Link>
                       ))}
                     </div>
                   </div>
-
                 </Disclosure.Panel>
               </>
             )}
           </Disclosure>
 
-          {/* <header className="bg-white shadow">
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-              <h1 className="text-2xl font-bold tracking-tight text-gray-900">
-                E-Shop
-              </h1>
-            </div>
-          </header> */}
+    
           <main>
-            <div className="mt-4">
-              {/* Your content */} {children}
+            <div className="mt-0 text-white bg-slate-900">
+              {children}
             </div>
           </main>
         </div>

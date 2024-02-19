@@ -74,13 +74,13 @@ export default function AdminOrders() {
   };
 
   return (
-    <div className="  mx-auto max-w-[98%]  md:max-w-[95%] lg:max-w-[80%]  mt-4 pb-1 mb-44 text-sm md:text-md lg:text-lg">
-      <div className=" overflow-x-auto bg-white ">
-        <table className=" w-full table-auto  text-left ">
-          <thead className="bg-gray-300 ">
+    <div className="mx-auto max-w-[100%]  md:max-w-[95%] lg:max-w-[80%]  pb-1 mb-44 text-sm md:text-md lg:text-lg">
+      <div className=" overflow-x-auto bg-slate-900">
+        <table className=" w-full table-auto  text-left">
+          <thead className="bg-slate-800 ">
             <tr className="text-sm md:text-md lg:text-lg font-semibold align-top ">
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "id", order: order });
@@ -94,20 +94,20 @@ export default function AdminOrders() {
                 )}
               </th>
 
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none">
                 Items
               </th>
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none">
                 Shipping Address
               </th>
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none">
                 Qty
               </th>
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none">
                 Price($)
               </th>
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "totalAmount", order: order });
@@ -122,7 +122,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "status", order: order });
@@ -137,7 +137,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "paymentMethod", order: order });
@@ -152,7 +152,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "paymentStatus", order: order });
@@ -167,7 +167,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "createdAt", order: order });
@@ -182,7 +182,7 @@ export default function AdminOrders() {
               </th>
 
               <th
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50"
+                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none"
                 onClick={() => {
                   const order = sort._order === "asc" ? "desc" : "asc";
                   handleSort({ sort: "updatedAt", order: order });
@@ -196,7 +196,7 @@ export default function AdminOrders() {
                 )}
               </th>
 
-              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50">
+              <th className=" border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 py-4 md:p-4 md:py-6 transition-colors hover:bg-blue-gray-50 border-none">
                 Actions
               </th>
             </tr>

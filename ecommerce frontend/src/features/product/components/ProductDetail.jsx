@@ -203,13 +203,13 @@ export default function ProductDetail() {
                   product.images.map((imgLink, index) => (
                     <div
                       key={index}
-                      className="space-x-4 hidden md:block md:p-4 max-h-[50%] "
+                      className="space-x-4 hidden md:block md:p-4 max-h-[50%]"
                     >
                       <img
                         key={index}
                         src={imgLink}
                         alt={product.title}
-                        className="item-stretch w-full max-h-[50%] lg:border-2"
+                        className="item-stretch w-full max-h-[50%] hover:lg:border-2 border-gray-300"
                       />
                     </div>
                   ))}

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -40,13 +40,18 @@ export default function ResetPassword() {
   return (
     <>
       {passwordResetStatus && <Navigate to="/login" replace={true} />}
-      <div className="flex flex-1 flex-col justify-center px-6 py-12 ">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="mx-auto h-20 w-auto" src={logo} alt="Your Company" />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Reset Password
-          </h2>
-        </div>
+      <div className="bg-slate-900 h-[100lvh] w-[100lvw]">
+        <div className="flex flex-1 flex-col justify-center px-6 py-12 ">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img
+              className="mx-auto h-20 w-auto"
+              src={logo}
+              alt="Your Company"
+            />
+            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-200">
+              Reset Password
+            </h2>
+          </div>
 
           <form
             noValidate
@@ -59,7 +64,7 @@ export default function ResetPassword() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-gray-200"
                 >
                   New Password
                 </label>
@@ -78,30 +83,30 @@ export default function ResetPassword() {
                     },
                   })}
                   type={type}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 {/* show password  */}
                 <span
-                    className="absolute top-1/2 transform -translate-y-1/2 right-2"
-                    onClick={handleToggle}
-                  >
-                    {type === "password" ? (
-                      <Icon icon={eyeOff} className="h-8 w-8 text-black" />
-                    ) : (
-                      <Icon icon={eye} className="h-8 w-8 text-black" />
-                    )}
-                  </span>
+                  className="absolute top-1/2 transform -translate-y-1/2 right-2"
+                  onClick={handleToggle}
+                >
+                  {type === "password" ? (
+                    <Icon icon={eyeOff} className="h-8 w-8 text-black" />
+                  ) : (
+                    <Icon icon={eye} className="h-8 w-8 text-black" />
+                  )}
+                </span>
               </div>
-                {errors.password && (
-                  <p className="text-red-500">{errors.password.message}</p>
-                )}
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
             </div>
 
             <div className="my-4">
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-gray-200"
                 >
                   Confirm Password
                 </label>
@@ -115,25 +120,23 @@ export default function ResetPassword() {
                       value === formValues.password || "Password doesn't match",
                   })}
                   type={type}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 {/* show password  */}
                 <span
-                    className="absolute top-1/2 transform -translate-y-1/2 right-2"
-                    onClick={handleToggle}
-                  >
-                    {type === "password" ? (
-                      <Icon icon={eyeOff} className="h-8 w-8 text-black" />
-                    ) : (
-                      <Icon icon={eye} className="h-8 w-8 text-black" />
-                    )}
-                  </span>
+                  className="absolute top-1/2 transform -translate-y-1/2 right-2"
+                  onClick={handleToggle}
+                >
+                  {type === "password" ? (
+                    <Icon icon={eyeOff} className="h-8 w-8 text-black" />
+                  ) : (
+                    <Icon icon={eye} className="h-8 w-8 text-black" />
+                  )}
+                </span>
               </div>
-                {errors.confirmPassword && (
-                  <p className="text-red-500">
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
+              {errors.confirmPassword && (
+                <p className="text-red-500">{errors.confirmPassword.message}</p>
+              )}
             </div>
 
             <div className="my-4 ">
@@ -159,7 +162,7 @@ export default function ResetPassword() {
               Login
             </Link>
           </p>
-
+        </div>
       </div>
     </>
   );
