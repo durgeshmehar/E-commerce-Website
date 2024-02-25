@@ -4,4 +4,5 @@ const router = express.Router();
 
 router.get('/',fetchBrands)
 router.post('/',createBrand)
+
 exports.router = router;
