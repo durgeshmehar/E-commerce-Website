@@ -28,7 +28,6 @@ import {
 import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 import StripeCheckout from "./pages/StripeCheckout";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-import { fetchProductByIdAsync } from "./features/product/productSlice";
 
 const router = createBrowserRouter([
   {
